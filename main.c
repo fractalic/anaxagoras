@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <p89lpc9351.h>
 
-// doing some more damage
-
 #define XTAL 7373000L
 #define BAUD 115200L
 
