@@ -1,27 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <p89lpc9351.h>
+#include <lcd.c>
 
 #define XTAL 7373000L
 #define BAUD 115200L
 
 // initialize the ports to proper I/O mode
 void init_ports();
-
-// load data into LCD
-void LCD_load();
-
-// send a character
-void LCD_write(char i);
-
-// 4 bits of data for LCD
-void LCD_push(char i);
-
-// send a command to the LCD
-void LCD_cmd(char i);
-
-// set LCD for operation
-void LCD_init();
 
 // make some light
 void lights(char i);
