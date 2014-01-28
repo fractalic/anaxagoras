@@ -16,6 +16,7 @@ void init_ports();
 // make some light
 void lights(char i);
 
+// BAHAHA
 void main(void)
 {
 	init_ports();
