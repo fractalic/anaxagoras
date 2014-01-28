@@ -16,6 +16,10 @@ void init_ports();
 // make some light
 void lights(char i);
 
+void this_does_nothing(void) {
+// no main is thoroughly messed up
+}
+
 void main(void)
 {
 	init_ports();
