@@ -7,8 +7,6 @@
 
 // LCD declarations --------------------------------
 
-// testing
-
 // LCD_clock()
 // send a clock pulse to the lcd
 // to make it read the current bits
