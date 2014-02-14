@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Thu Feb 13 21:16:16 2014
+; This file was generated Thu Feb 13 22:34:00 2014
 ;--------------------------------------------------------
 $name pins
 $optc51 --model-small
@@ -23,6 +23,7 @@ $optc51 --model-small
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	public _test
 ;--------------------------------------------------------
 ; Special Function Registers
 ;--------------------------------------------------------
@@ -90,6 +91,18 @@ $optc51 --model-small
 ; code
 ;--------------------------------------------------------
 	rseg R_CSEG
+;------------------------------------------------------------
+;Allocation info for local variables in function 'test'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\pins.c:51: void test() {
+;	-----------------------------------------
+;	 function test
+;	-----------------------------------------
+_test:
+	using	0
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\pins.c:53: }
+	ret
 	rseg R_CSEG
 
 	rseg R_XINIT
