@@ -2,6 +2,7 @@
 #define LCD
 
 #include <p89lpc9351.h>
+#include "pins.c"
 #include "utilities.c"
 
 // LCD declarations --------------------------------

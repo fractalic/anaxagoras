@@ -18,14 +18,11 @@ void init_ports();
 // make some light
 void lights(char i);
 
-// added globally
 void main(void)
 {
 	init_ports();
 	
 	LCD_init();
-	
-	this_does_nothing(TXD);
 	
 	while(1)
 	{
@@ -49,8 +46,8 @@ void init_ports() {
 
 void lights(char i) {
 	// run lights
-	P1_3 = (i) & 0x01;
-	P1_2 = (i>>1) & 0x01;
+	light_0 = (i) & 0x01;
+	light_1 = (i>>1) & 0x01;
 }
 
 

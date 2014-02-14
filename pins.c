@@ -31,6 +31,9 @@ right-to-left with usb connector to your right
 	P2.7
 */
 
+#define light_0 P1_2
+#define light_1 P1_3
+
 #define	lcd_data_0	P1_4
 #define lcd_data_1	P1_6
 #define lcd_data_2	P1_7
