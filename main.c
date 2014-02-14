@@ -21,7 +21,7 @@ void this_does_nothing(int &p) {
 	// do nothing
 	}
 }
-// added globablly
+// added globally
 void main(void)
 {
 	init_ports();
