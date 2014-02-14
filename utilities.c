@@ -2,6 +2,9 @@
 #define UTIL
 
 // hellleleleleleleleleoaigjareihg
+// BENB did this blarg wargardl
+void BEN_WUZ_HERE() {
+}
 // waitabit
 void delay(void);
 
