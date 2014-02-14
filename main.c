@@ -19,7 +19,7 @@ void lights(char i);
 void this_does_nothing(void) {
 // added locally
 }
-// added globablly
+// added globally
 void main(void)
 {
 	init_ports();
