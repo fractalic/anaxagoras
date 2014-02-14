@@ -7,35 +7,34 @@
 
 // LCD declarations --------------------------------
 
+// LCD_write(character)
+// write a character to the LCD
+// (sends a clock pulse)
+void LCD_write(char i);
+
+// LCD_writeString(char*)
+// write a sequence of characters to the LCD
+void LCD_writeString(char *string);
+
+// LCD_setCursor(int, int)
+// set the cursor position of the LCD
+void LCD_setCursor(int x, int y);
+
+// LCD_cmd(character)
+// write a command to the LCD
+// (sends a clock pulse)
+void LCD_cmd(char i);
+
 // LCD_clock()
 // send a clock pulse to the lcd
 // to make it read the current bits
 // applied to its input ports
 void LCD_clock();
 
-// LCD_write(character)
-// write a character to the LCD
-// (sends a clock pulse)
-void LCD_write(char i);
-
 // LCD_apply(character)
 // apply data to the LCD ports
 // (does not send a clock pulse)
 void LCD_apply(char i);
-
-// set the cursor
-void LCD_setcursor(int x, int y);
-
-// send a character
-void LCD_write(char i);
-
-//send a string
-void LCD_writestring(char *string);
-
-// LCD_cmd(character)
-// write a command to the LCD
-// (sends a clock pulse)
-void LCD_cmd(char i);
 
 // LCD_init()
 // wakeup the LCD and get ready for use
@@ -43,6 +42,52 @@ void LCD_init();
 
 
 // LCD definitions ---------------------------------------------
+
+// LCD_write(character)
+// write a character to the LCD
+// (sends a clock pulse)
+void LCD_write(char i) {
+	lcd_dc = 1; // set RS for data
+	lcd_rw = 0; // set RW for write
+	
+	LCD_apply(i);
+	
+	LCD_clock();
+}
+
+// LCD_writeString(char*)
+// write a sequence of characters to the LCD
+void LCD_writeString(char *string)
+{
+    
+    int i = 0;
+    while (string[i] != 0)
+    {
+        LCD_write(string[i]);
+        i++;
+        delay();
+    }
+    
+}
+
+// LCD_setCursor(int, int)
+// set the cursor position of the LCD
+void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
+{
+    //nothing in here yet
+}
+
+// LCD_cmd(character)
+// write a command to the LCD
+// (sends a clock pulse)
+void LCD_cmd(char i) {
+	lcd_dc = 0; // set RS for command
+	lcd_rw = 0; // set RW for write
+
+	// four-bit data set
+	LCD_apply(i);
+	LCD_clock();
+}
 
 // LCD_init()
 // wakeup the LCD and get ready for use
@@ -75,50 +120,6 @@ void LCD_apply(char i) {
 	lcd_data_2 = (i >> 5) & 1;
 	lcd_data_1 = (i >> 6) & 1;
 	lcd_data_0 = (i >> 7) & 1;
-}
-
-// LCD_write(character)
-// write a character to the LCD
-// (sends a clock pulse)
-void LCD_write(char i) {
-	lcd_dc = 1; // set RS for data
-	lcd_rw = 0; // set RW for write
-	
-	LCD_apply(i);
-	
-	LCD_clock();
-}
-
-//NOT YET TESTED DO NOT KNOW IF WILL COMPILE
-void LCD_writestring(char *string)
-{
-    
-    int i = 0;
-    while (string[i] != 0)
-    {
-        LCD_write(string[i]);
-        i++;
-        delay();
-    }
-    
-}
-
-// NOT YET TESTED DO NOT KNOW IF WILL COMPILE
-void LCD_setcursor(int x, int y) // x is row [0,15], y [0,1]
-{
-    //nothing in here yet
-}
-
-// LCD_cmd(character)
-// write a command to the LCD
-// (sends a clock pulse)
-void LCD_cmd(char i) {
-	lcd_dc = 0; // set RS for command
-	lcd_rw = 0; // set RW for write
-
-	// four-bit data set
-	LCD_apply(i);
-	LCD_clock();
 }
 
 // LCD_clock()
