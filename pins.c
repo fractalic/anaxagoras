@@ -47,14 +47,3 @@ right-to-left with usb connector to your right
 #define lcd_enable	P2_5 // lcd clock pulse pin
 
 #endif
-
-
-int notmain(void)
-{
-return 0; //added by carly
-}
-
-void test() {
-	// ben added this
-
-}
