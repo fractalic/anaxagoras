@@ -59,14 +59,12 @@ void LCD_write(char i) {
 // write a sequence of characters to the LCD
 void LCD_writeString(char *string)
 {
-    
     int i = 0;
     while (string[i] != 0)
     {
         LCD_write(string[i]);
         i++;
     }
-    
 }
 
 // LCD_setCursor(int, int)
