@@ -65,7 +65,6 @@ void LCD_writeString(char *string)
     {
         LCD_write(string[i]);
         i++;
-        delay();
     }
     
 }
