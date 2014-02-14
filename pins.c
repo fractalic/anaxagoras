@@ -48,7 +48,13 @@ right-to-left with usb connector to your right
 
 #endif
 
+
 int notmain(void)
 {
-return 0;
+return 0; //added by carly
+}
+
+void test() {
+	// ben added this
+
 }

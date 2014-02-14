@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Thu Feb 13 22:35:32 2014
+; This file was generated Thu Feb 13 22:40:34 2014
 ;--------------------------------------------------------
 $name pins
 $optc51 --model-small
@@ -23,6 +23,7 @@ $optc51 --model-small
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	public _test
 	public _notmain
 ;--------------------------------------------------------
 ; Special Function Registers
@@ -95,14 +96,25 @@ $optc51 --model-small
 ;Allocation info for local variables in function 'notmain'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Carly\Documents\GitHub\anaxagoras\pins.c:51: int notmain(void)
+;	C:\Users\Carly\Documents\GitHub\anaxagoras\pins.c:52: int notmain(void)
 ;	-----------------------------------------
 ;	 function notmain
 ;	-----------------------------------------
 _notmain:
 	using	0
-;	C:\Users\Carly\Documents\GitHub\anaxagoras\pins.c:53: return 0;
+;	C:\Users\Carly\Documents\GitHub\anaxagoras\pins.c:54: return 0; //added by carly
 	mov	dptr,#0x0000
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'test'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\Carly\Documents\GitHub\anaxagoras\pins.c:57: void test() {
+;	-----------------------------------------
+;	 function test
+;	-----------------------------------------
+_test:
+;	C:\Users\Carly\Documents\GitHub\anaxagoras\pins.c:60: }
 	ret
 	rseg R_CSEG
 
