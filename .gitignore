@@ -1,12 +1,3 @@
-## C51 build files
-.asm
-.hex
-.lkr
-.lst
-.map
-.obj
-
-
 #################
 ## Eclipse
 #################
