@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-0000              4   ; This file was generated Thu Feb 13 20:31:09 2014
+0000              4   ; This file was generated Thu Feb 13 21:13:35 2014
 0000              5   ;--------------------------------------------------------
                   5   $name main
                   6   $optc51 --model-small
@@ -570,45 +570,45 @@ FFBF            492   ;--------------------------------------------------------
 0025            570   ;Allocation info for local variables in function 'LCD_init'
 0025            571   ;------------------------------------------------------------
 0025            572   ;------------------------------------------------------------
-0025            573   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:22: void LCD_init() {
+0025            573   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:25: void LCD_init() {
 0025            574   ;        -----------------------------------------
 0025            575   ;         function LCD_init
 0025            576   ;        -----------------------------------------
 0025            577   _LCD_init:
-0025            578   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:23: P2_5 = 0;
+0025            578   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:26: P2_5 = 0;
 0025 C2A5       579            clr     _P2_5
-0027            580   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:24: delay();
+0027            580   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:27: delay();
 0027 120100     581            lcall   _delay
-002A            582   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:25: LCD_cmd(0x30); // wake up
+002A            582   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:28: LCD_cmd(0x30); // wake up
 002A 758230     583            mov     dpl,#0x30
 002D 120100     584            lcall   _LCD_cmd
-0030            585   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:26: delay();
+0030            585   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:29: delay();
 0030 120100     586            lcall   _delay
-0033            587   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:27: LCD_cmd(0x30); // wake up 2
+0033            587   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:30: LCD_cmd(0x30); // wake up 2
 0033 758230     588            mov     dpl,#0x30
 0036 120100     589            lcall   _LCD_cmd
-0039            590   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:28: delay();
+0039            590   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:31: delay();
 0039 120100     591            lcall   _delay
-003C            592   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:29: LCD_cmd(0x30); // wake up 3
+003C            592   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:32: LCD_cmd(0x30); // wake up 3
 003C 758230     593            mov     dpl,#0x30
 003F 120100     594            lcall   _LCD_cmd
-0042            595   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:30: delay();
+0042            595   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:33: delay();
 0042 120100     596            lcall   _delay
-0045            597   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:31: LCD_cmd(0x38); // 8bit/2line
+0045            597   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:34: LCD_cmd(0x38); // 8bit/2line
 0045 758238     598            mov     dpl,#0x38
 0048 120100     599            lcall   _LCD_cmd
-004B            600   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:32: LCD_cmd(0x10); // return home
+004B            600   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:35: LCD_cmd(0x10); // return home
 004B 758210     601            mov     dpl,#0x10
 004E 120100     602            lcall   _LCD_cmd
-0051            603   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:33: LCD_cmd(0x0c); // display on cursor on
+0051            603   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:36: LCD_cmd(0x0c); // display on cursor on
 0051 75820C     604            mov     dpl,#0x0C
 0054 120100     605            lcall   _LCD_cmd
-0057            606   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:34: LCD_cmd(0x06); // set display mode
+0057            606   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:37: LCD_cmd(0x06); // set display mode
 0057 758206     607            mov     dpl,#0x06
 005A 120100     608            lcall   _LCD_cmd
-005D            609   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:35: delay();
+005D            609   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:38: delay();
 005D 120100     610            lcall   _delay
-0060            611   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:36: LCD_cmd(0x01); // clear screen
+0060            611   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:39: LCD_cmd(0x01); // clear screen
 0060 758201     612            mov     dpl,#0x01
 0063 020100     613            ljmp    _LCD_cmd
 0066            614   ;------------------------------------------------------------
@@ -616,41 +616,41 @@ FFBF            492   ;--------------------------------------------------------
 0066            616   ;------------------------------------------------------------
 0066            617   ;i                         Allocated to registers r2 
 0066            618   ;------------------------------------------------------------
-0066            619   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:39: void LCD_push(char i) {
+0066            619   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:42: void LCD_push(char i) {
 0066            620   ;        -----------------------------------------
 0066            621   ;         function LCD_push
 0066            622   ;        -----------------------------------------
 0066            623   _LCD_push:
-0066            624   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:40: P2_4 = i & 1;
+0066            624   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:43: P2_4 = i & 1;
 0066 E582       625            mov     a,dpl
 0068 FA         626            mov     r2,a
 0069 13         627            rrc     a
 006A 92A4       628            mov     _P2_4,c
-006C            629   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:41: P2_3 = (i >> 1) & 1;
+006C            629   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:44: P2_3 = (i >> 1) & 1;
 006C EA         630            mov     a,r2
 006D A2E1       631            mov     c,acc.1
 006F 92A3       632            mov     _P2_3,c
-0071            633   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:42: P2_2 = (i >> 2) & 1;
+0071            633   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:45: P2_2 = (i >> 2) & 1;
 0071 EA         634            mov     a,r2
 0072 A2E2       635            mov     c,acc.2
 0074 92A2       636            mov     _P2_2,c
-0076            637   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:43: P2_1 = (i >> 3) & 1;
+0076            637   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:46: P2_1 = (i >> 3) & 1;
 0076 EA         638            mov     a,r2
 0077 A2E3       639            mov     c,acc.3
 0079 92A1       640            mov     _P2_1,c
-007B            641   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:44: P2_0 = (i >> 4) & 1;
+007B            641   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:47: P2_0 = (i >> 4) & 1;
 007B EA         642            mov     a,r2
 007C A2E4       643            mov     c,acc.4
 007E 92A0       644            mov     _P2_0,c
-0080            645   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:45: P1_7 = (i >> 5) & 1;
+0080            645   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:48: P1_7 = (i >> 5) & 1;
 0080 EA         646            mov     a,r2
 0081 A2E5       647            mov     c,acc.5
 0083 9297       648            mov     _P1_7,c
-0085            649   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:46: P1_6 = (i >> 6) & 1;
+0085            649   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:49: P1_6 = (i >> 6) & 1;
 0085 EA         650            mov     a,r2
 0086 A2E6       651            mov     c,acc.6
 0088 9296       652            mov     _P1_6,c
-008A            653   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:47: P1_4 = (i >> 7) & 1;
+008A            653   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:50: P1_4 = (i >> 7) & 1;
 008A EA         654            mov     a,r2
 008B 33         655            rlc     a
 008C 9294       656            mov     _P1_4,c
@@ -660,51 +660,51 @@ FFBF            492   ;--------------------------------------------------------
 008F            660   ;------------------------------------------------------------
 008F            661   ;i                         Allocated to registers 
 008F            662   ;------------------------------------------------------------
-008F            663   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:50: void LCD_write(char i) {
+008F            663   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:53: void LCD_write(char i) {
 008F            664   ;        -----------------------------------------
 008F            665   ;         function LCD_write
 008F            666   ;        -----------------------------------------
 008F            667   _LCD_write:
-008F            668   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:51: P2_7 = 1; // set RS for data
+008F            668   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:54: P2_7 = 1; // set RS for data
 008F D2A7       669            setb    _P2_7
-0091            670   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:52: P2_6 = 0; // set RW for write
+0091            670   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:55: P2_6 = 0; // set RW for write
 0091 C2A6       671            clr     _P2_6
-0093            672   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:54: LCD_push(i);
+0093            672   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:57: LCD_push(i);
 0093 120100     673            lcall   _LCD_push
-0096            674   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:56: LCD_load();
+0096            674   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:59: LCD_load();
 0096 020100     675            ljmp    _LCD_load
 0099            676   ;------------------------------------------------------------
 0099            677   ;Allocation info for local variables in function 'LCD_cmd'
 0099            678   ;------------------------------------------------------------
 0099            679   ;i                         Allocated to registers 
 0099            680   ;------------------------------------------------------------
-0099            681   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:59: void LCD_cmd(char i) {
+0099            681   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:62: void LCD_cmd(char i) {
 0099            682   ;        -----------------------------------------
 0099            683   ;         function LCD_cmd
 0099            684   ;        -----------------------------------------
 0099            685   _LCD_cmd:
-0099            686   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:60: P2_7 = 0; // set RS for command
+0099            686   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:63: P2_7 = 0; // set RS for command
 0099 C2A7       687            clr     _P2_7
-009B            688   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:61: P2_6 = 0; // set RW for write
+009B            688   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:64: P2_6 = 0; // set RW for write
 009B C2A6       689            clr     _P2_6
-009D            690   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:64: LCD_push(i);
+009D            690   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:67: LCD_push(i);
 009D 120100     691            lcall   _LCD_push
-00A0            692   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:65: LCD_load();
+00A0            692   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:68: LCD_load();
 00A0 020100     693            ljmp    _LCD_load
 00A3            694   ;------------------------------------------------------------
 00A3            695   ;Allocation info for local variables in function 'LCD_load'
 00A3            696   ;------------------------------------------------------------
 00A3            697   ;------------------------------------------------------------
-00A3            698   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:68: void LCD_load()
+00A3            698   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:71: void LCD_load()
 00A3            699   ;        -----------------------------------------
 00A3            700   ;         function LCD_load
 00A3            701   ;        -----------------------------------------
 00A3            702   _LCD_load:
-00A3            703   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:71: P2_5 = 1;
+00A3            703   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:74: P2_5 = 1;
 00A3 D2A5       704            setb    _P2_5
-00A5            705   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:72: delay();
+00A5            705   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:75: delay();
 00A5 120100     706            lcall   _delay
-00A8            707   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:73: P2_5 = 0;
+00A8            707   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:76: P2_5 = 0;
 00A8 C2A5       708            clr     _P2_5
 00AA 22         709            ret
 00AB            710   ;------------------------------------------------------------
@@ -712,100 +712,98 @@ FFBF            492   ;--------------------------------------------------------
 00AB            712   ;------------------------------------------------------------
 00AB            713   ;p                         Allocated to registers 
 00AB            714   ;------------------------------------------------------------
-00AB            715   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:19: void this_does_nothing(int *p) {
+00AB            715   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:21: void this_does_nothing(int p) {
 00AB            716   ;        -----------------------------------------
 00AB            717   ;         function this_does_nothing
 00AB            718   ;        -----------------------------------------
 00AB            719   _this_does_nothing:
-00AB            720   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:20: if(p=2) {
+00AB            720   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:22: if(p=2) {
 00AB 22         721            ret
 00AC            722   ;------------------------------------------------------------
 00AC            723   ;Allocation info for local variables in function 'main'
 00AC            724   ;------------------------------------------------------------
 00AC            725   ;------------------------------------------------------------
-00AC            726   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:25: void main(void)
+00AC            726   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:27: void main(void)
 00AC            727   ;        -----------------------------------------
 00AC            728   ;         function main
 00AC            729   ;        -----------------------------------------
 00AC            730   _main:
-00AC            731   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:27: init_ports();
+00AC            731   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:29: init_ports();
 00AC 120100     732            lcall   _init_ports
-00AF            733   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:29: LCD_init();
+00AF            733   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:31: LCD_init();
 00AF 120100     734            lcall   _LCD_init
-00B2            735   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:31: this_does_nothing(P1_3);
-00B2 A293       736            mov     c,_P1_3
+00B2            735   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:33: this_does_nothing(TXD);
+00B2 A290       736            mov     c,_TXD
 00B4 E4         737            clr     a
 00B5 33         738            rlc     a
 00B6 FA         739            mov     r2,a
 00B7 7B00       740            mov     r3,#0x00
-00B9 7C00       741            mov     r4,#0x00
-00BB 8A82       742            mov     dpl,r2
-00BD 8B83       743            mov     dph,r3
-00BF 8CF0       744            mov     b,r4
-00C1 120100     745            lcall   _this_does_nothing
-00C4            746   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:33: while(1)
-00C4            747   L010002?:
-00C4            748   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:35: lights(0x02);
-00C4 758202     749            mov     dpl,#0x02
-00C7 120100     750            lcall   _lights
-00CA            751   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:36: LCD_write(0x41);
-00CA 758241     752            mov     dpl,#0x41
-00CD 120100     753            lcall   _LCD_write
-00D0            754   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:37: delay();
-00D0 120100     755            lcall   _delay
-00D3            756   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:38: LCD_write(0x42);
-00D3 758242     757            mov     dpl,#0x42
-00D6 120100     758            lcall   _LCD_write
-00D9            759   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:39: lights(0x01);
-00D9 758201     760            mov     dpl,#0x01
-00DC 120100     761            lcall   _lights
-00DF            762   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:40: delay();
-00DF 120100     763            lcall   _delay
-00E2 8001       764            sjmp    L010002?
-00E4            765   ;------------------------------------------------------------
-00E4            766   ;Allocation info for local variables in function 'init_ports'
-00E4            767   ;------------------------------------------------------------
-00E4            768   ;------------------------------------------------------------
-00E4            769   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:44: void init_ports() {
-00E4            770   ;        -----------------------------------------
-00E4            771   ;         function init_ports
-00E4            772   ;        -----------------------------------------
-00E4            773   _init_ports:
-00E4            774   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:46: P1M1 = 0;
-00E4 759100     775            mov     _P1M1,#0x00
-00E7            776   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:47: P1M2 = 0;
-00E7 759200     777            mov     _P1M2,#0x00
-00EA            778   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:49: P2M1 = 0;
-00EA 75A400     779            mov     _P2M1,#0x00
-00ED            780   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:50: P2M2 = 0;
-00ED 75A500     781            mov     _P2M2,#0x00
-00F0 22         782            ret
-00F1            783   ;------------------------------------------------------------
-00F1            784   ;Allocation info for local variables in function 'lights'
-00F1            785   ;------------------------------------------------------------
-00F1            786   ;i                         Allocated to registers r2 
-00F1            787   ;------------------------------------------------------------
-00F1            788   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:53: void lights(char i) {
-00F1            789   ;        -----------------------------------------
-00F1            790   ;         function lights
-00F1            791   ;        -----------------------------------------
-00F1            792   _lights:
-00F1            793   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:55: P1_3 = (i) & 0x01;
-00F1 E582       794            mov     a,dpl
-00F3 FA         795            mov     r2,a
-00F4 13         796            rrc     a
-00F5 9293       797            mov     _P1_3,c
-00F7            798   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:56: P1_2 = (i>>1) & 0x01;
-00F7 EA         799            mov     a,r2
-00F8 A2E1       800            mov     c,acc.1
-00FA 9292       801            mov     _P1_2,c
-00FC 22         802            ret
-00FD            803            rseg R_CSEG
-00FD            804   
-0000            805            rseg R_XINIT
+00B9 8A82       741            mov     dpl,r2
+00BB 8B83       742            mov     dph,r3
+00BD 120100     743            lcall   _this_does_nothing
+00C0            744   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:35: while(1)
+00C0            745   L010002?:
+00C0            746   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:37: lights(0x02);
+00C0 758202     747            mov     dpl,#0x02
+00C3 120100     748            lcall   _lights
+00C6            749   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:38: LCD_write(0x41);
+00C6 758241     750            mov     dpl,#0x41
+00C9 120100     751            lcall   _LCD_write
+00CC            752   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:39: delay();
+00CC 120100     753            lcall   _delay
+00CF            754   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:40: LCD_write(0x42);
+00CF 758242     755            mov     dpl,#0x42
+00D2 120100     756            lcall   _LCD_write
+00D5            757   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:41: lights(0x01);
+00D5 758201     758            mov     dpl,#0x01
+00D8 120100     759            lcall   _lights
+00DB            760   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:42: delay();
+00DB 120100     761            lcall   _delay
+00DE 8001       762            sjmp    L010002?
+00E0            763   ;------------------------------------------------------------
+00E0            764   ;Allocation info for local variables in function 'init_ports'
+00E0            765   ;------------------------------------------------------------
+00E0            766   ;------------------------------------------------------------
+00E0            767   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:46: void init_ports() {
+00E0            768   ;        -----------------------------------------
+00E0            769   ;         function init_ports
+00E0            770   ;        -----------------------------------------
+00E0            771   _init_ports:
+00E0            772   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:48: P1M1 = 0;
+00E0 759100     773            mov     _P1M1,#0x00
+00E3            774   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:49: P1M2 = 0;
+00E3 759200     775            mov     _P1M2,#0x00
+00E6            776   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:51: P2M1 = 0;
+00E6 75A400     777            mov     _P2M1,#0x00
+00E9            778   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:52: P2M2 = 0;
+00E9 75A500     779            mov     _P2M2,#0x00
+00EC 22         780            ret
+00ED            781   ;------------------------------------------------------------
+00ED            782   ;Allocation info for local variables in function 'lights'
+00ED            783   ;------------------------------------------------------------
+00ED            784   ;i                         Allocated to registers r2 
+00ED            785   ;------------------------------------------------------------
+00ED            786   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:55: void lights(char i) {
+00ED            787   ;        -----------------------------------------
+00ED            788   ;         function lights
+00ED            789   ;        -----------------------------------------
+00ED            790   _lights:
+00ED            791   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:57: P1_3 = (i) & 0x01;
+00ED E582       792            mov     a,dpl
+00EF FA         793            mov     r2,a
+00F0 13         794            rrc     a
+00F1 9293       795            mov     _P1_3,c
+00F3            796   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:58: P1_2 = (i>>1) & 0x01;
+00F3 EA         797            mov     a,r2
+00F4 A2E1       798            mov     c,acc.1
+00F6 9292       799            mov     _P1_2,c
+00F8 22         800            ret
+00F9            801            rseg R_CSEG
+00F9            802   
+0000            803            rseg R_XINIT
+0000            804   
+0000            805            rseg R_CONST
 0000            806   
-0000            807            rseg R_CONST
-0000            808   
-0003            809            CSEG
-0003            810   
-0003            811   end
+0003            807            CSEG
+0003            808   
+0003            809   end

@@ -1,3 +1,6 @@
+#ifndef LCD
+#define LCD
+
 #include <p89lpc9351.h>
 #include "utilities.c"
 
@@ -72,3 +75,5 @@ void LCD_load()
 	delay();
 	P2_5 = 0;
 }
+
+#endif

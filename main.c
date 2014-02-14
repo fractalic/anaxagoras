@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <p89lpc9351.h>
 
-// including .c is not usually a good idea,
-// but I can't get headers to work
+// include .c files, because crosside gets mad a .h
+// pins should be included in every file
+// utilities should probably be included in every file
+#include "pins.c"
 #include "utilities.c"
 #include "lcd.c"
 
@@ -16,11 +18,6 @@ void init_ports();
 // make some light
 void lights(char i);
 
-void this_does_nothing(int &p) {
-	if(p=2) {
-	// do nothing
-	}
-}
 // added globally
 void main(void)
 {
@@ -28,7 +25,7 @@ void main(void)
 	
 	LCD_init();
 	
-	this_does_nothing(P1_3);
+	this_does_nothing(TXD);
 	
 	while(1)
 	{
