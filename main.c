@@ -17,9 +17,9 @@ void init_ports();
 void lights(char i);
 
 void this_does_nothing(void) {
-// added locally
+// no main is thoroughly messed up
 }
-// added globablly
+
 void main(void)
 {
 	init_ports();
