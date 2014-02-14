@@ -24,7 +24,7 @@ void LCD_init();
 
 // LCD definitions ---------------------------------------------
 void LCD_init() {
-	P2_5 = 0;
+	lcd_enable = 0;
 	delay();
 	LCD_cmd(0x30); // wake up
 	delay();
@@ -41,19 +41,19 @@ void LCD_init() {
 }
 
 void LCD_push(char i) {
-	P2_4 = i & 1;
-	P2_3 = (i >> 1) & 1;
-	P2_2 = (i >> 2) & 1;
-	P2_1 = (i >> 3) & 1;
-	P2_0 = (i >> 4) & 1;
-	P1_7 = (i >> 5) & 1;
-	P1_6 = (i >> 6) & 1;
-	P1_4 = (i >> 7) & 1;
+	lcd_data_7 = i & 1;
+	lcd_data_6 = (i >> 1) & 1;
+	lcd_data_5 = (i >> 2) & 1;
+	lcd_data_4 = (i >> 3) & 1;
+	lcd_data_3 = (i >> 4) & 1;
+	lcd_data_2 = (i >> 5) & 1;
+	lcd_data_1 = (i >> 6) & 1;
+	lcd_data_0 = (i >> 7) & 1;
 }
 
 void LCD_write(char i) {
-	P2_7 = 1; // set RS for data
-	P2_6 = 0; // set RW for write
+	lcd_dc = 1; // set RS for data
+	lcd_rw = 0; // set RW for write
 	
 	LCD_push(i);
 	
@@ -61,8 +61,8 @@ void LCD_write(char i) {
 }
 
 void LCD_cmd(char i) {
-	P2_7 = 0; // set RS for command
-	P2_6 = 0; // set RW for write
+	lcd_dc = 0; // set RS for command
+	lcd_rw = 0; // set RW for write
 
 	// four-bit data set
 	LCD_push(i);
@@ -72,9 +72,9 @@ void LCD_cmd(char i) {
 void LCD_load()
 {
 	// toggle enable bit
-	P2_5 = 1;
+	lcd_enable = 1;
 	delay();
-	P2_5 = 0;
+	lcd_enable = 0;
 }
 
 #endif
