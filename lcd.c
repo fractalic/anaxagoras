@@ -9,8 +9,14 @@
 // load data into LCD
 void LCD_load();
 
+// set the cursor
+void LCD_setcursor(int x, int y);
+
 // send a character
 void LCD_write(char i);
+
+//send a string
+void LCD_writestring(char *string);
 
 // 4 bits of data for LCD
 void LCD_push(char i);
@@ -58,6 +64,26 @@ void LCD_write(char i) {
 	LCD_push(i);
 	
 	LCD_load();
+}
+
+//NOT YET TESTED DO NOT KNOW IF WILL COMPILE
+void LCD_writestring(char *string)
+{
+    
+    int i = 0;
+    while (string[i] != 0)
+    {
+        LCD_write(string[i]);
+        i++;
+        delay();
+    }
+    
+}
+
+// NOT YET TESTED DO NOT KNOW IF WILL COMPILE
+void LCD_setcursor(int x, int y) // x is row [0,15], y [0,1]
+{
+    //nothing in here yet
 }
 
 void LCD_cmd(char i) {
