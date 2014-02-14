@@ -6,23 +6,37 @@
 #include "utilities.c"
 
 // LCD declarations --------------------------------
-// load data into LCD
-void LCD_load();
 
-// send a character
+// LCD_clock()
+// send a clock pulse to the lcd
+// to make it read the current bits
+// applied to its input ports
+void LCD_clock();
+
+// LCD_write(character)
+// write a character to the LCD
+// (sends a clock pulse)
 void LCD_write(char i);
 
-// 4 bits of data for LCD
-void LCD_push(char i);
+// LCD_apply(character)
+// apply data to the LCD ports
+// (does not send a clock pulse)
+void LCD_apply(char i);
 
-// send a command to the LCD
+// LCD_cmd(character)
+// write a command to the LCD
+// (sends a clock pulse)
 void LCD_cmd(char i);
 
-// set LCD for operation
+// LCD_init()
+// wakeup the LCD and get ready for use
 void LCD_init();
 
 
 // LCD definitions ---------------------------------------------
+
+// LCD_init()
+// wakeup the LCD and get ready for use
 void LCD_init() {
 	lcd_enable = 0;
 	delay();
@@ -40,7 +54,10 @@ void LCD_init() {
 	LCD_cmd(0x01); // clear screen
 }
 
-void LCD_push(char i) {
+// LCD_apply(character)
+// apply data to the LCD ports
+// (does not send a clock pulse)
+void LCD_apply(char i) {
 	lcd_data_7 = i & 1;
 	lcd_data_6 = (i >> 1) & 1;
 	lcd_data_5 = (i >> 2) & 1;
@@ -51,25 +68,35 @@ void LCD_push(char i) {
 	lcd_data_0 = (i >> 7) & 1;
 }
 
+// LCD_write(character)
+// write a character to the LCD
+// (sends a clock pulse)
 void LCD_write(char i) {
 	lcd_dc = 1; // set RS for data
 	lcd_rw = 0; // set RW for write
 	
-	LCD_push(i);
+	LCD_apply(i);
 	
-	LCD_load();
+	LCD_clock();
 }
 
+// LCD_cmd(character)
+// write a command to the LCD
+// (sends a clock pulse)
 void LCD_cmd(char i) {
 	lcd_dc = 0; // set RS for command
 	lcd_rw = 0; // set RW for write
 
 	// four-bit data set
-	LCD_push(i);
-	LCD_load();
+	LCD_apply(i);
+	LCD_clock();
 }
 
-void LCD_load()
+// LCD_clock()
+// send a clock pulse to the lcd
+// to make it read the current bits
+// applied to its input ports
+void LCD_clock()
 {
 	// toggle enable bit
 	lcd_enable = 1;
