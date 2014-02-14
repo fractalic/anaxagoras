@@ -4,12 +4,12 @@ Modules linked:
    'startup' from 'C:\Program Files (x86)\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
 
 Memory use per module linked:
-               main: C:00233 D:000 I:000 B:000 X:00000
+               main: C:00234 D:000 I:000 B:000 X:00000
                crt0: C:00113 D:000 I:000 B:000 X:00000
             startup: C:00004 D:000 I:000 B:000 X:00000
            ABSOLUTE: C:00004 D:000 I:000 B:000 X:00000
 ------------------------------------------------------
-             Totals: C:00354 D:000 I:000 B:000 X:00000
+             Totals: C:00355 D:000 I:000 B:000 X:00000
 
 INTERMAL RAM map (see legend below):
 00: 0 0 0 0 0 0 0 0 . . . . . . . . 
@@ -47,7 +47,7 @@ BIT map:
 70: . . . . . . . . . . . . . . . . 
 
 CODE usage map:
-0000: 256 098 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
+0000: 256 099 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 1000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 2000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 3000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
@@ -63,7 +63,7 @@ C000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
 D000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 E000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 F000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
-Total: 354 bytes
+Total: 355 bytes
 
 XDATA usage map:
 0000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
@@ -88,7 +88,7 @@ Base Segments:
    BIT_BANK=D:0000, size=0000
    R_BSEG=B:0000, size=0000
    R_CONST=C:0000, size=0000
-   R_CSEG=C:0075, size=00ED
+   R_CSEG=C:0075, size=00EE
    R_DINIT=C:0074, size=0000
    R_DSEG=D:0000, size=0000
    R_GSINIT=C:0003, size=0071
@@ -104,17 +104,18 @@ Base Segments:
 Module Segments:
    CSEG=C:0000, size=0004
    crt0:R_GSINIT=C:0003, size=0071
-   main:R_CSEG=C:0075, size=00E9
-   startup:R_CSEG=C:015E, size=0004
+   main:R_CSEG=C:0075, size=00EA
+   startup:R_CSEG=C:015F, size=0004
 
 Public symbols:
+   _BEN_WUZ_HERE=C:0075
    _BODCFG=X:FFC8
    _CLKCON=X:FFDE
-   _LCD_cmd=C:010D
-   _LCD_init=C:0099
-   _LCD_load=C:0117
-   _LCD_push=C:00DA
-   _LCD_write=C:0103
+   _LCD_cmd=C:010E
+   _LCD_init=C:009A
+   _LCD_load=C:0118
+   _LCD_push=C:00DB
+   _LCD_write=C:0104
    _PGA0TRIM2X4X=X:FFCC
    _PGA0TRIM8X16X=X:FFCD
    _PGA1TRIM2X4X=X:FFE2
@@ -129,7 +130,7 @@ Public symbols:
    _R_BSEG_start=L:0000
    _R_CONST_size=L:0000
    _R_CONST_start=L:0000
-   _R_CSEG_size=L:00ED
+   _R_CSEG_size=L:00EE
    _R_CSEG_start=L:0075
    _R_DINIT_size=L:0000
    _R_DINIT_start=L:0074
@@ -149,13 +150,13 @@ Public symbols:
    _R_XINIT_start=L:0000
    _R_XSEG_size=L:0000
    _R_XSEG_start=L:0000
-   __c51_external_startup=C:015E
+   __c51_external_startup=C:015F
    _crt0=C:0003
-   _delay=C:0075
-   _dummy_name_crt0=C:015E
-   _init_ports=C:0145
-   _lights=C:0152
-   _main=C:011F
+   _delay=C:0076
+   _dummy_name_crt0=C:015F
+   _init_ports=C:0146
+   _lights=C:0153
+   _main=C:0120
    _stack_start=L:0008
 
 Local symbols:
@@ -168,8 +169,8 @@ Local symbols:
    crt0:__c51_init_data=C:0010
    crt0:__c51_program_startup=C:006F
    crt0:forever?home?=C:0072
-   main:L002003?=C:0088
-   main:L002004?=C:0079
-   main:L002008?=C:0098
-   main:L002017?=C:008D
-   main:L008002?=C:0125
+   main:L003003?=C:0089
+   main:L003004?=C:007A
+   main:L003008?=C:0099
+   main:L003017?=C:008E
+   main:L009002?=C:0126

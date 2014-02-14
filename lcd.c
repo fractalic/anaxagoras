@@ -1,26 +1,55 @@
+#ifndef LCD
+#define LCD
+
 #include <p89lpc9351.h>
+#include "pins.c"
 #include "utilities.c"
 
 // LCD declarations --------------------------------
-// load data into LCD
-void LCD_load();
+
+// testing
+
+// LCD_clock()
+// send a clock pulse to the lcd
+// to make it read the current bits
+// applied to its input ports
+void LCD_clock();
+
+// LCD_write(character)
+// write a character to the LCD
+// (sends a clock pulse)
+void LCD_write(char i);
+
+// LCD_apply(character)
+// apply data to the LCD ports
+// (does not send a clock pulse)
+void LCD_apply(char i);
+
+// set the cursor
+void LCD_setcursor(int x, int y);
 
 // send a character
 void LCD_write(char i);
 
-// 4 bits of data for LCD
-void LCD_push(char i);
+//send a string
+void LCD_writestring(char *string);
 
-// send a command to the LCD
+// LCD_cmd(character)
+// write a command to the LCD
+// (sends a clock pulse)
 void LCD_cmd(char i);
 
-// set LCD for operation
+// LCD_init()
+// wakeup the LCD and get ready for use
 void LCD_init();
 
 
 // LCD definitions ---------------------------------------------
+
+// LCD_init()
+// wakeup the LCD and get ready for use
 void LCD_init() {
-	P2_5 = 0;
+	lcd_enable = 0;
 	delay();
 	LCD_cmd(0x30); // wake up
 	delay();
@@ -36,39 +65,74 @@ void LCD_init() {
 	LCD_cmd(0x01); // clear screen
 }
 
-void LCD_push(char i) {
-	P2_4 = i & 1;
-	P2_3 = (i >> 1) & 1;
-	P2_2 = (i >> 2) & 1;
-	P2_1 = (i >> 3) & 1;
-	P2_0 = (i >> 4) & 1;
-	P1_7 = (i >> 5) & 1;
-	P1_6 = (i >> 6) & 1;
-	P1_4 = (i >> 7) & 1;
+// LCD_apply(character)
+// apply data to the LCD ports
+// (does not send a clock pulse)
+void LCD_apply(char i) {
+	lcd_data_7 = i & 1;
+	lcd_data_6 = (i >> 1) & 1;
+	lcd_data_5 = (i >> 2) & 1;
+	lcd_data_4 = (i >> 3) & 1;
+	lcd_data_3 = (i >> 4) & 1;
+	lcd_data_2 = (i >> 5) & 1;
+	lcd_data_1 = (i >> 6) & 1;
+	lcd_data_0 = (i >> 7) & 1;
 }
 
+// LCD_write(character)
+// write a character to the LCD
+// (sends a clock pulse)
 void LCD_write(char i) {
-	P2_7 = 1; // set RS for data
-	P2_6 = 0; // set RW for write
+	lcd_dc = 1; // set RS for data
+	lcd_rw = 0; // set RW for write
 	
-	LCD_push(i);
+	LCD_apply(i);
 	
-	LCD_load();
+	LCD_clock();
 }
 
+//NOT YET TESTED DO NOT KNOW IF WILL COMPILE
+void LCD_writestring(char *string)
+{
+    
+    int i = 0;
+    while (string[i] != 0)
+    {
+        LCD_write(string[i]);
+        i++;
+        delay();
+    }
+    
+}
+
+// NOT YET TESTED DO NOT KNOW IF WILL COMPILE
+void LCD_setcursor(int x, int y) // x is row [0,15], y [0,1]
+{
+    //nothing in here yet
+}
+
+// LCD_cmd(character)
+// write a command to the LCD
+// (sends a clock pulse)
 void LCD_cmd(char i) {
-	P2_7 = 0; // set RS for command
-	P2_6 = 0; // set RW for write
+	lcd_dc = 0; // set RS for command
+	lcd_rw = 0; // set RW for write
 
 	// four-bit data set
-	LCD_push(i);
-	LCD_load();
+	LCD_apply(i);
+	LCD_clock();
 }
 
-void LCD_load()
+// LCD_clock()
+// send a clock pulse to the lcd
+// to make it read the current bits
+// applied to its input ports
+void LCD_clock()
 {
 	// toggle enable bit
-	P2_5 = 1;
+	lcd_enable = 1;
 	delay();
-	P2_5 = 0;
+	lcd_enable = 0;
 }
+
+#endif
