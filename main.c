@@ -16,8 +16,10 @@ void init_ports();
 // make some light
 void lights(char i);
 
-void this_does_nothing(void) {
-// added locally
+void this_does_nothing(int &p) {
+	if(p=2) {
+	// do nothing
+	}
 }
 // added globablly
 void main(void)
@@ -25,6 +27,8 @@ void main(void)
 	init_ports();
 	
 	LCD_init();
+	
+	this_does_nothing(P1_3);
 	
 	while(1)
 	{
