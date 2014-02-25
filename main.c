@@ -30,6 +30,9 @@ void main(void)
 		LCD_write(0x41);
 		delay();
 		LCD_write(0x42);
+		LCD_writeString("HI");
+		LCD_setCursor(1,0);
+		LCD_writeString("Hello");
 		lights(0x01);
 		delay();
 	}		
