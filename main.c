@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <p89lpc9351.h>
 
-// include .c files, because crosside gets mad a .h
+// include .c files, because crosside gets mad a .h //
 // pins should be included in every file
 // utilities should probably be included in every file
 #include "pins.c"

@@ -1,7 +1,11 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
+<<<<<<< HEAD
 ; This file was generated Mon Feb 24 18:44:33 2014
+=======
+; This file was generated Mon Feb 24 18:45:11 2014
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -575,11 +579,16 @@ L003008?:
 ;------------------------------------------------------------
 ;i                         Allocated to registers 
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:49: void LCD_write(char i) {
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:49: void LCD_write(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_write
 ;	-----------------------------------------
 _LCD_write:
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:50: lcd_dc = 1; // set RS for data
 	setb	_P2_7
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:51: lcd_rw = 0; // set RW for write
@@ -587,6 +596,15 @@ _LCD_write:
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:53: LCD_apply(i);
 	lcall	_LCD_apply
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:55: LCD_clock();
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:50: lcd_dc = 1; // set RS for data
+	setb	_P2_7
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:51: lcd_rw = 0; // set RW for write
+	clr	_P2_6
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:53: LCD_apply(i);
+	lcall	_LCD_apply
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:55: LCD_clock();
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	ljmp	_LCD_clock
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_writeString'
@@ -594,7 +612,11 @@ _LCD_write:
 ;string                    Allocated to registers r2 r3 r4 
 ;i                         Allocated to registers r5 r6 
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:60: void LCD_writeString(char *string)
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:60: void LCD_writeString(char *string)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_writeString
 ;	-----------------------------------------
@@ -602,7 +624,11 @@ _LCD_writeString:
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:63: while (string[i] != 0)
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:63: while (string[i] != 0)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	mov	r5,#0x00
 	mov	r6,#0x00
 L005001?:
@@ -619,7 +645,11 @@ L005001?:
 	lcall	__gptrget
 	mov	r7,a
 	jz	L005004?
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:65: LCD_write(string[i]);
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:65: LCD_write(string[i]);
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	mov	dpl,r7
 	push	ar2
 	push	ar3
@@ -632,7 +662,11 @@ L005001?:
 	pop	ar4
 	pop	ar3
 	pop	ar2
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:66: i++;
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:66: i++;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	inc	r5
 	cjne	r5,#0x00,L005001?
 	inc	r6
@@ -645,23 +679,36 @@ L005004?:
 ;y                         Allocated with name '_LCD_setCursor_PARM_2'
 ;x                         Allocated to registers 
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:72: void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:72: void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_setCursor
 ;	-----------------------------------------
 _LCD_setCursor:
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:75: }
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:75: }
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_cmd'
 ;------------------------------------------------------------
 ;i                         Allocated to registers 
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:80: void LCD_cmd(char i) {
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:80: void LCD_cmd(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_cmd
 ;	-----------------------------------------
 _LCD_cmd:
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:81: lcd_dc = 0; // set RS for command
 	clr	_P2_7
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:82: lcd_rw = 0; // set RW for write
@@ -669,16 +716,30 @@ _LCD_cmd:
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:85: LCD_apply(i);
 	lcall	_LCD_apply
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:86: LCD_clock();
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:81: lcd_dc = 0; // set RS for command
+	clr	_P2_7
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:82: lcd_rw = 0; // set RW for write
+	clr	_P2_6
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:85: LCD_apply(i);
+	lcall	_LCD_apply
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:86: LCD_clock();
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	ljmp	_LCD_clock
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:91: void LCD_init() {
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:91: void LCD_init() {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_init
 ;	-----------------------------------------
 _LCD_init:
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:92: lcd_enable = 0;
 	clr	_P2_5
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:93: delay();
@@ -713,6 +774,42 @@ _LCD_init:
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:104: delay();
 	lcall	_delay
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:105: LCD_cmd(0x01); // clear screen
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:92: lcd_enable = 0;
+	clr	_P2_5
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:93: delay();
+	lcall	_delay
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:94: LCD_cmd(0x30); // wake up
+	mov	dpl,#0x30
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:95: delay();
+	lcall	_delay
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:96: LCD_cmd(0x30); // wake up 2
+	mov	dpl,#0x30
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:97: delay();
+	lcall	_delay
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:98: LCD_cmd(0x30); // wake up 3
+	mov	dpl,#0x30
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:99: delay();
+	lcall	_delay
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:100: LCD_cmd(0x38); // 8bit/2line
+	mov	dpl,#0x38
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:101: LCD_cmd(0x10); // return home
+	mov	dpl,#0x10
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:102: LCD_cmd(0x0c); // display on cursor on
+	mov	dpl,#0x0C
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:103: LCD_cmd(0x06); // set display mode
+	mov	dpl,#0x06
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:104: delay();
+	lcall	_delay
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:105: LCD_cmd(0x01); // clear screen
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	mov	dpl,#0x01
 	ljmp	_LCD_cmd
 ;------------------------------------------------------------
@@ -720,16 +817,25 @@ _LCD_init:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:111: void LCD_apply(char i) {
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:111: void LCD_apply(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_apply
 ;	-----------------------------------------
 _LCD_apply:
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:112: lcd_data_7 = i & 1;
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:112: lcd_data_7 = i & 1;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	mov	a,dpl
 	mov	r2,a
 	rrc	a
 	mov	_P2_4,c
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:113: lcd_data_6 = (i >> 1) & 1;
 	mov	a,r2
 	mov	c,acc.1
@@ -755,6 +861,33 @@ _LCD_apply:
 	mov	c,acc.6
 	mov	_P1_6,c
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:119: lcd_data_0 = (i >> 7) & 1;
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:113: lcd_data_6 = (i >> 1) & 1;
+	mov	a,r2
+	mov	c,acc.1
+	mov	_P2_3,c
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:114: lcd_data_5 = (i >> 2) & 1;
+	mov	a,r2
+	mov	c,acc.2
+	mov	_P2_2,c
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:115: lcd_data_4 = (i >> 3) & 1;
+	mov	a,r2
+	mov	c,acc.3
+	mov	_P2_1,c
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:116: lcd_data_3 = (i >> 4) & 1;
+	mov	a,r2
+	mov	c,acc.4
+	mov	_P2_0,c
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:117: lcd_data_2 = (i >> 5) & 1;
+	mov	a,r2
+	mov	c,acc.5
+	mov	_P1_7,c
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:118: lcd_data_1 = (i >> 6) & 1;
+	mov	a,r2
+	mov	c,acc.6
+	mov	_P1_6,c
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:119: lcd_data_0 = (i >> 7) & 1;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	mov	a,r2
 	rlc	a
 	mov	_P1_4,c
@@ -763,16 +896,28 @@ _LCD_apply:
 ;Allocation info for local variables in function 'LCD_clock'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:126: void LCD_clock()
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:126: void LCD_clock()
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 ;	-----------------------------------------
 ;	 function LCD_clock
 ;	-----------------------------------------
 _LCD_clock:
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_enable = 1;
 	setb	_P2_5
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:130: delay();
 	lcall	_delay
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:131: lcd_enable = 0;
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:129: lcd_enable = 1;
+	setb	_P2_5
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:130: delay();
+	lcall	_delay
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:131: lcd_enable = 0;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	clr	_P2_5
 	ret
 ;------------------------------------------------------------
@@ -788,9 +933,15 @@ _main:
 	lcall	_init_ports
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:25: LCD_init();
 	lcall	_LCD_init
+<<<<<<< HEAD
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:27: while(1)
 L011002?:
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:29: lights(0x02);
+=======
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:27: while(1)
+L011002?:
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:29: lights(0x02);
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 	mov	dpl,#0x02
 	lcall	_lights
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:30: LCD_write(0x41);
