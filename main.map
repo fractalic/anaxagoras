@@ -1,10 +1,13 @@
 Modules linked:
    'main' from 'main.obj'
 <<<<<<< HEAD
+<<<<<<< HEAD
    'gptrget' from 'C:\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
    'crt0' from 'C:\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
    'startup' from 'C:\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
    'gptrget' from 'C:\Program Files (x86)\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
    'crt0' from 'C:\Program Files (x86)\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
    'startup' from 'C:\Program Files (x86)\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'

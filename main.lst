@@ -2,7 +2,11 @@
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
 <<<<<<< HEAD
+<<<<<<< HEAD
 0000              4   ; This file was generated Mon Feb 24 18:44:33 2014
+=======
+0000              4   ; This file was generated Mon Feb 24 18:45:11 2014
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0000              4   ; This file was generated Mon Feb 24 18:45:11 2014
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -527,7 +531,11 @@ FFBF            496   ;--------------------------------------------------------
 0000            523   ;------------------------------------------------------------
 0000            524   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 0000            525   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:7: void BEN_WUZ_HERE() {
+=======
+0000            525   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:7: void BEN_WUZ_HERE() {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0000            525   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:7: void BEN_WUZ_HERE() {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -537,7 +545,11 @@ FFBF            496   ;--------------------------------------------------------
 0000            529   _BEN_WUZ_HERE:
 0000            530            using   0
 <<<<<<< HEAD
+<<<<<<< HEAD
 0000            531   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:8: }
+=======
+0000            531   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:8: }
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0000            531   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:8: }
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -549,7 +561,11 @@ FFBF            496   ;--------------------------------------------------------
 0001            537   ;k                         Allocated to registers r4 r5 
 0001            538   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 0001            539   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:16: void delay(void)
+=======
+0001            539   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:16: void delay(void)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0001            539   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:16: void delay(void)
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -558,7 +574,11 @@ FFBF            496   ;--------------------------------------------------------
 0001            542   ;        -----------------------------------------
 0001            543   _delay:
 <<<<<<< HEAD
+<<<<<<< HEAD
 0001            544   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
+=======
+0001            544   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0001            544   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -573,7 +593,11 @@ FFBF            496   ;--------------------------------------------------------
 000C 9480       553            subb    a,#0x80
 000E 5001       554            jnc     L003008?
 <<<<<<< HEAD
+<<<<<<< HEAD
 0010            555   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:21: for(k=0; k<1000; k++);
+=======
+0010            555   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:21: for(k=0; k<1000; k++);
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0010            555   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:21: for(k=0; k<1000; k++);
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -582,7 +606,11 @@ FFBF            496   ;--------------------------------------------------------
 0014            558   L003003?:
 0014 1C         559            dec     r4
 <<<<<<< HEAD
+<<<<<<< HEAD
 0015 BCFF00     560            cjne    r4,#0xff,L003017?
+=======
+0015 BCFF28     560            cjne    r4,#0xff,L003017?
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0015 BCFF28     560            cjne    r4,#0xff,L003017?
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -592,9 +620,15 @@ FFBF            496   ;--------------------------------------------------------
 001A 4D         564            orl     a,r5
 001B 7001       565            jnz     L003003?
 <<<<<<< HEAD
+<<<<<<< HEAD
 001D            566   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
 001D 0A         567            inc     r2
 001E BA0040     568            cjne    r2,#0x00,L003004?
+=======
+001D            566   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
+001D 0A         567            inc     r2
+001E BA0068     568            cjne    r2,#0x00,L003004?
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 001D            566   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
 001D 0A         567            inc     r2
@@ -610,7 +644,11 @@ FFBF            496   ;--------------------------------------------------------
 0025            576   ;i                         Allocated to registers 
 0025            577   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 0025            578   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:49: void LCD_write(char i) {
+=======
+0025            578   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:49: void LCD_write(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0025            578   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:49: void LCD_write(char i) {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -618,6 +656,7 @@ FFBF            496   ;--------------------------------------------------------
 0025            580   ;         function LCD_write
 0025            581   ;        -----------------------------------------
 0025            582   _LCD_write:
+<<<<<<< HEAD
 <<<<<<< HEAD
 0025            583   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:50: lcd_dc = 1; // set RS for data
 0025 D2A7       584            setb    _P2_7
@@ -627,6 +666,8 @@ FFBF            496   ;--------------------------------------------------------
 0029 120100     588            lcall   _LCD_apply
 002C            589   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:55: LCD_clock();
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 0025            583   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:50: lcd_dc = 1; // set RS for data
 0025 D2A7       584            setb    _P2_7
 0027            585   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:51: lcd_rw = 0; // set RW for write
@@ -634,6 +675,9 @@ FFBF            496   ;--------------------------------------------------------
 0029            587   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:53: LCD_apply(i);
 0029 120100     588            lcall   _LCD_apply
 002C            589   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:55: LCD_clock();
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 002C 020100     590            ljmp    _LCD_clock
 002F            591   ;------------------------------------------------------------
@@ -643,7 +687,11 @@ FFBF            496   ;--------------------------------------------------------
 002F            595   ;i                         Allocated to registers r5 r6 
 002F            596   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 002F            597   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:60: void LCD_writeString(char *string)
+=======
+002F            597   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:60: void LCD_writeString(char *string)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 002F            597   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:60: void LCD_writeString(char *string)
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -655,7 +703,11 @@ FFBF            496   ;--------------------------------------------------------
 0031 AB83       603            mov     r3,dph
 0033 ACF0       604            mov     r4,b
 <<<<<<< HEAD
+<<<<<<< HEAD
 0035            605   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:63: while (string[i] != 0)
+=======
+0035            605   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:63: while (string[i] != 0)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0035            605   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:63: while (string[i] != 0)
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -676,7 +728,11 @@ FFBF            496   ;--------------------------------------------------------
 004A FF         620            mov     r7,a
 004B 6001       621            jz      L005004?
 <<<<<<< HEAD
+<<<<<<< HEAD
 004D            622   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:65: LCD_write(string[i]);
+=======
+004D            622   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:65: LCD_write(string[i]);
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 004D            622   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:65: LCD_write(string[i]);
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -693,9 +749,15 @@ FFBF            496   ;--------------------------------------------------------
 0062 D003       633            pop     ar3
 0064 D002       634            pop     ar2
 <<<<<<< HEAD
+<<<<<<< HEAD
 0066            635   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:66: i++;
 0066 0D         636            inc     r5
 0067 BD0000     637            cjne    r5,#0x00,L005001?
+=======
+0066            635   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:66: i++;
+0066 0D         636            inc     r5
+0067 BD0028     637            cjne    r5,#0x00,L005001?
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0066            635   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:66: i++;
 0066 0D         636            inc     r5
@@ -712,7 +774,11 @@ FFBF            496   ;--------------------------------------------------------
 006E            646   ;x                         Allocated to registers 
 006E            647   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 006E            648   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:72: void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
+=======
+006E            648   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:72: void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 006E            648   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:72: void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -721,7 +787,11 @@ FFBF            496   ;--------------------------------------------------------
 006E            651   ;        -----------------------------------------
 006E            652   _LCD_setCursor:
 <<<<<<< HEAD
+<<<<<<< HEAD
 006E            653   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:75: }
+=======
+006E            653   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:75: }
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 006E            653   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:75: }
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -732,7 +802,11 @@ FFBF            496   ;--------------------------------------------------------
 006F            658   ;i                         Allocated to registers 
 006F            659   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 006F            660   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:80: void LCD_cmd(char i) {
+=======
+006F            660   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:80: void LCD_cmd(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 006F            660   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:80: void LCD_cmd(char i) {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -740,6 +814,7 @@ FFBF            496   ;--------------------------------------------------------
 006F            662   ;         function LCD_cmd
 006F            663   ;        -----------------------------------------
 006F            664   _LCD_cmd:
+<<<<<<< HEAD
 <<<<<<< HEAD
 006F            665   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:81: lcd_dc = 0; // set RS for command
 006F C2A7       666            clr     _P2_7
@@ -749,6 +824,8 @@ FFBF            496   ;--------------------------------------------------------
 0073 120100     670            lcall   _LCD_apply
 0076            671   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:86: LCD_clock();
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 006F            665   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:81: lcd_dc = 0; // set RS for command
 006F C2A7       666            clr     _P2_7
 0071            667   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:82: lcd_rw = 0; // set RW for write
@@ -756,6 +833,9 @@ FFBF            496   ;--------------------------------------------------------
 0073            669   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:85: LCD_apply(i);
 0073 120100     670            lcall   _LCD_apply
 0076            671   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:86: LCD_clock();
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 0076 020100     672            ljmp    _LCD_clock
 0079            673   ;------------------------------------------------------------
@@ -763,7 +843,11 @@ FFBF            496   ;--------------------------------------------------------
 0079            675   ;------------------------------------------------------------
 0079            676   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 0079            677   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:91: void LCD_init() {
+=======
+0079            677   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:91: void LCD_init() {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0079            677   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:91: void LCD_init() {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -771,6 +855,7 @@ FFBF            496   ;--------------------------------------------------------
 0079            679   ;         function LCD_init
 0079            680   ;        -----------------------------------------
 0079            681   _LCD_init:
+<<<<<<< HEAD
 <<<<<<< HEAD
 0079            682   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:92: lcd_enable = 0;
 0079 C2A5       683            clr     _P2_5
@@ -807,6 +892,8 @@ FFBF            496   ;--------------------------------------------------------
 00B1 120100     714            lcall   _delay
 00B4            715   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:105: LCD_cmd(0x01); // clear screen
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 0079            682   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:92: lcd_enable = 0;
 0079 C2A5       683            clr     _P2_5
 007B            684   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:93: delay();
@@ -841,6 +928,9 @@ FFBF            496   ;--------------------------------------------------------
 00B1            713   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:104: delay();
 00B1 120100     714            lcall   _delay
 00B4            715   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:105: LCD_cmd(0x01); // clear screen
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 00B4 758201     716            mov     dpl,#0x01
 00B7 020100     717            ljmp    _LCD_cmd
@@ -850,7 +940,11 @@ FFBF            496   ;--------------------------------------------------------
 00BA            721   ;i                         Allocated to registers r2 
 00BA            722   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 00BA            723   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:111: void LCD_apply(char i) {
+=======
+00BA            723   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:111: void LCD_apply(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 00BA            723   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:111: void LCD_apply(char i) {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -859,7 +953,11 @@ FFBF            496   ;--------------------------------------------------------
 00BA            726   ;        -----------------------------------------
 00BA            727   _LCD_apply:
 <<<<<<< HEAD
+<<<<<<< HEAD
 00BA            728   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:112: lcd_data_7 = i & 1;
+=======
+00BA            728   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:112: lcd_data_7 = i & 1;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 00BA            728   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:112: lcd_data_7 = i & 1;
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -867,6 +965,7 @@ FFBF            496   ;--------------------------------------------------------
 00BC FA         730            mov     r2,a
 00BD 13         731            rrc     a
 00BE 92A4       732            mov     _P2_4,c
+<<<<<<< HEAD
 <<<<<<< HEAD
 00C0            733   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:113: lcd_data_6 = (i >> 1) & 1;
 00C0 EA         734            mov     a,r2
@@ -894,6 +993,8 @@ FFBF            496   ;--------------------------------------------------------
 00DC 9296       756            mov     _P1_6,c
 00DE            757   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:119: lcd_data_0 = (i >> 7) & 1;
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 00C0            733   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:113: lcd_data_6 = (i >> 1) & 1;
 00C0 EA         734            mov     a,r2
 00C1 A2E1       735            mov     c,acc.1
@@ -919,6 +1020,9 @@ FFBF            496   ;--------------------------------------------------------
 00DA A2E6       755            mov     c,acc.6
 00DC 9296       756            mov     _P1_6,c
 00DE            757   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:119: lcd_data_0 = (i >> 7) & 1;
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 00DE EA         758            mov     a,r2
 00DF 33         759            rlc     a
@@ -929,7 +1033,11 @@ FFBF            496   ;--------------------------------------------------------
 00E3            764   ;------------------------------------------------------------
 00E3            765   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 00E3            766   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:126: void LCD_clock()
+=======
+00E3            766   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:126: void LCD_clock()
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 00E3            766   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:126: void LCD_clock()
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -938,17 +1046,23 @@ FFBF            496   ;--------------------------------------------------------
 00E3            769   ;        -----------------------------------------
 00E3            770   _LCD_clock:
 <<<<<<< HEAD
+<<<<<<< HEAD
 00E3            771   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_enable = 1;
 00E3 D2A5       772            setb    _P2_5
 00E5            773   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:130: delay();
 00E5 120100     774            lcall   _delay
 00E8            775   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:131: lcd_enable = 0;
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 00E3            771   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:129: lcd_enable = 1;
 00E3 D2A5       772            setb    _P2_5
 00E5            773   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:130: delay();
 00E5 120100     774            lcall   _delay
 00E8            775   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\/lcd.c:131: lcd_enable = 0;
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 00E8 C2A5       776            clr     _P2_5
 00EA 22         777            ret
@@ -957,7 +1071,11 @@ FFBF            496   ;--------------------------------------------------------
 00EB            780   ;------------------------------------------------------------
 00EB            781   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 00EB            782   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:21: void main(void)
+=======
+00EB            782   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:21: void main(void)
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 00EB            782   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:21: void main(void)
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -965,6 +1083,7 @@ FFBF            496   ;--------------------------------------------------------
 00EB            784   ;         function main
 00EB            785   ;        -----------------------------------------
 00EB            786   _main:
+<<<<<<< HEAD
 <<<<<<< HEAD
 00EB            787   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:23: init_ports();
 00EB 120100     788            lcall   _init_ports
@@ -988,6 +1107,8 @@ FFBF            496   ;--------------------------------------------------------
 0109 120100     806            lcall   _lights
 010C            807   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:34: delay();
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 00EB            787   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:23: init_ports();
 00EB 120100     788            lcall   _init_ports
 00EE            789   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:25: LCD_init();
@@ -1009,6 +1130,9 @@ FFBF            496   ;--------------------------------------------------------
 0106 758201     805            mov     dpl,#0x01
 0109 120100     806            lcall   _lights
 010C            807   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:34: delay();
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 010C 120100     808            lcall   _delay
 010F 8001       809            sjmp    L011002?
@@ -1017,7 +1141,11 @@ FFBF            496   ;--------------------------------------------------------
 0111            812   ;------------------------------------------------------------
 0111            813   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 0111            814   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:38: void init_ports() {
+=======
+0111            814   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:38: void init_ports() {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0111            814   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:38: void init_ports() {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -1025,6 +1153,7 @@ FFBF            496   ;--------------------------------------------------------
 0111            816   ;         function init_ports
 0111            817   ;        -----------------------------------------
 0111            818   _init_ports:
+<<<<<<< HEAD
 <<<<<<< HEAD
 0111            819   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:40: P1M1 = 0;
 0111 759100     820            mov     _P1M1,#0x00
@@ -1034,6 +1163,8 @@ FFBF            496   ;--------------------------------------------------------
 0117 75A400     824            mov     _P2M1,#0x00
 011A            825   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:44: P2M2 = 0;
 =======
+=======
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 0111            819   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:40: P1M1 = 0;
 0111 759100     820            mov     _P1M1,#0x00
 0114            821   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:41: P1M2 = 0;
@@ -1041,6 +1172,9 @@ FFBF            496   ;--------------------------------------------------------
 0117            823   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:43: P2M1 = 0;
 0117 75A400     824            mov     _P2M1,#0x00
 011A            825   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:44: P2M2 = 0;
+<<<<<<< HEAD
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
+=======
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 011A 75A500     826            mov     _P2M2,#0x00
 011D 22         827            ret
@@ -1050,7 +1184,11 @@ FFBF            496   ;--------------------------------------------------------
 011E            831   ;i                         Allocated to registers r2 
 011E            832   ;------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 011E            833   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:47: void lights(char i) {
+=======
+011E            833   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:47: void lights(char i) {
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 011E            833   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:47: void lights(char i) {
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -1059,7 +1197,11 @@ FFBF            496   ;--------------------------------------------------------
 011E            836   ;        -----------------------------------------
 011E            837   _lights:
 <<<<<<< HEAD
+<<<<<<< HEAD
 011E            838   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:49: light_0 = (i) & 0x01;
+=======
+011E            838   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:49: light_0 = (i) & 0x01;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 011E            838   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:49: light_0 = (i) & 0x01;
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
@@ -1068,7 +1210,11 @@ FFBF            496   ;--------------------------------------------------------
 0121 13         841            rrc     a
 0122 9292       842            mov     _P1_2,c
 <<<<<<< HEAD
+<<<<<<< HEAD
 0124            843   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:50: light_1 = (i>>1) & 0x01;
+=======
+0124            843   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:50: light_1 = (i>>1) & 0x01;
+>>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
 =======
 0124            843   ;        C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\main.c:50: light_1 = (i>>1) & 0x01;
 >>>>>>> 915182ae3e41a391a1ca8e77509d6768b74215de
