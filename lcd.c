@@ -40,6 +40,8 @@ void LCD_apply(char i);
 // wakeup the LCD and get ready for use
 void LCD_init();
 
+// GLOBAL VARS ----------------------------------
+int LCD_8bit = 0; // set to 0 for 4-bit mode; 1 for 8-bit
 
 // LCD definitions ---------------------------------------------
 
@@ -97,7 +99,13 @@ void LCD_init() {
 	delay();
 	LCD_cmd(0x30); // wake up 3
 	delay();
-	LCD_cmd(0x38); // 8bit/2line
+	
+	if (LCD_8bit == 1) {
+		LCD_cmd(0x38); // 8bit/2line
+	} else {
+		LCD_cmd(0x28); // 4bit/2line
+	}
+	
 	LCD_cmd(0x10); // return home
 	LCD_cmd(0x0c); // display on cursor on
 	LCD_cmd(0x06); // set display mode
@@ -109,10 +117,14 @@ void LCD_init() {
 // apply data to the LCD ports
 // (does not send a clock pulse)
 void LCD_apply(char i) {
-	lcd_data_7 = i & 1;
-	lcd_data_6 = (i >> 1) & 1;
-	lcd_data_5 = (i >> 2) & 1;
-	lcd_data_4 = (i >> 3) & 1;
+	// write upper 4 bits only in 8-bit mode
+	if (LCD_8bit) {
+		lcd_data_7 = i & 1;
+		lcd_data_6 = (i >> 1) & 1;
+		lcd_data_5 = (i >> 2) & 1;
+		lcd_data_4 = (i >> 3) & 1;
+	}
+	// always write lower four bits
 	lcd_data_3 = (i >> 4) & 1;
 	lcd_data_2 = (i >> 5) & 1;
 	lcd_data_1 = (i >> 6) & 1;
