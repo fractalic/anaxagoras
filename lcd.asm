@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Feb 24 19:06:32 2014
+; This file was generated Mon Feb 24 20:09:15 2014
 ;--------------------------------------------------------
 $name lcd
 $optc51 --model-small
@@ -741,28 +741,27 @@ L008003?:
 ;	 function LCD_apply
 ;	-----------------------------------------
 _LCD_apply:
-	mov	r2,dpl
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:121: if (LCD_8bit) {
-	mov	a,_LCD_8bit
-	orl	a,(_LCD_8bit + 1)
-	jz	L009002?
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:122: lcd_data_7 = i & 1;
-	mov	a,r2
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:121: lcd_data_7 = i & 1;
+	mov	a,dpl
+	mov	r2,a
 	rrc	a
 	mov	_P2_4,c
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:123: lcd_data_6 = (i >> 1) & 1;
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:122: lcd_data_6 = (i >> 1) & 1;
 	mov	a,r2
 	mov	c,acc.1
 	mov	_P2_3,c
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:124: lcd_data_5 = (i >> 2) & 1;
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:123: lcd_data_5 = (i >> 2) & 1;
 	mov	a,r2
 	mov	c,acc.2
 	mov	_P2_2,c
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:125: lcd_data_4 = (i >> 3) & 1;
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:124: lcd_data_4 = (i >> 3) & 1;
 	mov	a,r2
 	mov	c,acc.3
 	mov	_P2_1,c
-L009002?:
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:127: if (LCD_8bit) {
+	mov	a,_LCD_8bit
+	orl	a,(_LCD_8bit + 1)
+	jz	L009003?
 ;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:128: lcd_data_3 = (i >> 4) & 1;
 	mov	a,r2
 	mov	c,acc.4
@@ -779,21 +778,22 @@ L009002?:
 	mov	a,r2
 	rlc	a
 	mov	_P1_4,c
+L009003?:
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_clock'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:138: void LCD_clock()
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:139: void LCD_clock()
 ;	-----------------------------------------
 ;	 function LCD_clock
 ;	-----------------------------------------
 _LCD_clock:
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:141: lcd_enable = 1;
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:142: lcd_enable = 1;
 	setb	_P2_5
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:142: delay();
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:143: delay();
 	lcall	_delay
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:143: lcd_enable = 0;
+;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\lcd.c:144: lcd_enable = 0;
 	clr	_P2_5
 	ret
 	rseg R_CSEG

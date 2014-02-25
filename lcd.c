@@ -117,18 +117,19 @@ void LCD_init() {
 // apply data to the LCD ports
 // (does not send a clock pulse)
 void LCD_apply(char i) {
-	// write upper 4 bits only in 8-bit mode
+	// always set upper 4 bits
+	lcd_data_7 = i & 1;
+	lcd_data_6 = (i >> 1) & 1;
+	lcd_data_5 = (i >> 2) & 1;
+	lcd_data_4 = (i >> 3) & 1;
+	
+	// write lower 4 bits only in 8-bit mode
 	if (LCD_8bit) {
-		lcd_data_7 = i & 1;
-		lcd_data_6 = (i >> 1) & 1;
-		lcd_data_5 = (i >> 2) & 1;
-		lcd_data_4 = (i >> 3) & 1;
+		lcd_data_3 = (i >> 4) & 1;
+		lcd_data_2 = (i >> 5) & 1;
+		lcd_data_1 = (i >> 6) & 1;
+		lcd_data_0 = (i >> 7) & 1;
 	}
-	// always write lower four bits
-	lcd_data_3 = (i >> 4) & 1;
-	lcd_data_2 = (i >> 5) & 1;
-	lcd_data_1 = (i >> 6) & 1;
-	lcd_data_0 = (i >> 7) & 1;
 }
 
 // LCD_clock()
