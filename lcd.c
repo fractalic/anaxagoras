@@ -18,7 +18,7 @@ void LCD_writeString(char *string);
 
 // LCD_setCursor(int, int)
 // set the cursor position of the LCD
-void LCD_setCursor(int x, int y);
+void LCD_setCursor(int col, int row);
 
 // LCD_cmd(character)
 // write a command to the LCD
@@ -69,9 +69,14 @@ void LCD_writeString(char *string)
 
 // LCD_setCursor(int, int)
 // set the cursor position of the LCD
-void LCD_setCursor(int x, int y) // x is row [0,15], y [0,1]
-{
-    //nothing in here yet
+void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
+{ 
+	int where;
+    LCD_cmd(0x10); // set cursor home
+    for(where = 0; where < (col+row*16); where++)
+    {
+    LCD_cmd(0x14);
+    }
 }
 
 // LCD_cmd(character)
