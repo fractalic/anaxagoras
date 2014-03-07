@@ -107,7 +107,7 @@ void LCD_init() {
 	
 	LCD_cmd(0x38); // 8bit/2line
 	
-	LCD_cmd(0x10); // return home
+	LCD_cmd(0x10); // function set
 	LCD_cmd(0x0c); // display on cursor on
 	LCD_cmd(0x06); // set display mode
 	delay();

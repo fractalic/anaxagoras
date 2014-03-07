@@ -14,6 +14,32 @@
 volatile unsigned char pwmcount;
 volatile unsigned char pwm1;
 
+//Procedures
+void putchar (char c)
+{
+	while (!TI);
+	TI=0;
+	SBUF=c;
+}
+
+char getchar (void)
+{
+	while (!RI);
+	RI=0;
+	return SBUF;
+}
+
+void InitSerialPort(void)
+{
+	BRGCON=0x00; //Make sure the baud rate generator is off
+	BRGR1=((XTAL/BAUD)-16)/0x100;
+	BRGR0=((XTAL/BAUD)-16)%0x100;
+	BRGCON=0x03; //Turn-on the baud rate generator
+	SCON=0x52; //Serial port in mode 1, ren, txrdy, rxempty
+	P1M1=0x00; //Enable pins RxD and Txd
+	P1M2=0x00; //Enable pins RxD and Txd
+}
+
 void InitTimer0 (void)
 {
 	// Initialize timer 0 for ISR 'pwmcounter' below
@@ -42,6 +68,8 @@ void pwmcounter (void) interrupt 1 using 1
 
 void main (void)
 {
+	InitSerialPort();
 	InitTimer0();
 	pwm1=20; //50% duty cycle wave at 100Hz
+	printf("Hello!\n\rPlease check pin P1.6 with the oscilloscope!\n\r");
 }
