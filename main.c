@@ -68,6 +68,12 @@ void display_time()
 {
 	time_string[0] = (char)(tenths%10);
 	time_string[1] = (char)(tenths%100);
+	time_string[2] = 'A';
+	time_string[3] = 'B';
+	time_string[4] = 'C';
+	time_string[5] = 'D';
+	time_string[6] = 'E';
+	time_string[7] = '\0';
 	LCD_writeString(time_string);
 }
 
