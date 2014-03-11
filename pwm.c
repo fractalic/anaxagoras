@@ -29,8 +29,8 @@ void InitTimer0 (void)
 	EA=1;  // Enable global interrupts
 }
 
-//Interrupt 1 is for timer 0.  This function is executed every 100 us.
-void pwmcounter (void) interrupt 1 using 1
+//bind this to interrupt 1 (timer 0)
+void t0_event (void) interrupt 1 using 1
 {
 	TF0=0; // Clear the overflow flag
 	//Reload the timer
@@ -42,6 +42,7 @@ void pwmcounter (void) interrupt 1 using 1
 	TR0=1; // Start timer 0
 
 	if(++pwmcount>99) pwmcount=0;
+
 	P1_6=(pwm1>pwmcount)?1:0;
 }
 
