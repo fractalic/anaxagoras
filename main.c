@@ -8,11 +8,11 @@
 #include "pins.c"
 #include "utilities.c"
 #include "lcd.c"
+#include "pwm.c"
 
-// XTAL is twice the clock speed of the p89lpc we're using
-// XTAL is in Hz (7.373MHz)
-#define XTAL 7373000L
-#define BAUD 115200L
+char time_string[8];
+// display the current time on the LCD
+void display_time(void);
 
 // initialize the ports to proper I/O mode
 void init_ports();
@@ -30,15 +30,21 @@ void main(void)
 	
 	while(1)
 	{
+		LCD_cmd(0x01); //clear screen
 		lights(0x02);
 	//	LCD_write(0x41);
 		delay();
 	//	LCD_write(0x42);
 		LCD_writeString("HI");
-		LCD_setCursor(0,1);
+		LCD_setCursor(0,4);
+		LCD_writeString("HI");
+		LCD_setCursor(1,1);
 		LCD_writeString("Hello");
+		
 		lights(0x01);
 		delay();
+		
+		display_time();
 	}		
 }
 
@@ -57,4 +63,11 @@ void lights(char i) {
 	light_1 = (i>>1) & 0x01;
 }
 
+// display the current time on the LCD
+void display_time()
+{
+	time_string[0] = (char)(tenths%10);
+	time_string[1] = (char)(tenths%100);
+	LCD_writeString(time_string);
+}
 

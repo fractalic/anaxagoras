@@ -1,7 +1,9 @@
+// this file contains useful functions that have no other depencies
+// do not modify the include list
 #ifndef UTIL
 #define UTIL
 
-
+#include "pins.c"
 
 // waitabit
 void delay(void);
@@ -15,5 +17,4 @@ void delay(void)
         for(k=0; k<1000; k++);
     }
 }
-
 #endif
