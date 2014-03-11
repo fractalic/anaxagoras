@@ -27,11 +27,11 @@ void main(void)
 	while(1)
 	{
 		lights(0x02);
-		LCD_write(0x41);
+	//	LCD_write(0x41);
 		delay();
-		LCD_write(0x42);
+	//	LCD_write(0x42);
 		LCD_writeString("HI");
-		LCD_setCursor(1,0);
+		LCD_setCursor(0,1);
 		LCD_writeString("Hello");
 		lights(0x01);
 		delay();
