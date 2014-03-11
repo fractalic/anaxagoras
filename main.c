@@ -70,9 +70,9 @@ void display_time()
 {
 	int seconds = tenths/10;
 	int minutes = seconds / 60;
-	if (seconds > 60) seconds=0;
+	if (seconds > 60) seconds-=60;
 
-	time_string[0] = num2char(minutes);
+	time_string[0] = num2char(minutes/10);
 	time_string[1] = num2char(minutes);
 	time_string[2] = ':';
 	time_string[3] = num2char(seconds/10);

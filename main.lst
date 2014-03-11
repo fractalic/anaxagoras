@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-0000              4   ; This file was generated Mon Mar 10 20:29:39 2014
+0000              4   ; This file was generated Mon Mar 10 20:31:27 2014
 0000              5   ;--------------------------------------------------------
                   5   $name main
                   6   $optc51 --model-small
@@ -1102,7 +1102,7 @@ FFBF            546   ;--------------------------------------------------------
 021B AD83      1102            mov     r5,dph
 021D D003      1103            pop     ar3
 021F D002      1104            pop     ar2
-0221           1105   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:73: if (seconds > 60) seconds=0;
+0221           1105   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:73: if (seconds > 60) seconds-=60;
 0221 C3        1106            clr     c
 0222 743C      1107            mov     a,#0x3C
 0224 9A        1108            subb    a,r2
@@ -1112,87 +1112,95 @@ FFBF            546   ;--------------------------------------------------------
 022A 63F080    1112            xrl     b,#0x80
 022D 95F0      1113            subb    a,b
 022F 5001      1114            jnc     L018002?
-0231 7A00      1115            mov     r2,#0x00
-0233 7B00      1116            mov     r3,#0x00
-0235           1117   L018002?:
-0235           1118   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:75: time_string[0] = num2char(minutes);
-0235 8C82      1119            mov     dpl,r4
-0237 8D83      1120            mov     dph,r5
-0239 C002      1121            push    ar2
-023B C003      1122            push    ar3
-023D C004      1123            push    ar4
-023F C005      1124            push    ar5
-0241 120100    1125            lcall   _num2char
-0244 E582      1126            mov     a,dpl
-0246 D005      1127            pop     ar5
-0248 D004      1128            pop     ar4
-024A F5C0      1129            mov     _time_string,a
-024C           1130   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:76: time_string[1] = num2char(minutes);
-024C 8C82      1131            mov     dpl,r4
-024E 8D83      1132            mov     dph,r5
-0250 120100    1133            lcall   _num2char
-0253 E582      1134            mov     a,dpl
-0255 D003      1135            pop     ar3
-0257 D002      1136            pop     ar2
-0259 F5C1      1137            mov     (_time_string + 0x0001),a
-025B           1138   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:77: time_string[2] = ':';
-025B 75C23A    1139            mov     (_time_string + 0x0002),#0x3A
-025E           1140   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:78: time_string[3] = num2char(seconds/10);
-025E 75000A    1141            mov     __divsint_PARM_2,#0x0A
-0261 E4        1142            clr     a
-0262 F501      1143            mov     (__divsint_PARM_2 + 1),a
-0264 8A82      1144            mov     dpl,r2
-0266 8B83      1145            mov     dph,r3
-0268 C002      1146            push    ar2
-026A C003      1147            push    ar3
-026C 120100    1148            lcall   __divsint
-026F 120100    1149            lcall   _num2char
-0272 E582      1150            mov     a,dpl
-0274 D003      1151            pop     ar3
-0276 D002      1152            pop     ar2
-0278 F5C3      1153            mov     (_time_string + 0x0003),a
-027A           1154   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:79: time_string[4] = num2char(seconds);
-027A 8A82      1155            mov     dpl,r2
-027C 8B83      1156            mov     dph,r3
-027E 120100    1157            lcall   _num2char
-0281 E582      1158            mov     a,dpl
-0283 F5C4      1159            mov     (_time_string + 0x0004),a
-0285           1160   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:80: time_string[5] = '.';
-0285 75C52E    1161            mov     (_time_string + 0x0005),#0x2E
-0288           1162   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:81: time_string[6] = num2char(tenths);
-0288 851082    1163            mov     dpl,_tenths
-028B 851183    1164            mov     dph,(_tenths + 1)
-028E 120100    1165            lcall   _num2char
-0291 E582      1166            mov     a,dpl
-0293 F5C6      1167            mov     (_time_string + 0x0006),a
-0295           1168   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:82: time_string[7] = '\0';
-0295 75C700    1169            mov     (_time_string + 0x0007),#0x00
-0298           1170   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:83: LCD_writeString(time_string);
-0298 9011C0    1171            mov     dptr,#_time_string
-029B 75F040    1172            mov     b,#0x40
-029E 020100    1173            ljmp    _LCD_writeString
-02A1           1174   ;------------------------------------------------------------
-02A1           1175   ;Allocation info for local variables in function 'display_battery'
-02A1           1176   ;------------------------------------------------------------
-02A1           1177   ;battery                   Allocated with name '_display_battery_battery_1_84'
-02A1           1178   ;------------------------------------------------------------
-02A1           1179   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:87: void display_battery()
-02A1           1180   ;        -----------------------------------------
-02A1           1181   ;         function display_battery
-02A1           1182   ;        -----------------------------------------
-02A1           1183   _display_battery:
-02A1           1184   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:90: LCD_setCursor(0,1);
-02A1 757001    1185            mov     _LCD_setCursor_PARM_2,#0x01
-02A4 E4        1186            clr     a
-02A5 F571      1187            mov     (_LCD_setCursor_PARM_2 + 1),a
-02A7 900000    1188            mov     dptr,#0x0000
-02AA 020100    1189            ljmp    _LCD_setCursor
-02AD           1190            rseg R_CSEG
-02AD           1191   
-0000           1192            rseg R_XINIT
-0000           1193   
-0000           1194            rseg R_CONST
-0000           1195   
-000E           1196            CSEG
-000E           1197   
-000E           1198   end
+0231 EA        1115            mov     a,r2
+0232 24C4      1116            add     a,#0xc4
+0234 FA        1117            mov     r2,a
+0235 EB        1118            mov     a,r3
+0236 34FF      1119            addc    a,#0xff
+0238 FB        1120            mov     r3,a
+0239           1121   L018002?:
+0239           1122   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:75: time_string[0] = num2char(minutes/10);
+0239 75000A    1123            mov     __divsint_PARM_2,#0x0A
+023C E4        1124            clr     a
+023D F501      1125            mov     (__divsint_PARM_2 + 1),a
+023F 8C82      1126            mov     dpl,r4
+0241 8D83      1127            mov     dph,r5
+0243 C002      1128            push    ar2
+0245 C003      1129            push    ar3
+0247 C004      1130            push    ar4
+0249 C005      1131            push    ar5
+024B 120100    1132            lcall   __divsint
+024E 120100    1133            lcall   _num2char
+0251 E582      1134            mov     a,dpl
+0253 D005      1135            pop     ar5
+0255 D004      1136            pop     ar4
+0257 F5C0      1137            mov     _time_string,a
+0259           1138   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:76: time_string[1] = num2char(minutes);
+0259 8C82      1139            mov     dpl,r4
+025B 8D83      1140            mov     dph,r5
+025D 120100    1141            lcall   _num2char
+0260 E582      1142            mov     a,dpl
+0262 D003      1143            pop     ar3
+0264 D002      1144            pop     ar2
+0266 F5C1      1145            mov     (_time_string + 0x0001),a
+0268           1146   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:77: time_string[2] = ':';
+0268 75C23A    1147            mov     (_time_string + 0x0002),#0x3A
+026B           1148   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:78: time_string[3] = num2char(seconds/10);
+026B 75000A    1149            mov     __divsint_PARM_2,#0x0A
+026E E4        1150            clr     a
+026F F501      1151            mov     (__divsint_PARM_2 + 1),a
+0271 8A82      1152            mov     dpl,r2
+0273 8B83      1153            mov     dph,r3
+0275 C002      1154            push    ar2
+0277 C003      1155            push    ar3
+0279 120100    1156            lcall   __divsint
+027C 120100    1157            lcall   _num2char
+027F E582      1158            mov     a,dpl
+0281 D003      1159            pop     ar3
+0283 D002      1160            pop     ar2
+0285 F5C3      1161            mov     (_time_string + 0x0003),a
+0287           1162   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:79: time_string[4] = num2char(seconds);
+0287 8A82      1163            mov     dpl,r2
+0289 8B83      1164            mov     dph,r3
+028B 120100    1165            lcall   _num2char
+028E E582      1166            mov     a,dpl
+0290 F5C4      1167            mov     (_time_string + 0x0004),a
+0292           1168   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:80: time_string[5] = '.';
+0292 75C52E    1169            mov     (_time_string + 0x0005),#0x2E
+0295           1170   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:81: time_string[6] = num2char(tenths);
+0295 851082    1171            mov     dpl,_tenths
+0298 851183    1172            mov     dph,(_tenths + 1)
+029B 120100    1173            lcall   _num2char
+029E E582      1174            mov     a,dpl
+02A0 F5C6      1175            mov     (_time_string + 0x0006),a
+02A2           1176   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:82: time_string[7] = '\0';
+02A2 75C700    1177            mov     (_time_string + 0x0007),#0x00
+02A5           1178   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:83: LCD_writeString(time_string);
+02A5 9011C0    1179            mov     dptr,#_time_string
+02A8 75F040    1180            mov     b,#0x40
+02AB 020100    1181            ljmp    _LCD_writeString
+02AE           1182   ;------------------------------------------------------------
+02AE           1183   ;Allocation info for local variables in function 'display_battery'
+02AE           1184   ;------------------------------------------------------------
+02AE           1185   ;battery                   Allocated with name '_display_battery_battery_1_84'
+02AE           1186   ;------------------------------------------------------------
+02AE           1187   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:87: void display_battery()
+02AE           1188   ;        -----------------------------------------
+02AE           1189   ;         function display_battery
+02AE           1190   ;        -----------------------------------------
+02AE           1191   _display_battery:
+02AE           1192   ;        C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:90: LCD_setCursor(0,1);
+02AE 757001    1193            mov     _LCD_setCursor_PARM_2,#0x01
+02B1 E4        1194            clr     a
+02B2 F571      1195            mov     (_LCD_setCursor_PARM_2 + 1),a
+02B4 900000    1196            mov     dptr,#0x0000
+02B7 020100    1197            ljmp    _LCD_setCursor
+02BA           1198            rseg R_CSEG
+02BA           1199   
+0000           1200            rseg R_XINIT
+0000           1201   
+0000           1202            rseg R_CONST
+0000           1203   
+000E           1204            CSEG
+000E           1205   
+000E           1206   end

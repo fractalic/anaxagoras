@@ -8,7 +8,7 @@ Modules linked:
    'startup' from 'C:\Program Files (x86)\CrossIDE\Call51\Bin\..\lib\small\libc51.lib'
 
 Memory use per module linked:
-               main: C:00695 D:024 I:000 B:000 X:00000
+               main: C:00708 D:024 I:000 B:000 X:00000
             gptrget: C:00028 D:000 I:000 B:000 X:00000
             divuint: C:00041 D:002 I:000 B:000 X:00000
             moduint: C:00077 D:002 I:000 B:000 X:00000
@@ -17,7 +17,7 @@ Memory use per module linked:
             startup: C:00004 D:000 I:000 B:000 X:00000
            ABSOLUTE: C:00007 D:000 I:000 B:000 X:00000
 ------------------------------------------------------
-             Totals: C:01021 D:028 I:000 B:000 X:00000
+             Totals: C:01034 D:028 I:000 B:000 X:00000
 
 INTERMAL RAM map (see legend below):
 00: 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 
@@ -58,7 +58,7 @@ BIT map:
 70: . . . . . . . . . . . . . . . . 
 
 CODE usage map:
-0000: 248 256 256 256 005 000 000 000 000 000 000 000 000 000 000 000 
+0000: 248 256 256 256 018 000 000 000 000 000 000 000 000 000 000 000 
 1000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 2000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 3000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
@@ -74,7 +74,7 @@ C000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
 D000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 E000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
 F000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
-Total: 1021 bytes
+Total: 1034 bytes
 
 XDATA usage map:
 0000: 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 
@@ -99,7 +99,7 @@ Base Segments:
    BIT_BANK=D:0020, size=0001
    R_BSEG=B:0000, size=0000
    R_CONST=C:0000, size=0000
-   R_CSEG=C:008A, size=037B
+   R_CSEG=C:008A, size=0388
    R_DINIT=C:007F, size=000A
    R_DSEG=D:0000, size=0017
    R_GSINIT=C:000E, size=0071
@@ -116,17 +116,17 @@ Base Segments:
 Module Segments:
    CSEG=C:0000, size=0007
    crt0:R_GSINIT=C:000E, size=0071
-   divsint:R_CSEG=C:03C9, size=0038
-   divuint:R_CSEG=C:0353, size=0029
+   divsint:R_CSEG=C:03D6, size=0038
+   divuint:R_CSEG=C:0360, size=0029
    divuint:R_OSEG=D:0010, size=0002
-   gptrget:R_CSEG=C:0337, size=001C
+   gptrget:R_CSEG=C:0344, size=001C
    main:BIT_BANK=D:0020, size=0001
-   main:R_CSEG=C:008A, size=02AD
+   main:R_CSEG=C:008A, size=02BA
    main:R_DINIT=C:007F, size=000A
    main:R_DSEG=D:0021, size=0017
-   moduint:R_CSEG=C:037C, size=004D
+   moduint:R_CSEG=C:0389, size=004D
    moduint:R_OSEG=D:0010, size=0002
-   startup:R_CSEG=C:0401, size=0004
+   startup:R_CSEG=C:040E, size=0004
 
 Public symbols:
    _BODCFG=X:FFC8
@@ -153,7 +153,7 @@ Public symbols:
    _R_BSEG_start=L:0000
    _R_CONST_size=L:0000
    _R_CONST_start=L:0000
-   _R_CSEG_size=L:037B
+   _R_CSEG_size=L:0388
    _R_CSEG_start=L:008A
    _R_DINIT_size=L:000A
    _R_DINIT_start=L:007F
@@ -173,22 +173,22 @@ Public symbols:
    _R_XINIT_start=L:0000
    _R_XSEG_size=L:0000
    _R_XSEG_start=L:0000
-   __c51_external_startup=C:0401
-   __divsint=C:03C9
+   __c51_external_startup=C:040E
+   __divsint=C:03D6
    __divsint_PARM_2=D:0010
-   __divuint=C:0353
+   __divuint=C:0360
    __divuint_PARM_2=D:0010
-   __gptrget=C:0337
+   __gptrget=C:0344
    __modsint_PARM_2=D:0010
-   __moduint=C:037C
+   __moduint=C:0389
    __moduint_PARM_2=D:0010
    _crt0=C:000E
    _delay=C:008A
-   _display_battery=C:032B
+   _display_battery=C:0338
    _display_time=C:027F
    _drive_left=D:002E
    _drive_right=D:002C
-   _dummy_name_crt0=C:0401
+   _dummy_name_crt0=C:040E
    _hundredths=D:002B
    _hundredths_count=D:002A
    _init_ports=C:0266
@@ -219,17 +219,17 @@ Local symbols:
    crt0:__c51_init_data=C:001B
    crt0:__c51_program_startup=C:007A
    crt0:forever?home?=C:007D
-   divsint:__divsint_dummy=C:03C9
-   divsint:a_not_negative=C:03DD
-   divsint:b_not_negative=C:03EF
-   divsint:not_negative=C:0400
-   divuint:__divuint_dummy=C:0353
-   divuint:loop=C:0358
-   divuint:smaller=C:0379
-   gptrget:codeptr?=C:034E
-   gptrget:dataptrrestore?=C:0345
-   gptrget:pdataptr?=C:034B
-   gptrget:xdataptr?=C:0351
+   divsint:__divsint_dummy=C:03D6
+   divsint:a_not_negative=C:03EA
+   divsint:b_not_negative=C:03FC
+   divsint:not_negative=C:040D
+   divuint:__divuint_dummy=C:0360
+   divuint:loop=C:0365
+   divuint:smaller=C:0386
+   gptrget:codeptr?=C:035B
+   gptrget:dataptrrestore?=C:0352
+   gptrget:pdataptr?=C:0358
+   gptrget:xdataptr?=C:035E
    main:L002003?=C:009D
    main:L002004?=C:008E
    main:L002008?=C:00AD
@@ -239,7 +239,7 @@ Local symbols:
    main:L011002?=C:01D4
    main:L011005?=C:01FA
    main:L015002?=C:0252
-   main:L018002?=C:02BF
+   main:L018002?=C:02C3
    main:b0=D:0020
    main:b1=D:0020
    main:b2=D:0020
@@ -249,10 +249,10 @@ Local symbols:
    main:b6=D:0020
    main:b7=D:0020
    main:bits=D:0020
-   moduint:__moduint_dummy=C:037C
-   moduint:div_by_0=C:03C8
-   moduint:loop1=C:0384
-   moduint:loop2=C:03A9
-   moduint:msbset=C:03A1
-   moduint:smaller=C:03BB
-   moduint:start=C:039E
+   moduint:__moduint_dummy=C:0389
+   moduint:div_by_0=C:03D5
+   moduint:loop1=C:0391
+   moduint:loop2=C:03B6
+   moduint:msbset=C:03AE
+   moduint:smaller=C:03C8
+   moduint:start=C:03AB

@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Mar 10 20:29:39 2014
+; This file was generated Mon Mar 10 20:31:27 2014
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -1102,7 +1102,7 @@ _display_time:
 	mov	r5,dph
 	pop	ar3
 	pop	ar2
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:73: if (seconds > 60) seconds=0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:73: if (seconds > 60) seconds-=60;
 	clr	c
 	mov	a,#0x3C
 	subb	a,r2
@@ -1112,16 +1112,24 @@ _display_time:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	L018002?
-	mov	r2,#0x00
-	mov	r3,#0x00
+	mov	a,r2
+	add	a,#0xc4
+	mov	r2,a
+	mov	a,r3
+	addc	a,#0xff
+	mov	r3,a
 L018002?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:75: time_string[0] = num2char(minutes);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:75: time_string[0] = num2char(minutes/10);
+	mov	__divsint_PARM_2,#0x0A
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
 	mov	dpl,r4
 	mov	dph,r5
 	push	ar2
 	push	ar3
 	push	ar4
 	push	ar5
+	lcall	__divsint
 	lcall	_num2char
 	mov	a,dpl
 	pop	ar5
