@@ -9,6 +9,7 @@
 #include "utilities.c"
 #include "lcd.c"
 #include "pwm.c"
+extern volatile long int tenths;
 
 char time_string[8];
 // display the current time on the LCD
