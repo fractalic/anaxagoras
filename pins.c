@@ -1,6 +1,11 @@
 #ifndef PINS
 #define PINS
 
+// XTAL is twice the clock speed of the p89lpc we're using
+// XTAL is in Hz (7.373MHz)
+#define XTAL 7373000L
+#define BAUD 115200L
+
 /* Pin sequence on controller
 right-to-left with usb connector to your right
 	
