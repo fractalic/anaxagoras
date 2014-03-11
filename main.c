@@ -15,6 +15,9 @@ char time_string[8];
 // display the current time on the LCD
 void display_time(void);
 
+// display the current battery on the LCD
+void display_battery(void);
+
 // initialize the ports to proper I/O mode
 void init_ports();
 
@@ -82,5 +85,16 @@ void display_time()
 	time_string[6] = 'E';
 	time_string[7] = '\0';
 	LCD_writeString(time_string);
+}
+
+// display the current battery on the LCD
+void display_battery()
+{
+	float battery;
+	LCD_setCursor(0,1);
+	// TO DO: read in from a pins
+	// battery = readpin(yyy);
+	// lcd_writeString("Battery: " + numtostring(battery));
+	
 }
 
