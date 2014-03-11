@@ -36,15 +36,13 @@ void main(void)
 		delay();
 	//	LCD_write(0x42);
 		LCD_writeString("HI");
-		LCD_setCursor(4,0);
-		LCD_writeString("HI");
+		LCD_setCursor(3,0);
+		display_time();
 		LCD_setCursor(1,1);
 		LCD_writeString("Hello");
 		
 		lights(0x01);
 		delay();
-		
-		display_time();
 	}		
 }
 
