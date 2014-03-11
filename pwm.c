@@ -71,5 +71,5 @@ void main (void)
 	InitSerialPort();
 	InitTimer0();
 	pwm1=20; //50% duty cycle wave at 100Hz
-	printf("Hello!\n\rPlease check pin P1.6 with the oscilloscope!\n\r");
+	
 }
