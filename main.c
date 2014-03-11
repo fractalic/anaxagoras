@@ -9,19 +9,23 @@
 #include "utilities.c"
 #include "lcd.c"
 
+// XTAL is twice the clock speed of the p89lpc we're using
+// XTAL is in Hz (7.373MHz)
 #define XTAL 7373000L
 #define BAUD 115200L
 
 // initialize the ports to proper I/O mode
 void init_ports();
 
-// make some light
+// make some lights flash
 void lights(char i);
 
 void main(void)
 {
+	// set I/O mode of ports and pins on the microcontroller
 	init_ports();
 	
+	// wake up the LCD
 	LCD_init();
 	
 	while(1)
