@@ -45,7 +45,7 @@ void LCD_init();
 
 // LCD definitions ---------------------------------------------
 
-// LCD_write(character)
+// LCD_write(character) - TESTED WORKS
 // write a character to the LCD
 // (sends a clock pulse)
 void LCD_write(char i) {
@@ -57,7 +57,7 @@ void LCD_write(char i) {
 	LCD_clock();
 }
 
-// LCD_writeString(char*)
+// LCD_writeString(char*) - TESTED WORKS
 // write a sequence of characters to the LCD
 void LCD_writeString(char *string)
 {
@@ -81,7 +81,7 @@ void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
     }
 }
 
-// LCD_cmd(character)
+// LCD_cmd(character) - TESTED WORKS
 // write a command to the LCD
 // (sends a clock pulse)
 void LCD_cmd(char i) {
