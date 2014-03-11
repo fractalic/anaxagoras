@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-0000              4   ; This file was generated Mon Feb 24 21:19:48 2014
+0000              4   ; This file was generated Mon Mar 10 18:43:45 2014
 0000              5   ;--------------------------------------------------------
                   5   $name main
                   6   $optc51 --model-small
@@ -26,936 +26,909 @@
 0000             26            public _main
 0000             27            public _BEN_WUZ_HERE
 0000             28            public _LCD_setCursor_PARM_2
-0000             29            public _LCD_8bit
-0000             30            public _delay
-0000             31            public _LCD_write
-0000             32            public _LCD_writeString
-0000             33            public _LCD_setCursor
-0000             34            public _LCD_cmd
-0000             35            public _LCD_init
-0000             36            public _LCD_apply
-0000             37            public _LCD_clock
-0000             38            public _init_ports
-0000             39            public _lights
-0000             40   ;--------------------------------------------------------
-0000             41   ; Special Function Registers
-0000             42   ;--------------------------------------------------------
-0000             43   _ACC            DATA 0xe0
-0000             44   _ADCON0         DATA 0x8e
-0000             45   _ADCON1         DATA 0x97
-0000             46   _ADINS          DATA 0xa3
-0000             47   _ADMODA         DATA 0xc0
-0000             48   _ADMODB         DATA 0xa1
-0000             49   _AD0BH          DATA 0xbb
-0000             50   _AD0BL          DATA 0xa6
-0000             51   _AD0DAT0        DATA 0xc5
-0000             52   _AD0DAT1        DATA 0xc6
-0000             53   _AD0DAT2        DATA 0xc7
-0000             54   _AD0DAT3        DATA 0xf4
-0000             55   _AD1BH          DATA 0xc4
-0000             56   _AD1BL          DATA 0xbc
-0000             57   _AD1DAT0        DATA 0xd5
-0000             58   _AD1DAT1        DATA 0xd6
-0000             59   _AD1DAT2        DATA 0xd7
-0000             60   _AD1DAT3        DATA 0xf5
-0000             61   _AUXR1          DATA 0xa2
-0000             62   _B              DATA 0xf0
-0000             63   _BRGR0          DATA 0xbe
-0000             64   _BRGR1          DATA 0xbf
-0000             65   _BRGCON         DATA 0xbd
-0000             66   _CCCRA          DATA 0xea
-0000             67   _CCCRB          DATA 0xeb
-0000             68   _CCCRC          DATA 0xec
-0000             69   _CCCRD          DATA 0xed
-0000             70   _CMP1           DATA 0xac
-0000             71   _CMP2           DATA 0xad
-0000             72   _DEECON         DATA 0xf1
-0000             73   _DEEDAT         DATA 0xf2
-0000             74   _DEEADR         DATA 0xf3
-0000             75   _DIVM           DATA 0x95
-0000             76   _DPH            DATA 0x83
-0000             77   _DPL            DATA 0x82
-0000             78   _FMADRH         DATA 0xe7
-0000             79   _FMADRL         DATA 0xe6
-0000             80   _FMCON          DATA 0xe4
-0000             81   _FMDATA         DATA 0xe5
-0000             82   _I2ADR          DATA 0xdb
-0000             83   _I2CON          DATA 0xd8
-0000             84   _I2DAT          DATA 0xda
-0000             85   _I2SCLH         DATA 0xdd
-0000             86   _I2SCLL         DATA 0xdc
-0000             87   _I2STAT         DATA 0xd9
-0000             88   _ICRAH          DATA 0xab
-0000             89   _ICRAL          DATA 0xaa
-0000             90   _ICRBH          DATA 0xaf
-0000             91   _ICRBL          DATA 0xae
-0000             92   _IEN0           DATA 0xa8
-0000             93   _IEN1           DATA 0xe8
-0000             94   _IP0            DATA 0xb8
-0000             95   _IP0H           DATA 0xb7
-0000             96   _IP1            DATA 0xf8
-0000             97   _IP1H           DATA 0xf7
-0000             98   _KBCON          DATA 0x94
-0000             99   _KBMASK         DATA 0x86
-0000            100   _KBPATN         DATA 0x93
-0000            101   _OCRAH          DATA 0xef
-0000            102   _OCRAL          DATA 0xee
-0000            103   _OCRBH          DATA 0xfb
-0000            104   _OCRBL          DATA 0xfa
-0000            105   _OCRCH          DATA 0xfd
-0000            106   _OCRCL          DATA 0xfc
-0000            107   _OCRDH          DATA 0xff
-0000            108   _OCRDL          DATA 0xfe
-0000            109   _P0             DATA 0x80
-0000            110   _P1             DATA 0x90
-0000            111   _P2             DATA 0xa0
-0000            112   _P3             DATA 0xb0
-0000            113   _P0M1           DATA 0x84
-0000            114   _P0M2           DATA 0x85
-0000            115   _P1M1           DATA 0x91
-0000            116   _P1M2           DATA 0x92
-0000            117   _P2M1           DATA 0xa4
-0000            118   _P2M2           DATA 0xa5
-0000            119   _P3M1           DATA 0xb1
-0000            120   _P3M2           DATA 0xb2
-0000            121   _PCON           DATA 0x87
-0000            122   _PCONA          DATA 0xb5
-0000            123   _PSW            DATA 0xd0
-0000            124   _PT0AD          DATA 0xf6
-0000            125   _RSTSRC         DATA 0xdf
-0000            126   _RTCCON         DATA 0xd1
-0000            127   _RTCH           DATA 0xd2
-0000            128   _RTCL           DATA 0xd3
-0000            129   _SADDR          DATA 0xa9
-0000            130   _SADEN          DATA 0xb9
-0000            131   _SBUF           DATA 0x99
-0000            132   _SCON           DATA 0x98
-0000            133   _SSTAT          DATA 0xba
-0000            134   _SP             DATA 0x81
-0000            135   _SPCTL          DATA 0xe2
-0000            136   _SPSTAT         DATA 0xe1
-0000            137   _SPDAT          DATA 0xe3
-0000            138   _TAMOD          DATA 0x8f
-0000            139   _TCON           DATA 0x88
-0000            140   _TCR20          DATA 0xc8
-0000            141   _TCR21          DATA 0xf9
-0000            142   _TH0            DATA 0x8c
-0000            143   _TH1            DATA 0x8d
-0000            144   _TH2            DATA 0xcd
-0000            145   _TICR2          DATA 0xc9
-0000            146   _TIFR2          DATA 0xe9
-0000            147   _TISE2          DATA 0xde
-0000            148   _TL0            DATA 0x8a
-0000            149   _TL1            DATA 0x8b
-0000            150   _TL2            DATA 0xcc
-0000            151   _TMOD           DATA 0x89
-0000            152   _TOR2H          DATA 0xcf
-0000            153   _TOR2L          DATA 0xce
-0000            154   _TPCR2H         DATA 0xcb
-0000            155   _TPCR2L         DATA 0xca
-0000            156   _TRIM           DATA 0x96
-0000            157   _WDCON          DATA 0xa7
-0000            158   _WDL            DATA 0xc1
-0000            159   _WFEED1         DATA 0xc2
-0000            160   _WFEED2         DATA 0xc3
-0000            161   ;--------------------------------------------------------
-0000            162   ; special function bits
-0000            163   ;--------------------------------------------------------
-0000            164   _ACC_7          BIT 0xe7
-0000            165   _ACC_6          BIT 0xe6
-0000            166   _ACC_5          BIT 0xe5
-0000            167   _ACC_4          BIT 0xe4
-0000            168   _ACC_3          BIT 0xe3
-0000            169   _ACC_2          BIT 0xe2
-0000            170   _ACC_1          BIT 0xe1
-0000            171   _ACC_0          BIT 0xe0
-0000            172   _ADMODA_7       BIT 0xc7
-0000            173   _ADMODA_6       BIT 0xc6
-0000            174   _ADMODA_5       BIT 0xc5
-0000            175   _ADMODA_4       BIT 0xc4
-0000            176   _ADMODA_3       BIT 0xc3
-0000            177   _ADMODA_2       BIT 0xc2
-0000            178   _ADMODA_1       BIT 0xc1
-0000            179   _ADMODA_0       BIT 0xc0
-0000            180   _BNDI1          BIT 0xc7
-0000            181   _BURST1         BIT 0xc6
-0000            182   _SCC1           BIT 0xc5
-0000            183   _SCAN1          BIT 0xc4
-0000            184   _BNDI0          BIT 0xc3
-0000            185   _BURST0         BIT 0xc2
-0000            186   _SCC0           BIT 0xc1
-0000            187   _SCAN0          BIT 0xc0
-0000            188   _B_7            BIT 0xf7
-0000            189   _B_6            BIT 0xf6
-0000            190   _B_5            BIT 0xf5
-0000            191   _B_4            BIT 0xf4
-0000            192   _B_3            BIT 0xf3
-0000            193   _B_2            BIT 0xf2
-0000            194   _B_1            BIT 0xf1
-0000            195   _B_0            BIT 0xf0
-0000            196   _I2CON_7        BIT 0xdf
-0000            197   _I2CON_6        BIT 0xde
-0000            198   _I2CON_5        BIT 0xdd
-0000            199   _I2CON_4        BIT 0xdc
-0000            200   _I2CON_3        BIT 0xdb
-0000            201   _I2CON_2        BIT 0xda
-0000            202   _I2CON_1        BIT 0xd9
-0000            203   _I2CON_0        BIT 0xd8
-0000            204   _I2EN           BIT 0xde
-0000            205   _STA            BIT 0xdd
-0000            206   _STO            BIT 0xdc
-0000            207   _SI             BIT 0xdb
-0000            208   _AA             BIT 0xda
-0000            209   _CRSEL          BIT 0xd8
-0000            210   _IEN0_7         BIT 0xaf
-0000            211   _IEN0_6         BIT 0xae
-0000            212   _IEN0_5         BIT 0xad
-0000            213   _IEN0_4         BIT 0xac
-0000            214   _IEN0_3         BIT 0xab
-0000            215   _IEN0_2         BIT 0xaa
-0000            216   _IEN0_1         BIT 0xa9
-0000            217   _IEN0_0         BIT 0xa8
-0000            218   _EA             BIT 0xaf
-0000            219   _EWDRT          BIT 0xae
-0000            220   _EBO            BIT 0xad
-0000            221   _ES             BIT 0xac
-0000            222   _ESR            BIT 0xac
-0000            223   _ET1            BIT 0xab
-0000            224   _EX1            BIT 0xaa
-0000            225   _ET0            BIT 0xa9
-0000            226   _EX0            BIT 0xa8
-0000            227   _IEN1_7         BIT 0xef
-0000            228   _IEN1_6         BIT 0xee
-0000            229   _IEN1_5         BIT 0xed
-0000            230   _IEN1_4         BIT 0xec
-0000            231   _IEN1_3         BIT 0xeb
-0000            232   _IEN1_2         BIT 0xea
-0000            233   _IEN1_1         BIT 0xe9
-0000            234   _IEN1_0         BIT 0xe8
-0000            235   _EADEE          BIT 0xef
-0000            236   _EST            BIT 0xee
-0000            237   _ECCU           BIT 0xec
-0000            238   _ESPI           BIT 0xeb
-0000            239   _EC             BIT 0xea
-0000            240   _EKBI           BIT 0xe9
-0000            241   _EI2C           BIT 0xe8
-0000            242   _IP0_7          BIT 0xbf
-0000            243   _IP0_6          BIT 0xbe
-0000            244   _IP0_5          BIT 0xbd
-0000            245   _IP0_4          BIT 0xbc
-0000            246   _IP0_3          BIT 0xbb
-0000            247   _IP0_2          BIT 0xba
-0000            248   _IP0_1          BIT 0xb9
-0000            249   _IP0_0          BIT 0xb8
-0000            250   _PWDRT          BIT 0xbe
-0000            251   _PBO            BIT 0xbd
-0000            252   _PS             BIT 0xbc
-0000            253   _PSR            BIT 0xbc
-0000            254   _PT1            BIT 0xbb
-0000            255   _PX1            BIT 0xba
-0000            256   _PT0            BIT 0xb9
-0000            257   _PX0            BIT 0xb8
-0000            258   _IP1_7          BIT 0xff
-0000            259   _IP1_6          BIT 0xfe
-0000            260   _IP1_5          BIT 0xfd
-0000            261   _IP1_4          BIT 0xfc
-0000            262   _IP1_3          BIT 0xfb
-0000            263   _IP1_2          BIT 0xfa
-0000            264   _IP1_1          BIT 0xf9
-0000            265   _IP1_0          BIT 0xf8
-0000            266   _PADEE          BIT 0xff
-0000            267   _PST            BIT 0xfe
-0000            268   _PCCU           BIT 0xfc
-0000            269   _PSPI           BIT 0xfb
-0000            270   _PC             BIT 0xfa
-0000            271   _PKBI           BIT 0xf9
-0000            272   _PI2C           BIT 0xf8
-0000            273   _P0_7           BIT 0x87
-0000            274   _P0_6           BIT 0x86
-0000            275   _P0_5           BIT 0x85
-0000            276   _P0_4           BIT 0x84
-0000            277   _P0_3           BIT 0x83
-0000            278   _P0_2           BIT 0x82
-0000            279   _P0_1           BIT 0x81
-0000            280   _P0_0           BIT 0x80
-0000            281   _T1             BIT 0x87
-0000            282   _KB7            BIT 0x87
-0000            283   _CMP_1          BIT 0x86
-0000            284   _KB6            BIT 0x86
-0000            285   _CMPREF         BIT 0x85
-0000            286   _KB5            BIT 0x85
-0000            287   _CIN1A          BIT 0x84
-0000            288   _KB4            BIT 0x84
-0000            289   _CIN1B          BIT 0x83
-0000            290   _KB3            BIT 0x83
-0000            291   _CIN2A          BIT 0x82
-0000            292   _KB2            BIT 0x82
-0000            293   _CIN2B          BIT 0x81
-0000            294   _KB1            BIT 0x81
-0000            295   _CMP_2          BIT 0x80
-0000            296   _KB0            BIT 0x80
-0000            297   _P1_7           BIT 0x97
-0000            298   _P1_6           BIT 0x96
-0000            299   _P1_5           BIT 0x95
-0000            300   _P1_4           BIT 0x94
-0000            301   _P1_3           BIT 0x93
-0000            302   _P1_2           BIT 0x92
-0000            303   _P1_1           BIT 0x91
-0000            304   _P1_0           BIT 0x90
-0000            305   _OCC            BIT 0x97
-0000            306   _OCB            BIT 0x96
-0000            307   _RST            BIT 0x95
-0000            308   _INT1           BIT 0x94
-0000            309   _INT0           BIT 0x93
-0000            310   _SDA            BIT 0x93
-0000            311   _T0             BIT 0x92
-0000            312   _SCL            BIT 0x92
-0000            313   _RXD            BIT 0x91
-0000            314   _TXD            BIT 0x90
-0000            315   _P2_7           BIT 0xa7
-0000            316   _P2_6           BIT 0xa6
-0000            317   _P2_5           BIT 0xa5
-0000            318   _P2_4           BIT 0xa4
-0000            319   _P2_3           BIT 0xa3
-0000            320   _P2_2           BIT 0xa2
-0000            321   _P2_1           BIT 0xa1
-0000            322   _P2_0           BIT 0xa0
-0000            323   _ICA            BIT 0xa7
-0000            324   _OCA            BIT 0xa6
-0000            325   _SPICLK         BIT 0xa5
-0000            326   _SS             BIT 0xa4
-0000            327   _MISO           BIT 0xa3
-0000            328   _MOSI           BIT 0xa2
-0000            329   _OCD            BIT 0xa1
-0000            330   _ICB            BIT 0xa0
-0000            331   _P3_7           BIT 0xb7
-0000            332   _P3_6           BIT 0xb6
-0000            333   _P3_5           BIT 0xb5
-0000            334   _P3_4           BIT 0xb4
-0000            335   _P3_3           BIT 0xb3
-0000            336   _P3_2           BIT 0xb2
-0000            337   _P3_1           BIT 0xb1
-0000            338   _P3_0           BIT 0xb0
-0000            339   _XTAL1          BIT 0xb1
-0000            340   _XTAL2          BIT 0xb0
-0000            341   _PSW_7          BIT 0xd7
-0000            342   _PSW_6          BIT 0xd6
-0000            343   _PSW_5          BIT 0xd5
-0000            344   _PSW_4          BIT 0xd4
-0000            345   _PSW_3          BIT 0xd3
-0000            346   _PSW_2          BIT 0xd2
-0000            347   _PSW_1          BIT 0xd1
-0000            348   _PSW_0          BIT 0xd0
-0000            349   _CY             BIT 0xd7
-0000            350   _AC             BIT 0xd6
-0000            351   _F0             BIT 0xd5
-0000            352   _RS1            BIT 0xd4
-0000            353   _RS0            BIT 0xd3
-0000            354   _OV             BIT 0xd2
-0000            355   _F1             BIT 0xd1
-0000            356   _P              BIT 0xd0
-0000            357   _SCON_7         BIT 0x9f
-0000            358   _SCON_6         BIT 0x9e
-0000            359   _SCON_5         BIT 0x9d
-0000            360   _SCON_4         BIT 0x9c
-0000            361   _SCON_3         BIT 0x9b
-0000            362   _SCON_2         BIT 0x9a
-0000            363   _SCON_1         BIT 0x99
-0000            364   _SCON_0         BIT 0x98
-0000            365   _SM0            BIT 0x9f
-0000            366   _FE             BIT 0x9f
-0000            367   _SM1            BIT 0x9e
-0000            368   _SM2            BIT 0x9d
-0000            369   _REN            BIT 0x9c
-0000            370   _TB8            BIT 0x9b
-0000            371   _RB8            BIT 0x9a
-0000            372   _TI             BIT 0x99
-0000            373   _RI             BIT 0x98
-0000            374   _TCON_7         BIT 0x8f
-0000            375   _TCON_6         BIT 0x8e
-0000            376   _TCON_5         BIT 0x8d
-0000            377   _TCON_4         BIT 0x8c
-0000            378   _TCON_3         BIT 0x8b
-0000            379   _TCON_2         BIT 0x8a
-0000            380   _TCON_1         BIT 0x89
-0000            381   _TCON_0         BIT 0x88
-0000            382   _TF1            BIT 0x8f
-0000            383   _TR1            BIT 0x8e
-0000            384   _TF0            BIT 0x8d
-0000            385   _TR0            BIT 0x8c
-0000            386   _IE1            BIT 0x8b
-0000            387   _IT1            BIT 0x8a
-0000            388   _IE0            BIT 0x89
-0000            389   _IT0            BIT 0x88
-0000            390   _TCR20_7        BIT 0xcf
-0000            391   _TCR20_6        BIT 0xce
-0000            392   _TCR20_5        BIT 0xcd
-0000            393   _TCR20_4        BIT 0xcc
-0000            394   _TCR20_3        BIT 0xcb
-0000            395   _TCR20_2        BIT 0xca
-0000            396   _TCR20_1        BIT 0xc9
-0000            397   _TCR20_0        BIT 0xc8
-0000            398   _PLEEN          BIT 0xcf
-0000            399   _HLTRN          BIT 0xce
-0000            400   _HLTEN          BIT 0xcd
-0000            401   _ALTCD          BIT 0xcc
-0000            402   _ALTAB          BIT 0xcb
-0000            403   _TDIR2          BIT 0xca
-0000            404   _TMOD21         BIT 0xc9
-0000            405   _TMOD20         BIT 0xc8
-0000            406   ;--------------------------------------------------------
-0000            407   ; overlayable register banks
-0000            408   ;--------------------------------------------------------
-0000            409            rbank0 segment data overlay
-0000            410   ;--------------------------------------------------------
-0000            411   ; internal ram data
-0000            412   ;--------------------------------------------------------
-0000            413            rseg R_DSEG
-0000            414   _LCD_8bit:
-0000            415            ds 2
-0002            416   _LCD_setCursor_PARM_2:
-0002            417            ds 2
-0004            418   ;--------------------------------------------------------
-0004            419   ; overlayable items in internal ram 
-0004            420   ;--------------------------------------------------------
-0000            421            rseg    R_OSEG
-0000            422            rseg    R_OSEG
-0000            423            rseg    R_OSEG
-0000            424   ;--------------------------------------------------------
-0000            425   ; indirectly addressable internal ram data
-0000            426   ;--------------------------------------------------------
-0000            427            rseg R_ISEG
-0000            428   ;--------------------------------------------------------
-0000            429   ; absolute internal ram data
-0000            430   ;--------------------------------------------------------
-0000            431            DSEG
-0000            432   ;--------------------------------------------------------
-0000            433   ; bit data
-0000            434   ;--------------------------------------------------------
-0000            435            rseg R_BSEG
-0000            436   ;--------------------------------------------------------
-0000            437   ; paged external ram data
-0000            438   ;--------------------------------------------------------
-0000            439            rseg R_PSEG
-0000            440   ;--------------------------------------------------------
-0000            441   ; external ram data
-0000            442   ;--------------------------------------------------------
-0000            443            rseg R_XSEG
-FFC8            444            XSEG at 0xffc8
-FFC8            445   _BODCFG: ds 1
-FFC9            446            public _BODCFG
-0000            447            rseg R_XSEG
-FFDE            448            XSEG at 0xffde
-FFDE            449   _CLKCON: ds 1
-FFDF            450            public _CLKCON
-0000            451            rseg R_XSEG
-FFE1            452            XSEG at 0xffe1
-FFE1            453   _PGACON1: ds 1
-FFE2            454            public _PGACON1
-0000            455            rseg R_XSEG
-FFE4            456            XSEG at 0xffe4
-FFE4            457   _PGACON1B: ds 1
-FFE5            458            public _PGACON1B
-0000            459            rseg R_XSEG
-FFE3            460            XSEG at 0xffe3
-FFE3            461   _PGA1TRIM8X16X: ds 1
-FFE4            462            public _PGA1TRIM8X16X
-0000            463            rseg R_XSEG
-FFE2            464            XSEG at 0xffe2
-FFE2            465   _PGA1TRIM2X4X: ds 1
-FFE3            466            public _PGA1TRIM2X4X
-0000            467            rseg R_XSEG
-FFCA            468            XSEG at 0xffca
-FFCA            469   _PGACON0: ds 1
-FFCB            470            public _PGACON0
-0000            471            rseg R_XSEG
-FFCE            472            XSEG at 0xffce
-FFCE            473   _PGACON0B: ds 1
-FFCF            474            public _PGACON0B
-0000            475            rseg R_XSEG
-FFCD            476            XSEG at 0xffcd
-FFCD            477   _PGA0TRIM8X16X: ds 1
-FFCE            478            public _PGA0TRIM8X16X
-0000            479            rseg R_XSEG
-FFCC            480            XSEG at 0xffcc
-FFCC            481   _PGA0TRIM2X4X: ds 1
-FFCD            482            public _PGA0TRIM2X4X
-0000            483            rseg R_XSEG
-FFBF            484            XSEG at 0xffbf
-FFBF            485   _RTCDATH: ds 1
-FFC0            486            public _RTCDATH
-0000            487            rseg R_XSEG
-FFBE            488            XSEG at 0xffbe
-FFBE            489   _RTCDATL: ds 1
-FFBF            490            public _RTCDATL
-0000            491            rseg R_XSEG
-0000            492   ;--------------------------------------------------------
-0000            493   ; absolute external ram data
-0000            494   ;--------------------------------------------------------
-FFBF            495            XSEG
-FFBF            496   ;--------------------------------------------------------
-FFBF            497   ; external initialized ram data
-FFBF            498   ;--------------------------------------------------------
-0000            499            rseg R_IXSEG
-0000            500            rseg R_HOME
-0000            501            rseg R_GSINIT
-0000            502            rseg R_CSEG
-0000            503   ;--------------------------------------------------------
-0000            504   ; Reset entry point and interrupt vectors
-0000            505   ;--------------------------------------------------------
-0000            506            CSEG at 0x0000
-0000 020100     507            ljmp    _crt0
-0003            508   ;--------------------------------------------------------
-0003            509   ; global & static initialisations
-0003            510   ;--------------------------------------------------------
-0000            511            rseg R_HOME
-0000            512            rseg R_GSINIT
-0000            513            rseg R_GSINIT
-0000            514   ;--------------------------------------------------------
-0000            515   ; data variables initialization
+0000             29            public _delay
+0000             30            public _LCD_write
+0000             31            public _LCD_writeString
+0000             32            public _LCD_setCursor
+0000             33            public _LCD_cmd
+0000             34            public _LCD_init
+0000             35            public _LCD_apply
+0000             36            public _LCD_clock
+0000             37            public _init_ports
+0000             38            public _lights
+0000             39   ;--------------------------------------------------------
+0000             40   ; Special Function Registers
+0000             41   ;--------------------------------------------------------
+0000             42   _ACC            DATA 0xe0
+0000             43   _ADCON0         DATA 0x8e
+0000             44   _ADCON1         DATA 0x97
+0000             45   _ADINS          DATA 0xa3
+0000             46   _ADMODA         DATA 0xc0
+0000             47   _ADMODB         DATA 0xa1
+0000             48   _AD0BH          DATA 0xbb
+0000             49   _AD0BL          DATA 0xa6
+0000             50   _AD0DAT0        DATA 0xc5
+0000             51   _AD0DAT1        DATA 0xc6
+0000             52   _AD0DAT2        DATA 0xc7
+0000             53   _AD0DAT3        DATA 0xf4
+0000             54   _AD1BH          DATA 0xc4
+0000             55   _AD1BL          DATA 0xbc
+0000             56   _AD1DAT0        DATA 0xd5
+0000             57   _AD1DAT1        DATA 0xd6
+0000             58   _AD1DAT2        DATA 0xd7
+0000             59   _AD1DAT3        DATA 0xf5
+0000             60   _AUXR1          DATA 0xa2
+0000             61   _B              DATA 0xf0
+0000             62   _BRGR0          DATA 0xbe
+0000             63   _BRGR1          DATA 0xbf
+0000             64   _BRGCON         DATA 0xbd
+0000             65   _CCCRA          DATA 0xea
+0000             66   _CCCRB          DATA 0xeb
+0000             67   _CCCRC          DATA 0xec
+0000             68   _CCCRD          DATA 0xed
+0000             69   _CMP1           DATA 0xac
+0000             70   _CMP2           DATA 0xad
+0000             71   _DEECON         DATA 0xf1
+0000             72   _DEEDAT         DATA 0xf2
+0000             73   _DEEADR         DATA 0xf3
+0000             74   _DIVM           DATA 0x95
+0000             75   _DPH            DATA 0x83
+0000             76   _DPL            DATA 0x82
+0000             77   _FMADRH         DATA 0xe7
+0000             78   _FMADRL         DATA 0xe6
+0000             79   _FMCON          DATA 0xe4
+0000             80   _FMDATA         DATA 0xe5
+0000             81   _I2ADR          DATA 0xdb
+0000             82   _I2CON          DATA 0xd8
+0000             83   _I2DAT          DATA 0xda
+0000             84   _I2SCLH         DATA 0xdd
+0000             85   _I2SCLL         DATA 0xdc
+0000             86   _I2STAT         DATA 0xd9
+0000             87   _ICRAH          DATA 0xab
+0000             88   _ICRAL          DATA 0xaa
+0000             89   _ICRBH          DATA 0xaf
+0000             90   _ICRBL          DATA 0xae
+0000             91   _IEN0           DATA 0xa8
+0000             92   _IEN1           DATA 0xe8
+0000             93   _IP0            DATA 0xb8
+0000             94   _IP0H           DATA 0xb7
+0000             95   _IP1            DATA 0xf8
+0000             96   _IP1H           DATA 0xf7
+0000             97   _KBCON          DATA 0x94
+0000             98   _KBMASK         DATA 0x86
+0000             99   _KBPATN         DATA 0x93
+0000            100   _OCRAH          DATA 0xef
+0000            101   _OCRAL          DATA 0xee
+0000            102   _OCRBH          DATA 0xfb
+0000            103   _OCRBL          DATA 0xfa
+0000            104   _OCRCH          DATA 0xfd
+0000            105   _OCRCL          DATA 0xfc
+0000            106   _OCRDH          DATA 0xff
+0000            107   _OCRDL          DATA 0xfe
+0000            108   _P0             DATA 0x80
+0000            109   _P1             DATA 0x90
+0000            110   _P2             DATA 0xa0
+0000            111   _P3             DATA 0xb0
+0000            112   _P0M1           DATA 0x84
+0000            113   _P0M2           DATA 0x85
+0000            114   _P1M1           DATA 0x91
+0000            115   _P1M2           DATA 0x92
+0000            116   _P2M1           DATA 0xa4
+0000            117   _P2M2           DATA 0xa5
+0000            118   _P3M1           DATA 0xb1
+0000            119   _P3M2           DATA 0xb2
+0000            120   _PCON           DATA 0x87
+0000            121   _PCONA          DATA 0xb5
+0000            122   _PSW            DATA 0xd0
+0000            123   _PT0AD          DATA 0xf6
+0000            124   _RSTSRC         DATA 0xdf
+0000            125   _RTCCON         DATA 0xd1
+0000            126   _RTCH           DATA 0xd2
+0000            127   _RTCL           DATA 0xd3
+0000            128   _SADDR          DATA 0xa9
+0000            129   _SADEN          DATA 0xb9
+0000            130   _SBUF           DATA 0x99
+0000            131   _SCON           DATA 0x98
+0000            132   _SSTAT          DATA 0xba
+0000            133   _SP             DATA 0x81
+0000            134   _SPCTL          DATA 0xe2
+0000            135   _SPSTAT         DATA 0xe1
+0000            136   _SPDAT          DATA 0xe3
+0000            137   _TAMOD          DATA 0x8f
+0000            138   _TCON           DATA 0x88
+0000            139   _TCR20          DATA 0xc8
+0000            140   _TCR21          DATA 0xf9
+0000            141   _TH0            DATA 0x8c
+0000            142   _TH1            DATA 0x8d
+0000            143   _TH2            DATA 0xcd
+0000            144   _TICR2          DATA 0xc9
+0000            145   _TIFR2          DATA 0xe9
+0000            146   _TISE2          DATA 0xde
+0000            147   _TL0            DATA 0x8a
+0000            148   _TL1            DATA 0x8b
+0000            149   _TL2            DATA 0xcc
+0000            150   _TMOD           DATA 0x89
+0000            151   _TOR2H          DATA 0xcf
+0000            152   _TOR2L          DATA 0xce
+0000            153   _TPCR2H         DATA 0xcb
+0000            154   _TPCR2L         DATA 0xca
+0000            155   _TRIM           DATA 0x96
+0000            156   _WDCON          DATA 0xa7
+0000            157   _WDL            DATA 0xc1
+0000            158   _WFEED1         DATA 0xc2
+0000            159   _WFEED2         DATA 0xc3
+0000            160   ;--------------------------------------------------------
+0000            161   ; special function bits
+0000            162   ;--------------------------------------------------------
+0000            163   _ACC_7          BIT 0xe7
+0000            164   _ACC_6          BIT 0xe6
+0000            165   _ACC_5          BIT 0xe5
+0000            166   _ACC_4          BIT 0xe4
+0000            167   _ACC_3          BIT 0xe3
+0000            168   _ACC_2          BIT 0xe2
+0000            169   _ACC_1          BIT 0xe1
+0000            170   _ACC_0          BIT 0xe0
+0000            171   _ADMODA_7       BIT 0xc7
+0000            172   _ADMODA_6       BIT 0xc6
+0000            173   _ADMODA_5       BIT 0xc5
+0000            174   _ADMODA_4       BIT 0xc4
+0000            175   _ADMODA_3       BIT 0xc3
+0000            176   _ADMODA_2       BIT 0xc2
+0000            177   _ADMODA_1       BIT 0xc1
+0000            178   _ADMODA_0       BIT 0xc0
+0000            179   _BNDI1          BIT 0xc7
+0000            180   _BURST1         BIT 0xc6
+0000            181   _SCC1           BIT 0xc5
+0000            182   _SCAN1          BIT 0xc4
+0000            183   _BNDI0          BIT 0xc3
+0000            184   _BURST0         BIT 0xc2
+0000            185   _SCC0           BIT 0xc1
+0000            186   _SCAN0          BIT 0xc0
+0000            187   _B_7            BIT 0xf7
+0000            188   _B_6            BIT 0xf6
+0000            189   _B_5            BIT 0xf5
+0000            190   _B_4            BIT 0xf4
+0000            191   _B_3            BIT 0xf3
+0000            192   _B_2            BIT 0xf2
+0000            193   _B_1            BIT 0xf1
+0000            194   _B_0            BIT 0xf0
+0000            195   _I2CON_7        BIT 0xdf
+0000            196   _I2CON_6        BIT 0xde
+0000            197   _I2CON_5        BIT 0xdd
+0000            198   _I2CON_4        BIT 0xdc
+0000            199   _I2CON_3        BIT 0xdb
+0000            200   _I2CON_2        BIT 0xda
+0000            201   _I2CON_1        BIT 0xd9
+0000            202   _I2CON_0        BIT 0xd8
+0000            203   _I2EN           BIT 0xde
+0000            204   _STA            BIT 0xdd
+0000            205   _STO            BIT 0xdc
+0000            206   _SI             BIT 0xdb
+0000            207   _AA             BIT 0xda
+0000            208   _CRSEL          BIT 0xd8
+0000            209   _IEN0_7         BIT 0xaf
+0000            210   _IEN0_6         BIT 0xae
+0000            211   _IEN0_5         BIT 0xad
+0000            212   _IEN0_4         BIT 0xac
+0000            213   _IEN0_3         BIT 0xab
+0000            214   _IEN0_2         BIT 0xaa
+0000            215   _IEN0_1         BIT 0xa9
+0000            216   _IEN0_0         BIT 0xa8
+0000            217   _EA             BIT 0xaf
+0000            218   _EWDRT          BIT 0xae
+0000            219   _EBO            BIT 0xad
+0000            220   _ES             BIT 0xac
+0000            221   _ESR            BIT 0xac
+0000            222   _ET1            BIT 0xab
+0000            223   _EX1            BIT 0xaa
+0000            224   _ET0            BIT 0xa9
+0000            225   _EX0            BIT 0xa8
+0000            226   _IEN1_7         BIT 0xef
+0000            227   _IEN1_6         BIT 0xee
+0000            228   _IEN1_5         BIT 0xed
+0000            229   _IEN1_4         BIT 0xec
+0000            230   _IEN1_3         BIT 0xeb
+0000            231   _IEN1_2         BIT 0xea
+0000            232   _IEN1_1         BIT 0xe9
+0000            233   _IEN1_0         BIT 0xe8
+0000            234   _EADEE          BIT 0xef
+0000            235   _EST            BIT 0xee
+0000            236   _ECCU           BIT 0xec
+0000            237   _ESPI           BIT 0xeb
+0000            238   _EC             BIT 0xea
+0000            239   _EKBI           BIT 0xe9
+0000            240   _EI2C           BIT 0xe8
+0000            241   _IP0_7          BIT 0xbf
+0000            242   _IP0_6          BIT 0xbe
+0000            243   _IP0_5          BIT 0xbd
+0000            244   _IP0_4          BIT 0xbc
+0000            245   _IP0_3          BIT 0xbb
+0000            246   _IP0_2          BIT 0xba
+0000            247   _IP0_1          BIT 0xb9
+0000            248   _IP0_0          BIT 0xb8
+0000            249   _PWDRT          BIT 0xbe
+0000            250   _PBO            BIT 0xbd
+0000            251   _PS             BIT 0xbc
+0000            252   _PSR            BIT 0xbc
+0000            253   _PT1            BIT 0xbb
+0000            254   _PX1            BIT 0xba
+0000            255   _PT0            BIT 0xb9
+0000            256   _PX0            BIT 0xb8
+0000            257   _IP1_7          BIT 0xff
+0000            258   _IP1_6          BIT 0xfe
+0000            259   _IP1_5          BIT 0xfd
+0000            260   _IP1_4          BIT 0xfc
+0000            261   _IP1_3          BIT 0xfb
+0000            262   _IP1_2          BIT 0xfa
+0000            263   _IP1_1          BIT 0xf9
+0000            264   _IP1_0          BIT 0xf8
+0000            265   _PADEE          BIT 0xff
+0000            266   _PST            BIT 0xfe
+0000            267   _PCCU           BIT 0xfc
+0000            268   _PSPI           BIT 0xfb
+0000            269   _PC             BIT 0xfa
+0000            270   _PKBI           BIT 0xf9
+0000            271   _PI2C           BIT 0xf8
+0000            272   _P0_7           BIT 0x87
+0000            273   _P0_6           BIT 0x86
+0000            274   _P0_5           BIT 0x85
+0000            275   _P0_4           BIT 0x84
+0000            276   _P0_3           BIT 0x83
+0000            277   _P0_2           BIT 0x82
+0000            278   _P0_1           BIT 0x81
+0000            279   _P0_0           BIT 0x80
+0000            280   _T1             BIT 0x87
+0000            281   _KB7            BIT 0x87
+0000            282   _CMP_1          BIT 0x86
+0000            283   _KB6            BIT 0x86
+0000            284   _CMPREF         BIT 0x85
+0000            285   _KB5            BIT 0x85
+0000            286   _CIN1A          BIT 0x84
+0000            287   _KB4            BIT 0x84
+0000            288   _CIN1B          BIT 0x83
+0000            289   _KB3            BIT 0x83
+0000            290   _CIN2A          BIT 0x82
+0000            291   _KB2            BIT 0x82
+0000            292   _CIN2B          BIT 0x81
+0000            293   _KB1            BIT 0x81
+0000            294   _CMP_2          BIT 0x80
+0000            295   _KB0            BIT 0x80
+0000            296   _P1_7           BIT 0x97
+0000            297   _P1_6           BIT 0x96
+0000            298   _P1_5           BIT 0x95
+0000            299   _P1_4           BIT 0x94
+0000            300   _P1_3           BIT 0x93
+0000            301   _P1_2           BIT 0x92
+0000            302   _P1_1           BIT 0x91
+0000            303   _P1_0           BIT 0x90
+0000            304   _OCC            BIT 0x97
+0000            305   _OCB            BIT 0x96
+0000            306   _RST            BIT 0x95
+0000            307   _INT1           BIT 0x94
+0000            308   _INT0           BIT 0x93
+0000            309   _SDA            BIT 0x93
+0000            310   _T0             BIT 0x92
+0000            311   _SCL            BIT 0x92
+0000            312   _RXD            BIT 0x91
+0000            313   _TXD            BIT 0x90
+0000            314   _P2_7           BIT 0xa7
+0000            315   _P2_6           BIT 0xa6
+0000            316   _P2_5           BIT 0xa5
+0000            317   _P2_4           BIT 0xa4
+0000            318   _P2_3           BIT 0xa3
+0000            319   _P2_2           BIT 0xa2
+0000            320   _P2_1           BIT 0xa1
+0000            321   _P2_0           BIT 0xa0
+0000            322   _ICA            BIT 0xa7
+0000            323   _OCA            BIT 0xa6
+0000            324   _SPICLK         BIT 0xa5
+0000            325   _SS             BIT 0xa4
+0000            326   _MISO           BIT 0xa3
+0000            327   _MOSI           BIT 0xa2
+0000            328   _OCD            BIT 0xa1
+0000            329   _ICB            BIT 0xa0
+0000            330   _P3_7           BIT 0xb7
+0000            331   _P3_6           BIT 0xb6
+0000            332   _P3_5           BIT 0xb5
+0000            333   _P3_4           BIT 0xb4
+0000            334   _P3_3           BIT 0xb3
+0000            335   _P3_2           BIT 0xb2
+0000            336   _P3_1           BIT 0xb1
+0000            337   _P3_0           BIT 0xb0
+0000            338   _XTAL1          BIT 0xb1
+0000            339   _XTAL2          BIT 0xb0
+0000            340   _PSW_7          BIT 0xd7
+0000            341   _PSW_6          BIT 0xd6
+0000            342   _PSW_5          BIT 0xd5
+0000            343   _PSW_4          BIT 0xd4
+0000            344   _PSW_3          BIT 0xd3
+0000            345   _PSW_2          BIT 0xd2
+0000            346   _PSW_1          BIT 0xd1
+0000            347   _PSW_0          BIT 0xd0
+0000            348   _CY             BIT 0xd7
+0000            349   _AC             BIT 0xd6
+0000            350   _F0             BIT 0xd5
+0000            351   _RS1            BIT 0xd4
+0000            352   _RS0            BIT 0xd3
+0000            353   _OV             BIT 0xd2
+0000            354   _F1             BIT 0xd1
+0000            355   _P              BIT 0xd0
+0000            356   _SCON_7         BIT 0x9f
+0000            357   _SCON_6         BIT 0x9e
+0000            358   _SCON_5         BIT 0x9d
+0000            359   _SCON_4         BIT 0x9c
+0000            360   _SCON_3         BIT 0x9b
+0000            361   _SCON_2         BIT 0x9a
+0000            362   _SCON_1         BIT 0x99
+0000            363   _SCON_0         BIT 0x98
+0000            364   _SM0            BIT 0x9f
+0000            365   _FE             BIT 0x9f
+0000            366   _SM1            BIT 0x9e
+0000            367   _SM2            BIT 0x9d
+0000            368   _REN            BIT 0x9c
+0000            369   _TB8            BIT 0x9b
+0000            370   _RB8            BIT 0x9a
+0000            371   _TI             BIT 0x99
+0000            372   _RI             BIT 0x98
+0000            373   _TCON_7         BIT 0x8f
+0000            374   _TCON_6         BIT 0x8e
+0000            375   _TCON_5         BIT 0x8d
+0000            376   _TCON_4         BIT 0x8c
+0000            377   _TCON_3         BIT 0x8b
+0000            378   _TCON_2         BIT 0x8a
+0000            379   _TCON_1         BIT 0x89
+0000            380   _TCON_0         BIT 0x88
+0000            381   _TF1            BIT 0x8f
+0000            382   _TR1            BIT 0x8e
+0000            383   _TF0            BIT 0x8d
+0000            384   _TR0            BIT 0x8c
+0000            385   _IE1            BIT 0x8b
+0000            386   _IT1            BIT 0x8a
+0000            387   _IE0            BIT 0x89
+0000            388   _IT0            BIT 0x88
+0000            389   _TCR20_7        BIT 0xcf
+0000            390   _TCR20_6        BIT 0xce
+0000            391   _TCR20_5        BIT 0xcd
+0000            392   _TCR20_4        BIT 0xcc
+0000            393   _TCR20_3        BIT 0xcb
+0000            394   _TCR20_2        BIT 0xca
+0000            395   _TCR20_1        BIT 0xc9
+0000            396   _TCR20_0        BIT 0xc8
+0000            397   _PLEEN          BIT 0xcf
+0000            398   _HLTRN          BIT 0xce
+0000            399   _HLTEN          BIT 0xcd
+0000            400   _ALTCD          BIT 0xcc
+0000            401   _ALTAB          BIT 0xcb
+0000            402   _TDIR2          BIT 0xca
+0000            403   _TMOD21         BIT 0xc9
+0000            404   _TMOD20         BIT 0xc8
+0000            405   ;--------------------------------------------------------
+0000            406   ; overlayable register banks
+0000            407   ;--------------------------------------------------------
+0000            408            rbank0 segment data overlay
+0000            409   ;--------------------------------------------------------
+0000            410   ; internal ram data
+0000            411   ;--------------------------------------------------------
+0000            412            rseg R_DSEG
+0000            413   _LCD_setCursor_PARM_2:
+0000            414            ds 2
+0002            415   ;--------------------------------------------------------
+0002            416   ; overlayable items in internal ram 
+0002            417   ;--------------------------------------------------------
+0000            418            rseg    R_OSEG
+0000            419            rseg    R_OSEG
+0000            420            rseg    R_OSEG
+0000            421   ;--------------------------------------------------------
+0000            422   ; indirectly addressable internal ram data
+0000            423   ;--------------------------------------------------------
+0000            424            rseg R_ISEG
+0000            425   ;--------------------------------------------------------
+0000            426   ; absolute internal ram data
+0000            427   ;--------------------------------------------------------
+0000            428            DSEG
+0000            429   ;--------------------------------------------------------
+0000            430   ; bit data
+0000            431   ;--------------------------------------------------------
+0000            432            rseg R_BSEG
+0000            433   ;--------------------------------------------------------
+0000            434   ; paged external ram data
+0000            435   ;--------------------------------------------------------
+0000            436            rseg R_PSEG
+0000            437   ;--------------------------------------------------------
+0000            438   ; external ram data
+0000            439   ;--------------------------------------------------------
+0000            440            rseg R_XSEG
+FFC8            441            XSEG at 0xffc8
+FFC8            442   _BODCFG: ds 1
+FFC9            443            public _BODCFG
+0000            444            rseg R_XSEG
+FFDE            445            XSEG at 0xffde
+FFDE            446   _CLKCON: ds 1
+FFDF            447            public _CLKCON
+0000            448            rseg R_XSEG
+FFE1            449            XSEG at 0xffe1
+FFE1            450   _PGACON1: ds 1
+FFE2            451            public _PGACON1
+0000            452            rseg R_XSEG
+FFE4            453            XSEG at 0xffe4
+FFE4            454   _PGACON1B: ds 1
+FFE5            455            public _PGACON1B
+0000            456            rseg R_XSEG
+FFE3            457            XSEG at 0xffe3
+FFE3            458   _PGA1TRIM8X16X: ds 1
+FFE4            459            public _PGA1TRIM8X16X
+0000            460            rseg R_XSEG
+FFE2            461            XSEG at 0xffe2
+FFE2            462   _PGA1TRIM2X4X: ds 1
+FFE3            463            public _PGA1TRIM2X4X
+0000            464            rseg R_XSEG
+FFCA            465            XSEG at 0xffca
+FFCA            466   _PGACON0: ds 1
+FFCB            467            public _PGACON0
+0000            468            rseg R_XSEG
+FFCE            469            XSEG at 0xffce
+FFCE            470   _PGACON0B: ds 1
+FFCF            471            public _PGACON0B
+0000            472            rseg R_XSEG
+FFCD            473            XSEG at 0xffcd
+FFCD            474   _PGA0TRIM8X16X: ds 1
+FFCE            475            public _PGA0TRIM8X16X
+0000            476            rseg R_XSEG
+FFCC            477            XSEG at 0xffcc
+FFCC            478   _PGA0TRIM2X4X: ds 1
+FFCD            479            public _PGA0TRIM2X4X
+0000            480            rseg R_XSEG
+FFBF            481            XSEG at 0xffbf
+FFBF            482   _RTCDATH: ds 1
+FFC0            483            public _RTCDATH
+0000            484            rseg R_XSEG
+FFBE            485            XSEG at 0xffbe
+FFBE            486   _RTCDATL: ds 1
+FFBF            487            public _RTCDATL
+0000            488            rseg R_XSEG
+0000            489   ;--------------------------------------------------------
+0000            490   ; absolute external ram data
+0000            491   ;--------------------------------------------------------
+FFBF            492            XSEG
+FFBF            493   ;--------------------------------------------------------
+FFBF            494   ; external initialized ram data
+FFBF            495   ;--------------------------------------------------------
+0000            496            rseg R_IXSEG
+0000            497            rseg R_HOME
+0000            498            rseg R_GSINIT
+0000            499            rseg R_CSEG
+0000            500   ;--------------------------------------------------------
+0000            501   ; Reset entry point and interrupt vectors
+0000            502   ;--------------------------------------------------------
+0000            503            CSEG at 0x0000
+0000 020100     504            ljmp    _crt0
+0003            505   ;--------------------------------------------------------
+0003            506   ; global & static initialisations
+0003            507   ;--------------------------------------------------------
+0000            508            rseg R_HOME
+0000            509            rseg R_GSINIT
+0000            510            rseg R_GSINIT
+0000            511   ;--------------------------------------------------------
+0000            512   ; data variables initialization
+0000            513   ;--------------------------------------------------------
+0000            514            rseg R_DINIT
+0000            515            ; The linker places a 'ret' at the end of segment R_DINIT.
 0000            516   ;--------------------------------------------------------
-0000            517            rseg R_DINIT
-0000            518   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:44: int LCD_8bit = 0; // set to 0 for 4-bit mode; 1 for 8-bit
-0000 E4         519            clr     a
-0001 F510       520            mov     _LCD_8bit,a
-0003 F511       521            mov     (_LCD_8bit + 1),a
-0005            522            ; The linker places a 'ret' at the end of segment R_DINIT.
-0005            523   ;--------------------------------------------------------
-0005            524   ; code
-0005            525   ;--------------------------------------------------------
-0000            526            rseg R_CSEG
-0000            527   ;------------------------------------------------------------
-0000            528   ;Allocation info for local variables in function 'BEN_WUZ_HERE'
-0000            529   ;------------------------------------------------------------
-0000            530   ;------------------------------------------------------------
-0000            531   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:7: void BEN_WUZ_HERE() {
-0000            532   ;        -----------------------------------------
-0000            533   ;         function BEN_WUZ_HERE
-0000            534   ;        -----------------------------------------
-0000            535   _BEN_WUZ_HERE:
-0000            536            using   0
-0000            537   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:8: }
-0000 22         538            ret
-0001            539   ;------------------------------------------------------------
-0001            540   ;Allocation info for local variables in function 'delay'
-0001            541   ;------------------------------------------------------------
-0001            542   ;j                         Allocated to registers r2 r3 
-0001            543   ;k                         Allocated to registers r4 r5 
-0001            544   ;------------------------------------------------------------
-0001            545   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:16: void delay(void)
-0001            546   ;        -----------------------------------------
-0001            547   ;         function delay
-0001            548   ;        -----------------------------------------
-0001            549   _delay:
-0001            550   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
-0001 7A00       551            mov     r2,#0x00
-0003 7B00       552            mov     r3,#0x00
-0005            553   L003004?:
-0005 C3         554            clr     c
-0006 EA         555            mov     a,r2
-0007 9464       556            subb    a,#0x64
-0009 EB         557            mov     a,r3
-000A 6480       558            xrl     a,#0x80
-000C 9480       559            subb    a,#0x80
-000E 5001       560            jnc     L003008?
-0010            561   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:21: for(k=0; k<1000; k++);
-0010 7CE8       562            mov     r4,#0xE8
-0012 7D03       563            mov     r5,#0x03
-0014            564   L003003?:
-0014 1C         565            dec     r4
-0015 BCFFC8     566            cjne    r4,#0xff,L003017?
-0018 1D         567            dec     r5
-0019            568   L003017?:
-0019 EC         569            mov     a,r4
-001A 4D         570            orl     a,r5
-001B 7001       571            jnz     L003003?
-001D            572   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
-001D 0A         573            inc     r2
-001E BA0008     574            cjne    r2,#0x00,L003004?
-0021 0B         575            inc     r3
-0022 8001       576            sjmp    L003004?
-0024            577   L003008?:
-0024 22         578            ret
-0025            579   ;------------------------------------------------------------
-0025            580   ;Allocation info for local variables in function 'LCD_write'
-0025            581   ;------------------------------------------------------------
-0025            582   ;i                         Allocated to registers 
-0025            583   ;------------------------------------------------------------
-0025            584   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:51: void LCD_write(char i) {
-0025            585   ;        -----------------------------------------
-0025            586   ;         function LCD_write
-0025            587   ;        -----------------------------------------
-0025            588   _LCD_write:
-0025            589   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:52: lcd_dc = 1; // set RS for data
-0025 D2A7       590            setb    _P2_7
-0027            591   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:53: lcd_rw = 0; // set RW for write
-0027 C2A6       592            clr     _P2_6
-0029            593   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:55: LCD_apply(i);
-0029 120100     594            lcall   _LCD_apply
-002C            595   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:57: LCD_clock();
-002C 020100     596            ljmp    _LCD_clock
-002F            597   ;------------------------------------------------------------
-002F            598   ;Allocation info for local variables in function 'LCD_writeString'
-002F            599   ;------------------------------------------------------------
-002F            600   ;string                    Allocated to registers r2 r3 r4 
-002F            601   ;i                         Allocated to registers r5 r6 
-002F            602   ;------------------------------------------------------------
-002F            603   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:62: void LCD_writeString(char *string)
-002F            604   ;        -----------------------------------------
-002F            605   ;         function LCD_writeString
-002F            606   ;        -----------------------------------------
-002F            607   _LCD_writeString:
-002F AA82       608            mov     r2,dpl
-0031 AB83       609            mov     r3,dph
-0033 ACF0       610            mov     r4,b
-0035            611   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:65: while (string[i] != 0)
-0035 7D00       612            mov     r5,#0x00
-0037 7E00       613            mov     r6,#0x00
-0039            614   L005001?:
-0039 ED         615            mov     a,r5
-003A 2A         616            add     a,r2
-003B FF         617            mov     r7,a
-003C EE         618            mov     a,r6
-003D 3B         619            addc    a,r3
-003E F8         620            mov     r0,a
-003F 8C01       621            mov     ar1,r4
-0041 8F82       622            mov     dpl,r7
-0043 8883       623            mov     dph,r0
-0045 89F0       624            mov     b,r1
-0047 120100     625            lcall   __gptrget
-004A FF         626            mov     r7,a
-004B 6001       627            jz      L005004?
-004D            628   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:67: LCD_write(string[i]);
-004D 8F82       629            mov     dpl,r7
-004F C002       630            push    ar2
-0051 C003       631            push    ar3
-0053 C004       632            push    ar4
-0055 C005       633            push    ar5
-0057 C006       634            push    ar6
-0059 120100     635            lcall   _LCD_write
-005C D006       636            pop     ar6
-005E D005       637            pop     ar5
-0060 D004       638            pop     ar4
-0062 D003       639            pop     ar3
-0064 D002       640            pop     ar2
-0066            641   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:68: i++;
-0066 0D         642            inc     r5
-0067 BD00C8     643            cjne    r5,#0x00,L005001?
-006A 0E         644            inc     r6
-006B 8001       645            sjmp    L005001?
-006D            646   L005004?:
-006D 22         647            ret
-006E            648   ;------------------------------------------------------------
-006E            649   ;Allocation info for local variables in function 'LCD_setCursor'
-006E            650   ;------------------------------------------------------------
-006E            651   ;row                       Allocated with name '_LCD_setCursor_PARM_2'
-006E            652   ;col                       Allocated to registers r2 r3 
-006E            653   ;where                     Allocated to registers r4 r5 
-006E            654   ;------------------------------------------------------------
-006E            655   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:74: void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
-006E            656   ;        -----------------------------------------
-006E            657   ;         function LCD_setCursor
-006E            658   ;        -----------------------------------------
-006E            659   _LCD_setCursor:
-006E AA82       660            mov     r2,dpl
-0070 AB83       661            mov     r3,dph
-0072            662   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:77: LCD_cmd(0x10); // set cursor home
-0072 758210     663            mov     dpl,#0x10
-0075 C002       664            push    ar2
-0077 C003       665            push    ar3
-0079 120100     666            lcall   _LCD_cmd
-007C D003       667            pop     ar3
-007E D002       668            pop     ar2
-0080            669   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:78: for(where = 0; where < (col+row*16); where++)
-0080 ACD0       670            mov     r4,_LCD_setCursor_PARM_2
-0082 E5D1       671            mov     a,(_LCD_setCursor_PARM_2 + 1)
-0084 C4         672            swap    a
-0085 54F0       673            anl     a,#0xf0
-0087 CC         674            xch     a,r4
-0088 C4         675            swap    a
-0089 CC         676            xch     a,r4
-008A 6C         677            xrl     a,r4
-008B CC         678            xch     a,r4
-008C 54F0       679            anl     a,#0xf0
-008E CC         680            xch     a,r4
-008F 6C         681            xrl     a,r4
-0090 FD         682            mov     r5,a
-0091 EC         683            mov     a,r4
-0092 2A         684            add     a,r2
-0093 FA         685            mov     r2,a
-0094 ED         686            mov     a,r5
-0095 3B         687            addc    a,r3
-0096 FB         688            mov     r3,a
-0097 7C00       689            mov     r4,#0x00
-0099 7D00       690            mov     r5,#0x00
-009B            691   L006001?:
-009B C3         692            clr     c
-009C EC         693            mov     a,r4
-009D 9A         694            subb    a,r2
-009E ED         695            mov     a,r5
-009F 6480       696            xrl     a,#0x80
-00A1 8BF0       697            mov     b,r3
-00A3 63F080     698            xrl     b,#0x80
-00A6 95F0       699            subb    a,b
-00A8 5001       700            jnc     L006005?
-00AA            701   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:80: LCD_cmd(0x14);
-00AA 758214     702            mov     dpl,#0x14
-00AD C002       703            push    ar2
-00AF C003       704            push    ar3
-00B1 C004       705            push    ar4
-00B3 C005       706            push    ar5
-00B5 120100     707            lcall   _LCD_cmd
-00B8 D005       708            pop     ar5
-00BA D004       709            pop     ar4
-00BC D003       710            pop     ar3
-00BE D002       711            pop     ar2
-00C0            712   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:78: for(where = 0; where < (col+row*16); where++)
-00C0 0C         713            inc     r4
-00C1 BC0088     714            cjne    r4,#0x00,L006001?
-00C4 0D         715            inc     r5
-00C5 8001       716            sjmp    L006001?
-00C7            717   L006005?:
-00C7 22         718            ret
-00C8            719   ;------------------------------------------------------------
-00C8            720   ;Allocation info for local variables in function 'LCD_cmd'
-00C8            721   ;------------------------------------------------------------
-00C8            722   ;i                         Allocated to registers 
-00C8            723   ;------------------------------------------------------------
-00C8            724   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:87: void LCD_cmd(char i) {
-00C8            725   ;        -----------------------------------------
-00C8            726   ;         function LCD_cmd
-00C8            727   ;        -----------------------------------------
-00C8            728   _LCD_cmd:
-00C8            729   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:88: lcd_dc = 0; // set RS for command
-00C8 C2A7       730            clr     _P2_7
-00CA            731   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:89: lcd_rw = 0; // set RW for write
-00CA C2A6       732            clr     _P2_6
-00CC            733   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:92: LCD_apply(i);
-00CC 120100     734            lcall   _LCD_apply
-00CF            735   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:93: LCD_clock();
-00CF 020100     736            ljmp    _LCD_clock
-00D2            737   ;------------------------------------------------------------
-00D2            738   ;Allocation info for local variables in function 'LCD_init'
-00D2            739   ;------------------------------------------------------------
-00D2            740   ;------------------------------------------------------------
-00D2            741   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:98: void LCD_init() {
-00D2            742   ;        -----------------------------------------
-00D2            743   ;         function LCD_init
-00D2            744   ;        -----------------------------------------
-00D2            745   _LCD_init:
-00D2            746   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:99: lcd_enable = 0;
-00D2 C2A5       747            clr     _P2_5
-00D4            748   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:100: delay();
-00D4 120100     749            lcall   _delay
-00D7            750   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:101: LCD_cmd(0x30); // wake up
-00D7 758230     751            mov     dpl,#0x30
-00DA 120100     752            lcall   _LCD_cmd
-00DD            753   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:102: delay();
-00DD 120100     754            lcall   _delay
-00E0            755   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:103: LCD_cmd(0x30); // wake up 2
-00E0 758230     756            mov     dpl,#0x30
-00E3 120100     757            lcall   _LCD_cmd
-00E6            758   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:104: delay();
-00E6 120100     759            lcall   _delay
-00E9            760   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:105: LCD_cmd(0x30); // wake up 3
-00E9 758230     761            mov     dpl,#0x30
-00EC 120100     762            lcall   _LCD_cmd
-00EF            763   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:106: delay();
-00EF 120100     764            lcall   _delay
-00F2            765   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:108: if (LCD_8bit == 1) {
-00F2 7401       766            mov     a,#0x01
-00F4 B51008     767            cjne    a,_LCD_8bit,L008007?
-00F7 E4         768            clr     a
-00F8 B51108     769            cjne    a,(_LCD_8bit + 1),L008007?
-00FB 8001       770            sjmp    L008008?
-00FD            771   L008007?:
-00FD 8001       772            sjmp    L008002?
-00FF            773   L008008?:
-00FF            774   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:109: LCD_cmd(0x38); // 8bit/2line
-00FF 758238     775            mov     dpl,#0x38
-0102 120100     776            lcall   _LCD_cmd
-0105 8001       777            sjmp    L008003?
-0107            778   L008002?:
-0107            779   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:111: LCD_cmd(0x28); // 4bit/2line
-0107 758228     780            mov     dpl,#0x28
-010A 120100     781            lcall   _LCD_cmd
-010D            782   L008003?:
-010D            783   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:114: LCD_cmd(0x10); // return home
-010D 758210     784            mov     dpl,#0x10
-0110 120100     785            lcall   _LCD_cmd
-0113            786   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:115: LCD_cmd(0x0c); // display on cursor on
-0113 75820C     787            mov     dpl,#0x0C
-0116 120100     788            lcall   _LCD_cmd
-0119            789   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:116: LCD_cmd(0x06); // set display mode
-0119 758206     790            mov     dpl,#0x06
-011C 120100     791            lcall   _LCD_cmd
-011F            792   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:117: delay();
-011F 120100     793            lcall   _delay
-0122            794   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:118: LCD_cmd(0x01); // clear screen
-0122 758201     795            mov     dpl,#0x01
-0125 020100     796            ljmp    _LCD_cmd
-0128            797   ;------------------------------------------------------------
-0128            798   ;Allocation info for local variables in function 'LCD_apply'
-0128            799   ;------------------------------------------------------------
-0128            800   ;i                         Allocated to registers r2 
-0128            801   ;------------------------------------------------------------
-0128            802   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:124: void LCD_apply(char i) {
-0128            803   ;        -----------------------------------------
-0128            804   ;         function LCD_apply
-0128            805   ;        -----------------------------------------
-0128            806   _LCD_apply:
-0128            807   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:126: lcd_data_7 = i & 1;
-0128 E582       808            mov     a,dpl
-012A FA         809            mov     r2,a
-012B 13         810            rrc     a
-012C 92A4       811            mov     _P2_4,c
-012E            812   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:127: lcd_data_6 = (i >> 1) & 1;
-012E EA         813            mov     a,r2
-012F A2E1       814            mov     c,acc.1
-0131 92A3       815            mov     _P2_3,c
-0133            816   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:128: lcd_data_5 = (i >> 2) & 1;
-0133 EA         817            mov     a,r2
-0134 A2E2       818            mov     c,acc.2
-0136 92A2       819            mov     _P2_2,c
-0138            820   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_data_4 = (i >> 3) & 1;
-0138 EA         821            mov     a,r2
-0139 A2E3       822            mov     c,acc.3
-013B 92A1       823            mov     _P2_1,c
-013D            824   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:132: if (LCD_8bit) {
-013D E510       825            mov     a,_LCD_8bit
-013F 4511       826            orl     a,(_LCD_8bit + 1)
-0141 6001       827            jz      L009003?
-0143            828   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:133: lcd_data_3 = (i >> 4) & 1;
-0143 EA         829            mov     a,r2
-0144 A2E4       830            mov     c,acc.4
-0146 92A0       831            mov     _P2_0,c
-0148            832   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:134: lcd_data_2 = (i >> 5) & 1;
-0148 EA         833            mov     a,r2
-0149 A2E5       834            mov     c,acc.5
-014B 9297       835            mov     _P1_7,c
-014D            836   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:135: lcd_data_1 = (i >> 6) & 1;
-014D EA         837            mov     a,r2
-014E A2E6       838            mov     c,acc.6
-0150 9296       839            mov     _P1_6,c
-0152            840   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:136: lcd_data_0 = (i >> 7) & 1;
-0152 EA         841            mov     a,r2
-0153 33         842            rlc     a
-0154 9294       843            mov     _P1_4,c
-0156            844   L009003?:
-0156 22         845            ret
-0157            846   ;------------------------------------------------------------
-0157            847   ;Allocation info for local variables in function 'LCD_clock'
-0157            848   ;------------------------------------------------------------
-0157            849   ;------------------------------------------------------------
-0157            850   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:144: void LCD_clock()
-0157            851   ;        -----------------------------------------
-0157            852   ;         function LCD_clock
-0157            853   ;        -----------------------------------------
-0157            854   _LCD_clock:
-0157            855   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:147: lcd_enable = 1;
-0157 D2A5       856            setb    _P2_5
-0159            857   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:148: delay();
-0159 120100     858            lcall   _delay
-015C            859   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:149: lcd_enable = 0;
-015C C2A5       860            clr     _P2_5
-015E 22         861            ret
-015F            862   ;------------------------------------------------------------
-015F            863   ;Allocation info for local variables in function 'main'
-015F            864   ;------------------------------------------------------------
-015F            865   ;------------------------------------------------------------
-015F            866   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:21: void main(void)
-015F            867   ;        -----------------------------------------
-015F            868   ;         function main
-015F            869   ;        -----------------------------------------
-015F            870   _main:
-015F            871   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:23: init_ports();
-015F 120100     872            lcall   _init_ports
-0162            873   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:25: LCD_init();
-0162 120100     874            lcall   _LCD_init
-0165            875   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:27: while(1)
-0165            876   L011002?:
-0165            877   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:29: lights(0x02);
-0165 758202     878            mov     dpl,#0x02
-0168 120100     879            lcall   _lights
-016B            880   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:30: LCD_write(0x41);
-016B 758241     881            mov     dpl,#0x41
-016E 120100     882            lcall   _LCD_write
-0171            883   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:31: delay();
-0171 120100     884            lcall   _delay
-0174            885   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:32: LCD_write(0x42);
-0174 758242     886            mov     dpl,#0x42
-0177 120100     887            lcall   _LCD_write
-017A            888   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:33: LCD_writeString("HI");
-017A 90A0C8     889            mov     dptr,#__str_0
-017D 75F080     890            mov     b,#0x80
-0180 120100     891            lcall   _LCD_writeString
-0183            892   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:34: LCD_setCursor(1,0);
-0183 E4         893            clr     a
-0184 F5D0       894            mov     _LCD_setCursor_PARM_2,a
-0186 F5D1       895            mov     (_LCD_setCursor_PARM_2 + 1),a
-0188 900001     896            mov     dptr,#0x0001
-018B 120100     897            lcall   _LCD_setCursor
-018E            898   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:35: LCD_writeString("Hello");
-018E 90A108     899            mov     dptr,#__str_1
-0191 75F080     900            mov     b,#0x80
-0194 120100     901            lcall   _LCD_writeString
-0197            902   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:36: lights(0x01);
-0197 758201     903            mov     dpl,#0x01
-019A 120100     904            lcall   _lights
-019D            905   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:37: delay();
-019D 120100     906            lcall   _delay
-01A0 8001       907            sjmp    L011002?
-01A2            908   ;------------------------------------------------------------
-01A2            909   ;Allocation info for local variables in function 'init_ports'
-01A2            910   ;------------------------------------------------------------
-01A2            911   ;------------------------------------------------------------
-01A2            912   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:41: void init_ports() {
-01A2            913   ;        -----------------------------------------
-01A2            914   ;         function init_ports
-01A2            915   ;        -----------------------------------------
-01A2            916   _init_ports:
-01A2            917   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:43: P1M1 = 0;
-01A2 759100     918            mov     _P1M1,#0x00
-01A5            919   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:44: P1M2 = 0;
-01A5 759200     920            mov     _P1M2,#0x00
-01A8            921   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:46: P2M1 = 0;
-01A8 75A400     922            mov     _P2M1,#0x00
-01AB            923   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:47: P2M2 = 0;
-01AB 75A500     924            mov     _P2M2,#0x00
-01AE 22         925            ret
-01AF            926   ;------------------------------------------------------------
-01AF            927   ;Allocation info for local variables in function 'lights'
-01AF            928   ;------------------------------------------------------------
-01AF            929   ;i                         Allocated to registers r2 
-01AF            930   ;------------------------------------------------------------
-01AF            931   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:50: void lights(char i) {
-01AF            932   ;        -----------------------------------------
-01AF            933   ;         function lights
-01AF            934   ;        -----------------------------------------
-01AF            935   _lights:
-01AF            936   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:52: light_0 = (i) & 0x01;
-01AF E582       937            mov     a,dpl
-01B1 FA         938            mov     r2,a
-01B2 13         939            rrc     a
-01B3 9292       940            mov     _P1_2,c
-01B5            941   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:53: light_1 = (i>>1) & 0x01;
-01B5 EA         942            mov     a,r2
-01B6 A2E1       943            mov     c,acc.1
-01B8 9293       944            mov     _P1_3,c
-01BA 22         945            ret
-01BB            946            rseg R_CSEG
-01BB            947   
-0000            948            rseg R_XINIT
-0000            949   
-0000            950            rseg R_CONST
-0000            951   __str_0:
-0000 4849       952            db 'HI'
-0002 00         953            db 0x00
-0003            954   __str_1:
-0003 48656C6C   955            db 'Hello'
+0000            517   ; code
+0000            518   ;--------------------------------------------------------
+0000            519            rseg R_CSEG
+0000            520   ;------------------------------------------------------------
+0000            521   ;Allocation info for local variables in function 'BEN_WUZ_HERE'
+0000            522   ;------------------------------------------------------------
+0000            523   ;------------------------------------------------------------
+0000            524   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:7: void BEN_WUZ_HERE() {
+0000            525   ;        -----------------------------------------
+0000            526   ;         function BEN_WUZ_HERE
+0000            527   ;        -----------------------------------------
+0000            528   _BEN_WUZ_HERE:
+0000            529            using   0
+0000            530   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:8: }
+0000 22         531            ret
+0001            532   ;------------------------------------------------------------
+0001            533   ;Allocation info for local variables in function 'delay'
+0001            534   ;------------------------------------------------------------
+0001            535   ;j                         Allocated to registers r2 r3 
+0001            536   ;k                         Allocated to registers r4 r5 
+0001            537   ;------------------------------------------------------------
+0001            538   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:16: void delay(void)
+0001            539   ;        -----------------------------------------
+0001            540   ;         function delay
+0001            541   ;        -----------------------------------------
+0001            542   _delay:
+0001            543   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
+0001 7A00       544            mov     r2,#0x00
+0003 7B00       545            mov     r3,#0x00
+0005            546   L003004?:
+0005 C3         547            clr     c
+0006 EA         548            mov     a,r2
+0007 9464       549            subb    a,#0x64
+0009 EB         550            mov     a,r3
+000A 6480       551            xrl     a,#0x80
+000C 9480       552            subb    a,#0x80
+000E 5001       553            jnc     L003008?
+0010            554   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:21: for(k=0; k<1000; k++);
+0010 7CE8       555            mov     r4,#0xE8
+0012 7D03       556            mov     r5,#0x03
+0014            557   L003003?:
+0014 1C         558            dec     r4
+0015 BCFF50     559            cjne    r4,#0xff,L003017?
+0018 1D         560            dec     r5
+0019            561   L003017?:
+0019 EC         562            mov     a,r4
+001A 4D         563            orl     a,r5
+001B 7001       564            jnz     L003003?
+001D            565   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/utilities.c:19: for(j=0; j<100; j++)
+001D 0A         566            inc     r2
+001E BA0090     567            cjne    r2,#0x00,L003004?
+0021 0B         568            inc     r3
+0022 8001       569            sjmp    L003004?
+0024            570   L003008?:
+0024 22         571            ret
+0025            572   ;------------------------------------------------------------
+0025            573   ;Allocation info for local variables in function 'LCD_write'
+0025            574   ;------------------------------------------------------------
+0025            575   ;i                         Allocated to registers 
+0025            576   ;------------------------------------------------------------
+0025            577   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:51: void LCD_write(char i) {
+0025            578   ;        -----------------------------------------
+0025            579   ;         function LCD_write
+0025            580   ;        -----------------------------------------
+0025            581   _LCD_write:
+0025            582   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:52: lcd_dc = 1; // set RS for data
+0025 D2A7       583            setb    _P2_7
+0027            584   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:53: lcd_rw = 0; // set RW for write
+0027 C2A6       585            clr     _P2_6
+0029            586   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:55: LCD_apply(i);
+0029 120100     587            lcall   _LCD_apply
+002C            588   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:57: LCD_clock();
+002C 020100     589            ljmp    _LCD_clock
+002F            590   ;------------------------------------------------------------
+002F            591   ;Allocation info for local variables in function 'LCD_writeString'
+002F            592   ;------------------------------------------------------------
+002F            593   ;string                    Allocated to registers r2 r3 r4 
+002F            594   ;i                         Allocated to registers r5 r6 
+002F            595   ;------------------------------------------------------------
+002F            596   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:62: void LCD_writeString(char *string)
+002F            597   ;        -----------------------------------------
+002F            598   ;         function LCD_writeString
+002F            599   ;        -----------------------------------------
+002F            600   _LCD_writeString:
+002F AA82       601            mov     r2,dpl
+0031 AB83       602            mov     r3,dph
+0033 ACF0       603            mov     r4,b
+0035            604   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:65: while (string[i] != 0)
+0035 7D00       605            mov     r5,#0x00
+0037 7E00       606            mov     r6,#0x00
+0039            607   L005001?:
+0039 ED         608            mov     a,r5
+003A 2A         609            add     a,r2
+003B FF         610            mov     r7,a
+003C EE         611            mov     a,r6
+003D 3B         612            addc    a,r3
+003E F8         613            mov     r0,a
+003F 8C01       614            mov     ar1,r4
+0041 8F82       615            mov     dpl,r7
+0043 8883       616            mov     dph,r0
+0045 89F0       617            mov     b,r1
+0047 120100     618            lcall   __gptrget
+004A FF         619            mov     r7,a
+004B 6001       620            jz      L005004?
+004D            621   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:67: LCD_write(string[i]);
+004D 8F82       622            mov     dpl,r7
+004F C002       623            push    ar2
+0051 C003       624            push    ar3
+0053 C004       625            push    ar4
+0055 C005       626            push    ar5
+0057 C006       627            push    ar6
+0059 120100     628            lcall   _LCD_write
+005C D006       629            pop     ar6
+005E D005       630            pop     ar5
+0060 D004       631            pop     ar4
+0062 D003       632            pop     ar3
+0064 D002       633            pop     ar2
+0066            634   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:68: i++;
+0066 0D         635            inc     r5
+0067 BD0050     636            cjne    r5,#0x00,L005001?
+006A 0E         637            inc     r6
+006B 8001       638            sjmp    L005001?
+006D            639   L005004?:
+006D 22         640            ret
+006E            641   ;------------------------------------------------------------
+006E            642   ;Allocation info for local variables in function 'LCD_setCursor'
+006E            643   ;------------------------------------------------------------
+006E            644   ;row                       Allocated with name '_LCD_setCursor_PARM_2'
+006E            645   ;col                       Allocated to registers r2 r3 
+006E            646   ;where                     Allocated to registers r4 r5 
+006E            647   ;------------------------------------------------------------
+006E            648   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:74: void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
+006E            649   ;        -----------------------------------------
+006E            650   ;         function LCD_setCursor
+006E            651   ;        -----------------------------------------
+006E            652   _LCD_setCursor:
+006E AA82       653            mov     r2,dpl
+0070 AB83       654            mov     r3,dph
+0072            655   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:77: LCD_cmd(0x10); // set cursor home
+0072 758210     656            mov     dpl,#0x10
+0075 C002       657            push    ar2
+0077 C003       658            push    ar3
+0079 120100     659            lcall   _LCD_cmd
+007C D003       660            pop     ar3
+007E D002       661            pop     ar2
+0080            662   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:78: for(where = 0; where < (col+row*16); where++)
+0080 ACD0       663            mov     r4,_LCD_setCursor_PARM_2
+0082 E5D1       664            mov     a,(_LCD_setCursor_PARM_2 + 1)
+0084 C4         665            swap    a
+0085 54F0       666            anl     a,#0xf0
+0087 CC         667            xch     a,r4
+0088 C4         668            swap    a
+0089 CC         669            xch     a,r4
+008A 6C         670            xrl     a,r4
+008B CC         671            xch     a,r4
+008C 54F0       672            anl     a,#0xf0
+008E CC         673            xch     a,r4
+008F 6C         674            xrl     a,r4
+0090 FD         675            mov     r5,a
+0091 EC         676            mov     a,r4
+0092 2A         677            add     a,r2
+0093 FA         678            mov     r2,a
+0094 ED         679            mov     a,r5
+0095 3B         680            addc    a,r3
+0096 FB         681            mov     r3,a
+0097 7C00       682            mov     r4,#0x00
+0099 7D00       683            mov     r5,#0x00
+009B            684   L006001?:
+009B C3         685            clr     c
+009C EC         686            mov     a,r4
+009D 9A         687            subb    a,r2
+009E ED         688            mov     a,r5
+009F 6480       689            xrl     a,#0x80
+00A1 8BF0       690            mov     b,r3
+00A3 63F080     691            xrl     b,#0x80
+00A6 95F0       692            subb    a,b
+00A8 5001       693            jnc     L006005?
+00AA            694   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:80: LCD_cmd(0x14);
+00AA 758214     695            mov     dpl,#0x14
+00AD C002       696            push    ar2
+00AF C003       697            push    ar3
+00B1 C004       698            push    ar4
+00B3 C005       699            push    ar5
+00B5 120100     700            lcall   _LCD_cmd
+00B8 D005       701            pop     ar5
+00BA D004       702            pop     ar4
+00BC D003       703            pop     ar3
+00BE D002       704            pop     ar2
+00C0            705   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:78: for(where = 0; where < (col+row*16); where++)
+00C0 0C         706            inc     r4
+00C1 BC0010     707            cjne    r4,#0x00,L006001?
+00C4 0D         708            inc     r5
+00C5 8001       709            sjmp    L006001?
+00C7            710   L006005?:
+00C7 22         711            ret
+00C8            712   ;------------------------------------------------------------
+00C8            713   ;Allocation info for local variables in function 'LCD_cmd'
+00C8            714   ;------------------------------------------------------------
+00C8            715   ;i                         Allocated to registers 
+00C8            716   ;------------------------------------------------------------
+00C8            717   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:87: void LCD_cmd(char i) {
+00C8            718   ;        -----------------------------------------
+00C8            719   ;         function LCD_cmd
+00C8            720   ;        -----------------------------------------
+00C8            721   _LCD_cmd:
+00C8            722   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:88: lcd_dc = 0; // set RS for command
+00C8 C2A7       723            clr     _P2_7
+00CA            724   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:89: lcd_rw = 0; // set RW for write
+00CA C2A6       725            clr     _P2_6
+00CC            726   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:92: LCD_apply(i);
+00CC 120100     727            lcall   _LCD_apply
+00CF            728   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:93: LCD_clock();
+00CF 020100     729            ljmp    _LCD_clock
+00D2            730   ;------------------------------------------------------------
+00D2            731   ;Allocation info for local variables in function 'LCD_init'
+00D2            732   ;------------------------------------------------------------
+00D2            733   ;------------------------------------------------------------
+00D2            734   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:98: void LCD_init() {
+00D2            735   ;        -----------------------------------------
+00D2            736   ;         function LCD_init
+00D2            737   ;        -----------------------------------------
+00D2            738   _LCD_init:
+00D2            739   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:99: lcd_enable = 0;
+00D2 C2A5       740            clr     _P2_5
+00D4            741   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:100: delay();
+00D4 120100     742            lcall   _delay
+00D7            743   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:101: LCD_cmd(0x30); // wake up
+00D7 758230     744            mov     dpl,#0x30
+00DA 120100     745            lcall   _LCD_cmd
+00DD            746   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:102: delay();
+00DD 120100     747            lcall   _delay
+00E0            748   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:103: LCD_cmd(0x30); // wake up 2
+00E0 758230     749            mov     dpl,#0x30
+00E3 120100     750            lcall   _LCD_cmd
+00E6            751   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:104: delay();
+00E6 120100     752            lcall   _delay
+00E9            753   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:105: LCD_cmd(0x30); // wake up 3
+00E9 758230     754            mov     dpl,#0x30
+00EC 120100     755            lcall   _LCD_cmd
+00EF            756   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:106: delay();
+00EF 120100     757            lcall   _delay
+00F2            758   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:108: LCD_cmd(0x38); // 8bit/2line
+00F2 758238     759            mov     dpl,#0x38
+00F5 120100     760            lcall   _LCD_cmd
+00F8            761   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:110: LCD_cmd(0x10); // return home
+00F8 758210     762            mov     dpl,#0x10
+00FB 120100     763            lcall   _LCD_cmd
+00FE            764   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:111: LCD_cmd(0x0c); // display on cursor on
+00FE 75820C     765            mov     dpl,#0x0C
+0101 120100     766            lcall   _LCD_cmd
+0104            767   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:112: LCD_cmd(0x06); // set display mode
+0104 758206     768            mov     dpl,#0x06
+0107 120100     769            lcall   _LCD_cmd
+010A            770   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:113: delay();
+010A 120100     771            lcall   _delay
+010D            772   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:114: LCD_cmd(0x01); // clear screen
+010D 758201     773            mov     dpl,#0x01
+0110 020100     774            ljmp    _LCD_cmd
+0113            775   ;------------------------------------------------------------
+0113            776   ;Allocation info for local variables in function 'LCD_apply'
+0113            777   ;------------------------------------------------------------
+0113            778   ;i                         Allocated to registers r2 
+0113            779   ;------------------------------------------------------------
+0113            780   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:120: void LCD_apply(char i) {
+0113            781   ;        -----------------------------------------
+0113            782   ;         function LCD_apply
+0113            783   ;        -----------------------------------------
+0113            784   _LCD_apply:
+0113            785   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:121: lcd_data_7 = i & 1;
+0113 E582       786            mov     a,dpl
+0115 FA         787            mov     r2,a
+0116 13         788            rrc     a
+0117 92A4       789            mov     _P2_4,c
+0119            790   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:122: lcd_data_6 = (i >> 1) & 1;
+0119 EA         791            mov     a,r2
+011A A2E1       792            mov     c,acc.1
+011C 92A3       793            mov     _P2_3,c
+011E            794   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:123: lcd_data_5 = (i >> 2) & 1;
+011E EA         795            mov     a,r2
+011F A2E2       796            mov     c,acc.2
+0121 92A2       797            mov     _P2_2,c
+0123            798   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:124: lcd_data_4 = (i >> 3) & 1;
+0123 EA         799            mov     a,r2
+0124 A2E3       800            mov     c,acc.3
+0126 92A1       801            mov     _P2_1,c
+0128            802   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:126: lcd_data_3 = (i >> 4) & 1;
+0128 EA         803            mov     a,r2
+0129 A2E4       804            mov     c,acc.4
+012B 92A0       805            mov     _P2_0,c
+012D            806   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:127: lcd_data_2 = (i >> 5) & 1;
+012D EA         807            mov     a,r2
+012E A2E5       808            mov     c,acc.5
+0130 9297       809            mov     _P1_7,c
+0132            810   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:128: lcd_data_1 = (i >> 6) & 1;
+0132 EA         811            mov     a,r2
+0133 A2E6       812            mov     c,acc.6
+0135 9296       813            mov     _P1_6,c
+0137            814   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_data_0 = (i >> 7) & 1;
+0137 EA         815            mov     a,r2
+0138 33         816            rlc     a
+0139 9294       817            mov     _P1_4,c
+013B 22         818            ret
+013C            819   ;------------------------------------------------------------
+013C            820   ;Allocation info for local variables in function 'LCD_clock'
+013C            821   ;------------------------------------------------------------
+013C            822   ;------------------------------------------------------------
+013C            823   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:136: void LCD_clock()
+013C            824   ;        -----------------------------------------
+013C            825   ;         function LCD_clock
+013C            826   ;        -----------------------------------------
+013C            827   _LCD_clock:
+013C            828   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:139: lcd_enable = 1;
+013C D2A5       829            setb    _P2_5
+013E            830   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:140: delay();
+013E 120100     831            lcall   _delay
+0141            832   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:141: lcd_enable = 0;
+0141 C2A5       833            clr     _P2_5
+0143 22         834            ret
+0144            835   ;------------------------------------------------------------
+0144            836   ;Allocation info for local variables in function 'main'
+0144            837   ;------------------------------------------------------------
+0144            838   ;------------------------------------------------------------
+0144            839   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:21: void main(void)
+0144            840   ;        -----------------------------------------
+0144            841   ;         function main
+0144            842   ;        -----------------------------------------
+0144            843   _main:
+0144            844   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:23: init_ports();
+0144 120100     845            lcall   _init_ports
+0147            846   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:25: LCD_init();
+0147 120100     847            lcall   _LCD_init
+014A            848   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:27: while(1)
+014A            849   L011002?:
+014A            850   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:29: lights(0x02);
+014A 758202     851            mov     dpl,#0x02
+014D 120100     852            lcall   _lights
+0150            853   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:30: LCD_write(0x41);
+0150 758241     854            mov     dpl,#0x41
+0153 120100     855            lcall   _LCD_write
+0156            856   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:31: delay();
+0156 120100     857            lcall   _delay
+0159            858   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:32: LCD_write(0x42);
+0159 758242     859            mov     dpl,#0x42
+015C 120100     860            lcall   _LCD_write
+015F            861   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:33: LCD_writeString("HI");
+015F 909F10     862            mov     dptr,#__str_0
+0162 75F080     863            mov     b,#0x80
+0165 120100     864            lcall   _LCD_writeString
+0168            865   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:34: LCD_setCursor(1,0);
+0168 E4         866            clr     a
+0169 F5D0       867            mov     _LCD_setCursor_PARM_2,a
+016B F5D1       868            mov     (_LCD_setCursor_PARM_2 + 1),a
+016D 900001     869            mov     dptr,#0x0001
+0170 120100     870            lcall   _LCD_setCursor
+0173            871   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:35: LCD_writeString("Hello");
+0173 909F50     872            mov     dptr,#__str_1
+0176 75F080     873            mov     b,#0x80
+0179 120100     874            lcall   _LCD_writeString
+017C            875   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:36: lights(0x01);
+017C 758201     876            mov     dpl,#0x01
+017F 120100     877            lcall   _lights
+0182            878   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:37: delay();
+0182 120100     879            lcall   _delay
+0185 8001       880            sjmp    L011002?
+0187            881   ;------------------------------------------------------------
+0187            882   ;Allocation info for local variables in function 'init_ports'
+0187            883   ;------------------------------------------------------------
+0187            884   ;------------------------------------------------------------
+0187            885   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:41: void init_ports() {
+0187            886   ;        -----------------------------------------
+0187            887   ;         function init_ports
+0187            888   ;        -----------------------------------------
+0187            889   _init_ports:
+0187            890   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:43: P1M1 = 0;
+0187 759100     891            mov     _P1M1,#0x00
+018A            892   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:44: P1M2 = 0;
+018A 759200     893            mov     _P1M2,#0x00
+018D            894   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:46: P2M1 = 0;
+018D 75A400     895            mov     _P2M1,#0x00
+0190            896   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:47: P2M2 = 0;
+0190 75A500     897            mov     _P2M2,#0x00
+0193 22         898            ret
+0194            899   ;------------------------------------------------------------
+0194            900   ;Allocation info for local variables in function 'lights'
+0194            901   ;------------------------------------------------------------
+0194            902   ;i                         Allocated to registers r2 
+0194            903   ;------------------------------------------------------------
+0194            904   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:50: void lights(char i) {
+0194            905   ;        -----------------------------------------
+0194            906   ;         function lights
+0194            907   ;        -----------------------------------------
+0194            908   _lights:
+0194            909   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:52: light_0 = (i) & 0x01;
+0194 E582       910            mov     a,dpl
+0196 FA         911            mov     r2,a
+0197 13         912            rrc     a
+0198 9292       913            mov     _P1_2,c
+019A            914   ;        C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\main.c:53: light_1 = (i>>1) & 0x01;
+019A EA         915            mov     a,r2
+019B A2E1       916            mov     c,acc.1
+019D 9293       917            mov     _P1_3,c
+019F 22         918            ret
+01A0            919            rseg R_CSEG
+01A0            920   
+0000            921            rseg R_XINIT
+0000            922   
+0000            923            rseg R_CONST
+0000            924   __str_0:
+0000 4849       925            db 'HI'
+0002 00         926            db 0x00
+0003            927   __str_1:
+0003 48656C6C   928            db 'Hello'
      6F
-0008 00         956            db 0x00
-0009            957   
-0003            958            CSEG
-0003            959   
-0003            960   end
+0008 00         929            db 0x00
+0009            930   
+0003            931            CSEG
+0003            932   
+0003            933   end

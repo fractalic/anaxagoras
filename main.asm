@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Feb 24 21:19:48 2014
+; This file was generated Mon Mar 10 18:43:45 2014
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -26,7 +26,6 @@ $optc51 --model-small
 	public _main
 	public _BEN_WUZ_HERE
 	public _LCD_setCursor_PARM_2
-	public _LCD_8bit
 	public _delay
 	public _LCD_write
 	public _LCD_writeString
@@ -411,8 +410,6 @@ _TMOD20         BIT 0xc8
 ; internal ram data
 ;--------------------------------------------------------
 	rseg R_DSEG
-_LCD_8bit:
-	ds 2
 _LCD_setCursor_PARM_2:
 	ds 2
 ;--------------------------------------------------------
@@ -515,10 +512,6 @@ _RTCDATL: ds 1
 ; data variables initialization
 ;--------------------------------------------------------
 	rseg R_DINIT
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:44: int LCD_8bit = 0; // set to 0 for 4-bit mode; 1 for 8-bit
-	clr	a
-	mov	_LCD_8bit,a
-	mov	(_LCD_8bit + 1),a
 	; The linker places a 'ret' at the end of segment R_DINIT.
 ;--------------------------------------------------------
 ; code
@@ -762,36 +755,21 @@ _LCD_init:
 	lcall	_LCD_cmd
 ;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:106: delay();
 	lcall	_delay
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:108: if (LCD_8bit == 1) {
-	mov	a,#0x01
-	cjne	a,_LCD_8bit,L008007?
-	clr	a
-	cjne	a,(_LCD_8bit + 1),L008007?
-	sjmp	L008008?
-L008007?:
-	sjmp	L008002?
-L008008?:
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:109: LCD_cmd(0x38); // 8bit/2line
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:108: LCD_cmd(0x38); // 8bit/2line
 	mov	dpl,#0x38
 	lcall	_LCD_cmd
-	sjmp	L008003?
-L008002?:
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:111: LCD_cmd(0x28); // 4bit/2line
-	mov	dpl,#0x28
-	lcall	_LCD_cmd
-L008003?:
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:114: LCD_cmd(0x10); // return home
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:110: LCD_cmd(0x10); // return home
 	mov	dpl,#0x10
 	lcall	_LCD_cmd
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:115: LCD_cmd(0x0c); // display on cursor on
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:111: LCD_cmd(0x0c); // display on cursor on
 	mov	dpl,#0x0C
 	lcall	_LCD_cmd
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:116: LCD_cmd(0x06); // set display mode
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:112: LCD_cmd(0x06); // set display mode
 	mov	dpl,#0x06
 	lcall	_LCD_cmd
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:117: delay();
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:113: delay();
 	lcall	_delay
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:118: LCD_cmd(0x01); // clear screen
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:114: LCD_cmd(0x01); // clear screen
 	mov	dpl,#0x01
 	ljmp	_LCD_cmd
 ;------------------------------------------------------------
@@ -799,64 +777,59 @@ L008003?:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:124: void LCD_apply(char i) {
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:120: void LCD_apply(char i) {
 ;	-----------------------------------------
 ;	 function LCD_apply
 ;	-----------------------------------------
 _LCD_apply:
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:126: lcd_data_7 = i & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:121: lcd_data_7 = i & 1;
 	mov	a,dpl
 	mov	r2,a
 	rrc	a
 	mov	_P2_4,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:127: lcd_data_6 = (i >> 1) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:122: lcd_data_6 = (i >> 1) & 1;
 	mov	a,r2
 	mov	c,acc.1
 	mov	_P2_3,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:128: lcd_data_5 = (i >> 2) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:123: lcd_data_5 = (i >> 2) & 1;
 	mov	a,r2
 	mov	c,acc.2
 	mov	_P2_2,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_data_4 = (i >> 3) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:124: lcd_data_4 = (i >> 3) & 1;
 	mov	a,r2
 	mov	c,acc.3
 	mov	_P2_1,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:132: if (LCD_8bit) {
-	mov	a,_LCD_8bit
-	orl	a,(_LCD_8bit + 1)
-	jz	L009003?
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:133: lcd_data_3 = (i >> 4) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:126: lcd_data_3 = (i >> 4) & 1;
 	mov	a,r2
 	mov	c,acc.4
 	mov	_P2_0,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:134: lcd_data_2 = (i >> 5) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:127: lcd_data_2 = (i >> 5) & 1;
 	mov	a,r2
 	mov	c,acc.5
 	mov	_P1_7,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:135: lcd_data_1 = (i >> 6) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:128: lcd_data_1 = (i >> 6) & 1;
 	mov	a,r2
 	mov	c,acc.6
 	mov	_P1_6,c
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:136: lcd_data_0 = (i >> 7) & 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_data_0 = (i >> 7) & 1;
 	mov	a,r2
 	rlc	a
 	mov	_P1_4,c
-L009003?:
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_clock'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:144: void LCD_clock()
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:136: void LCD_clock()
 ;	-----------------------------------------
 ;	 function LCD_clock
 ;	-----------------------------------------
 _LCD_clock:
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:147: lcd_enable = 1;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:139: lcd_enable = 1;
 	setb	_P2_5
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:148: delay();
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:140: delay();
 	lcall	_delay
-;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:149: lcd_enable = 0;
+;	C:\Users\Jannicke Pearkes\Documents\GitHub\anaxagoras\/lcd.c:141: lcd_enable = 0;
 	clr	_P2_5
 	ret
 ;------------------------------------------------------------
