@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Mar 10 18:50:16 2014
+; This file was generated Mon Mar 10 18:57:15 2014
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -1124,49 +1124,62 @@ _main:
 	lcall	_LCD_init
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:31: while(1)
 L014002?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:33: lights(0x02);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:33: LCD_cmd(0x01); //clear screen
+	mov	dpl,#0x01
+	lcall	_LCD_cmd
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:34: lights(0x02);
 	mov	dpl,#0x02
 	lcall	_lights
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:35: delay();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:36: delay();
 	lcall	_delay
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:37: LCD_writeString("HI");
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:38: LCD_writeString("HI");
 	mov	dptr,#__str_0
 	mov	b,#0x80
 	lcall	_LCD_writeString
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:38: LCD_setCursor(0,1);
-	mov	_LCD_setCursor_PARM_2,#0x01
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:39: LCD_setCursor(0,4);
+	mov	_LCD_setCursor_PARM_2,#0x04
 	clr	a
 	mov	(_LCD_setCursor_PARM_2 + 1),a
 	mov	dptr,#0x0000
 	lcall	_LCD_setCursor
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:39: LCD_writeString("Hello");
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:40: LCD_writeString("HI");
+	mov	dptr,#__str_0
+	mov	b,#0x80
+	lcall	_LCD_writeString
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:41: LCD_setCursor(1,1);
+	mov	_LCD_setCursor_PARM_2,#0x01
+	clr	a
+	mov	(_LCD_setCursor_PARM_2 + 1),a
+	mov	dptr,#0x0001
+	lcall	_LCD_setCursor
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:42: LCD_writeString("Hello");
 	mov	dptr,#__str_1
 	mov	b,#0x80
 	lcall	_LCD_writeString
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:41: lights(0x01);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:44: lights(0x01);
 	mov	dpl,#0x01
 	lcall	_lights
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:42: delay();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:45: delay();
 	lcall	_delay
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:44: display_time();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:47: display_time();
 	lcall	_display_time
 	sjmp	L014002?
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'init_ports'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:48: void init_ports() {
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:51: void init_ports() {
 ;	-----------------------------------------
 ;	 function init_ports
 ;	-----------------------------------------
 _init_ports:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:50: P1M1 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:53: P1M1 = 0;
 	mov	_P1M1,#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:51: P1M2 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:54: P1M2 = 0;
 	mov	_P1M2,#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:53: P2M1 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:56: P2M1 = 0;
 	mov	_P2M1,#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:54: P2M2 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:57: P2M2 = 0;
 	mov	_P2M2,#0x00
 	ret
 ;------------------------------------------------------------
@@ -1174,17 +1187,17 @@ _init_ports:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:57: void lights(char i) {
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:60: void lights(char i) {
 ;	-----------------------------------------
 ;	 function lights
 ;	-----------------------------------------
 _lights:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:59: light_0 = (i) & 0x01;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:62: light_0 = (i) & 0x01;
 	mov	a,dpl
 	mov	r2,a
 	rrc	a
 	mov	_P1_2,c
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:60: light_1 = (i>>1) & 0x01;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:63: light_1 = (i>>1) & 0x01;
 	mov	a,r2
 	mov	c,acc.1
 	mov	_P1_3,c
@@ -1193,12 +1206,12 @@ _lights:
 ;Allocation info for local variables in function 'display_time'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:64: void display_time()
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:67: void display_time()
 ;	-----------------------------------------
 ;	 function display_time
 ;	-----------------------------------------
 _display_time:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:66: time_string[0] = (char)(tenths%10);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:69: time_string[0] = (char)(tenths%10);
 	mov	__modslong_PARM_2,#0x0A
 	clr	a
 	mov	(__modslong_PARM_2 + 1),a
@@ -1211,7 +1224,7 @@ _display_time:
 	lcall	__modslong
 	mov	r2,dpl
 	mov	_time_string,r2
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:67: time_string[1] = (char)(tenths%100);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:70: time_string[1] = (char)(tenths%100);
 	mov	__modslong_PARM_2,#0x64
 	clr	a
 	mov	(__modslong_PARM_2 + 1),a
@@ -1224,7 +1237,7 @@ _display_time:
 	lcall	__modslong
 	mov	r2,dpl
 	mov	(_time_string + 0x0001),r2
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:68: LCD_writeString(time_string);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:71: LCD_writeString(time_string);
 	mov	dptr,#_time_string
 	mov	b,#0x40
 	ljmp	_LCD_writeString
