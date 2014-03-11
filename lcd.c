@@ -75,7 +75,7 @@ void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
 { 
 	int where;
     LCD_cmd(0x10); // set cursor home
-    for(where = 0; where < (col+row*16); where++)
+    for(where = 0; where < (col+row*40); where++)
     {
     LCD_cmd(0x14);
     }

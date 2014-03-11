@@ -38,8 +38,10 @@ void main(void)
 		LCD_writeString("HI");
 		LCD_setCursor(4,0);
 		LCD_writeString("HI");
-		LCD_setCursor(1,1);
+		LCD_setCursor(0,1);
 		LCD_writeString("Hello");
+		LCD_writeString("HI");
+		LCD_setCursor(6,1);
 		
 		lights(0x01);
 		delay();
