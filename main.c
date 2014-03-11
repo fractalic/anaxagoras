@@ -9,6 +9,7 @@
 #include "utilities.c"
 #include "lcd.c"
 #include "pwm.c"
+extern volatile long int tenths;
 
 char time_string[8];
 // display the current time on the LCD
@@ -36,6 +37,7 @@ void main(void)
 		delay();
 	//	LCD_write(0x42);
 		LCD_writeString("HI");
+
 		LCD_setCursor(4,0);
 		LCD_writeString("HI");
 		LCD_setCursor(0,1);
@@ -45,8 +47,6 @@ void main(void)
 		
 		lights(0x01);
 		delay();
-		
-		display_time();
 	}		
 }
 
@@ -70,6 +70,12 @@ void display_time()
 {
 	time_string[0] = (char)(tenths%10);
 	time_string[1] = (char)(tenths%100);
+	time_string[2] = 'A';
+	time_string[3] = 'B';
+	time_string[4] = 'C';
+	time_string[5] = 'D';
+	time_string[6] = 'E';
+	time_string[7] = '\0';
 	LCD_writeString(time_string);
 }
 
