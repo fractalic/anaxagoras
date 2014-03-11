@@ -11,7 +11,7 @@ void delay(void);
 // num2char(unsigned int)
 // convert an integer from 0 to 9
 // to its ascii equivalent
-void num2char(unsigned char number);
+char num2char(unsigned short number);
 
 // waitabit
 void delay(void)
@@ -26,9 +26,9 @@ void delay(void)
 // num2char(unsigned int)
 // convert an integer from 0 to 9
 // to its ascii equivalent
-char num2char(unsigned char number)
+char num2char(unsigned short number)
 {
-	return num2char % 10 + 48;
+	return (char)((number % 10) + 48);
 }
 
 #endif

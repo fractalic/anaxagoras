@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Jan 27 17:59:49 2014
+; This file was generated Mon Mar 10 20:21:08 2014
 ;--------------------------------------------------------
 $name utilities
 $optc51 --model-small
@@ -24,6 +24,7 @@ $optc51 --model-small
 ; Public variables in this module
 ;--------------------------------------------------------
 	public _delay
+	public _num2char
 ;--------------------------------------------------------
 ; Special Function Registers
 ;--------------------------------------------------------
@@ -97,13 +98,13 @@ $optc51 --model-small
 ;j                         Allocated to registers r2 r3 
 ;k                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\utilities.c:8: void delay(void)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\utilities.c:17: void delay(void)
 ;	-----------------------------------------
 ;	 function delay
 ;	-----------------------------------------
 _delay:
 	using	0
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\utilities.c:11: for(j=0; j<100; j++)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\utilities.c:20: for(j=0; j<100; j++)
 	mov	r2,#0x00
 	mov	r3,#0x00
 L002004?:
@@ -114,9 +115,9 @@ L002004?:
 	xrl	a,#0x80
 	subb	a,#0x80
 	jnc	L002008?
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\utilities.c:13: for(k=0; k<1000; k++);
-	mov	r4,#0xE8
-	mov	r5,#0x03
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\utilities.c:22: for(k=0; k<100; k++);
+	mov	r4,#0x64
+	mov	r5,#0x00
 L002003?:
 	dec	r4
 	cjne	r4,#0xff,L002017?
@@ -125,12 +126,32 @@ L002017?:
 	mov	a,r4
 	orl	a,r5
 	jnz	L002003?
-;	C:\Users\Ben\Documents\UBC\EECE284-rover\code\anaxagoras\utilities.c:11: for(j=0; j<100; j++)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\utilities.c:20: for(j=0; j<100; j++)
 	inc	r2
 	cjne	r2,#0x00,L002004?
 	inc	r3
 	sjmp	L002004?
 L002008?:
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'num2char'
+;------------------------------------------------------------
+;number                    Allocated to registers 
+;------------------------------------------------------------
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\utilities.c:29: char num2char(unsigned short number)
+;	-----------------------------------------
+;	 function num2char
+;	-----------------------------------------
+_num2char:
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\utilities.c:31: return (char)((number % 10) + 48);
+	mov	__moduint_PARM_2,#0x0A
+	clr	a
+	mov	(__moduint_PARM_2 + 1),a
+	lcall	__moduint
+	mov	r2,dpl
+	mov	a,#0x30
+	add	a,r2
+	mov	dpl,a
 	ret
 	rseg R_CSEG
 

@@ -22,7 +22,7 @@ volatile unsigned char right_wheel_pwm;
 
 // count fractions of a second
 volatile unsigned int tenths_count;
-volatile unsigned char tenths;
+volatile unsigned int tenths;
 volatile unsigned char hundredths_count;
 volatile unsigned char hundredths;
 

@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Mar 10 20:12:08 2014
+; This file was generated Mon Mar 10 20:29:39 2014
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -37,6 +37,7 @@ $optc51 --model-small
 	public _pwmcount
 	public _LCD_setCursor_PARM_2
 	public _delay
+	public _num2char
 	public _LCD_write
 	public _LCD_writeString
 	public _LCD_setCursor
@@ -50,6 +51,7 @@ $optc51 --model-small
 	public _init_ports
 	public _lights
 	public _display_time
+	public _display_battery
 ;--------------------------------------------------------
 ; Special Function Registers
 ;--------------------------------------------------------
@@ -450,7 +452,7 @@ _right_wheel_pwm:
 _tenths_count:
 	ds 2
 _tenths:
-	ds 1
+	ds 2
 _hundredths_count:
 	ds 1
 _hundredths:
@@ -582,13 +584,13 @@ _RTCDATL: ds 1
 ;j                         Allocated to registers r2 r3 
 ;k                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:12: void delay(void)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:17: void delay(void)
 ;	-----------------------------------------
 ;	 function delay
 ;	-----------------------------------------
 _delay:
 	using	0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:15: for(j=0; j<100; j++)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:20: for(j=0; j<100; j++)
 	mov	r2,#0x00
 	mov	r3,#0x00
 L002004?:
@@ -599,7 +601,7 @@ L002004?:
 	xrl	a,#0x80
 	subb	a,#0x80
 	jnc	L002008?
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:17: for(k=0; k<100; k++);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:22: for(k=0; k<100; k++);
 	mov	r4,#0x64
 	mov	r5,#0x00
 L002003?:
@@ -610,12 +612,32 @@ L002017?:
 	mov	a,r4
 	orl	a,r5
 	jnz	L002003?
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:15: for(j=0; j<100; j++)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:20: for(j=0; j<100; j++)
 	inc	r2
 	cjne	r2,#0x00,L002004?
 	inc	r3
 	sjmp	L002004?
 L002008?:
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'num2char'
+;------------------------------------------------------------
+;number                    Allocated to registers 
+;------------------------------------------------------------
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:29: char num2char(unsigned short number)
+;	-----------------------------------------
+;	 function num2char
+;	-----------------------------------------
+_num2char:
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/utilities.c:31: return (char)((number % 10) + 48);
+	mov	__moduint_PARM_2,#0x0A
+	clr	a
+	mov	(__moduint_PARM_2 + 1),a
+	lcall	__moduint
+	mov	r2,dpl
+	mov	a,#0x30
+	add	a,r2
+	mov	dpl,a
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_write'
@@ -652,7 +674,7 @@ _LCD_writeString:
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/lcd.c:65: while (string[i] != 0)
 	mov	r5,#0x00
 	mov	r6,#0x00
-L004001?:
+L005001?:
 	mov	a,r5
 	add	a,r2
 	mov	r7,a
@@ -665,7 +687,7 @@ L004001?:
 	mov	b,r1
 	lcall	__gptrget
 	mov	r7,a
-	jz	L004004?
+	jz	L005004?
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/lcd.c:67: LCD_write(string[i]);
 	mov	dpl,r7
 	push	ar2
@@ -681,10 +703,10 @@ L004001?:
 	pop	ar2
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/lcd.c:68: i++;
 	inc	r5
-	cjne	r5,#0x00,L004001?
+	cjne	r5,#0x00,L005001?
 	inc	r6
-	sjmp	L004001?
-L004004?:
+	sjmp	L005001?
+L005004?:
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_setCursor'
@@ -869,9 +891,9 @@ _timer0_event:
 	inc	_pwmcount
 	mov	a,_pwmcount
 	add	a,#0xff - 0x63
-	jnc	L010002?
+	jnc	L011002?
 	mov	_pwmcount,#0x00
-L010002?:
+L011002?:
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/pwm.c:69: if(++tenths_count>1000){
 	mov	a,#0x01
 	add	a,_tenths_count
@@ -884,14 +906,19 @@ L010002?:
 	subb	a,_tenths_count
 	mov	a,#0x03
 	subb	a,(_tenths_count + 1)
-	jnc	L010005?
+	jnc	L011005?
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/pwm.c:70: tenths_count = 0;
 	clr	a
 	mov	_tenths_count,a
 	mov	(_tenths_count + 1),a
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/pwm.c:71: tenths++;
-	inc	_tenths
-L010005?:
+	mov	a,#0x01
+	add	a,_tenths
+	mov	_tenths,a
+	clr	a
+	addc	a,(_tenths + 1)
+	mov	(_tenths + 1),a
+L011005?:
 	pop	psw
 	pop	(0+1)
 	pop	(0+0)
@@ -934,6 +961,8 @@ _timer0_init:
 	setb	_EA
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/pwm.c:98: tenths = 23;
 	mov	_tenths,#0x17
+	clr	a
+	mov	(_tenths + 1),a
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'timer0_restart'
@@ -965,57 +994,59 @@ _timer0_restart:
 ;	-----------------------------------------
 _reset_time:
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/pwm.c:120: tenths = 0;
-	mov	_tenths,#0x00
 ;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\/pwm.c:121: hundredths = 0;
-	mov	_hundredths,#0x00
+	clr	a
+	mov	_tenths,a
+	mov	(_tenths + 1),a
+	mov	_hundredths,a
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:29: void main(void)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:32: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:32: init_ports();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:35: init_ports();
 	lcall	_init_ports
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:35: LCD_init();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:38: LCD_init();
 	lcall	_LCD_init
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:38: timer0_init();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:41: timer0_init();
 	lcall	_timer0_init
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:40: reset_time();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:43: reset_time();
 	lcall	_reset_time
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:42: while(1)
-L014002?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:44: display_time();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:45: while(1)
+L015002?:
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:47: display_time();
 	lcall	_display_time
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:45: delay();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:48: delay();
 	lcall	_delay
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:46: LCD_setCursor(0,0);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:49: LCD_setCursor(0,0);
 	clr	a
 	mov	_LCD_setCursor_PARM_2,a
 	mov	(_LCD_setCursor_PARM_2 + 1),a
 	mov	dpl,a
 	mov	dph,a
 	lcall	_LCD_setCursor
-	sjmp	L014002?
+	sjmp	L015002?
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'init_ports'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:50: void init_ports() {
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:53: void init_ports() {
 ;	-----------------------------------------
 ;	 function init_ports
 ;	-----------------------------------------
 _init_ports:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:52: P1M1 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:55: P1M1 = 0;
 	mov	_P1M1,#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:53: P1M2 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:56: P1M2 = 0;
 	mov	_P1M2,#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:55: P2M1 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:58: P2M1 = 0;
 	mov	_P2M1,#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:56: P2M2 = 0;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:59: P2M2 = 0;
 	mov	_P2M2,#0x00
 	ret
 ;------------------------------------------------------------
@@ -1023,17 +1054,17 @@ _init_ports:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:59: void lights(char i) {
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:62: void lights(char i) {
 ;	-----------------------------------------
 ;	 function lights
 ;	-----------------------------------------
 _lights:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:61: light_0 = (i) & 0x01;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:64: light_0 = (i) & 0x01;
 	mov	a,dpl
 	mov	r2,a
 	rrc	a
 	mov	_P1_2,c
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:62: light_1 = (i>>1) & 0x01;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:65: light_1 = (i>>1) & 0x01;
 	mov	a,r2
 	mov	c,acc.1
 	mov	_P1_3,c
@@ -1041,54 +1072,121 @@ _lights:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'display_time'
 ;------------------------------------------------------------
+;seconds                   Allocated to registers r2 r3 
+;minutes                   Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:66: void display_time()
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:69: void display_time()
 ;	-----------------------------------------
 ;	 function display_time
 ;	-----------------------------------------
 _display_time:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:68: time_string[0] = (char)(tenths/10)%10+48;
-	mov	b,#0x0A
-	mov	a,_tenths
-	div	ab
-	mov	b,#0x0a
-	clr	F0
-	jnb	acc.7,L017003?
-	setb	F0
-	cpl	a
-	inc	a
-L017003?:
-	div	ab
-	mov	a,b
-	jnb	F0,L017004?
-	cpl	a
-	inc	a
-L017004?:
-	add	a,#0x30
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:71: int seconds = tenths/10;
+	mov	__divuint_PARM_2,#0x0A
+	clr	a
+	mov	(__divuint_PARM_2 + 1),a
+	mov	dpl,_tenths
+	mov	dph,(_tenths + 1)
+	lcall	__divuint
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:72: int minutes = seconds / 60;
+	mov	__divsint_PARM_2,#0x3C
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,r2
+	mov	dph,r3
+	push	ar2
+	push	ar3
+	lcall	__divsint
+	mov	r4,dpl
+	mov	r5,dph
+	pop	ar3
+	pop	ar2
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:73: if (seconds > 60) seconds=0;
+	clr	c
+	mov	a,#0x3C
+	subb	a,r2
+	clr	a
+	xrl	a,#0x80
+	mov	b,r3
+	xrl	b,#0x80
+	subb	a,b
+	jnc	L018002?
+	mov	r2,#0x00
+	mov	r3,#0x00
+L018002?:
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:75: time_string[0] = num2char(minutes);
+	mov	dpl,r4
+	mov	dph,r5
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar5
+	pop	ar4
 	mov	_time_string,a
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:69: time_string[1] = (char)(tenths%10)+48;
-	mov	b,#0x0A
-	mov	a,_tenths
-	div	ab
-	mov	a,b
-	add	a,#0x30
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:76: time_string[1] = num2char(minutes);
+	mov	dpl,r4
+	mov	dph,r5
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar3
+	pop	ar2
 	mov	(_time_string + 0x0001),a
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:70: time_string[2] = 'A';
-	mov	(_time_string + 0x0002),#0x41
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:71: time_string[3] = 'B';
-	mov	(_time_string + 0x0003),#0x42
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:72: time_string[4] = 'C';
-	mov	(_time_string + 0x0004),#0x43
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:73: time_string[5] = 'D';
-	mov	(_time_string + 0x0005),#0x44
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:74: time_string[6] = 'Z';
-	mov	(_time_string + 0x0006),#0x5A
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:75: time_string[7] = '\0';
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:77: time_string[2] = ':';
+	mov	(_time_string + 0x0002),#0x3A
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:78: time_string[3] = num2char(seconds/10);
+	mov	__divsint_PARM_2,#0x0A
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,r2
+	mov	dph,r3
+	push	ar2
+	push	ar3
+	lcall	__divsint
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar3
+	pop	ar2
+	mov	(_time_string + 0x0003),a
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:79: time_string[4] = num2char(seconds);
+	mov	dpl,r2
+	mov	dph,r3
+	lcall	_num2char
+	mov	a,dpl
+	mov	(_time_string + 0x0004),a
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:80: time_string[5] = '.';
+	mov	(_time_string + 0x0005),#0x2E
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:81: time_string[6] = num2char(tenths);
+	mov	dpl,_tenths
+	mov	dph,(_tenths + 1)
+	lcall	_num2char
+	mov	a,dpl
+	mov	(_time_string + 0x0006),a
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:82: time_string[7] = '\0';
 	mov	(_time_string + 0x0007),#0x00
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:76: LCD_writeString(time_string);
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:83: LCD_writeString(time_string);
 	mov	dptr,#_time_string
 	mov	b,#0x40
 	ljmp	_LCD_writeString
+;------------------------------------------------------------
+;Allocation info for local variables in function 'display_battery'
+;------------------------------------------------------------
+;battery                   Allocated with name '_display_battery_battery_1_84'
+;------------------------------------------------------------
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:87: void display_battery()
+;	-----------------------------------------
+;	 function display_battery
+;	-----------------------------------------
+_display_battery:
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\main.c:90: LCD_setCursor(0,1);
+	mov	_LCD_setCursor_PARM_2,#0x01
+	clr	a
+	mov	(_LCD_setCursor_PARM_2 + 1),a
+	mov	dptr,#0x0000
+	ljmp	_LCD_setCursor
 	rseg R_CSEG
 
 	rseg R_XINIT
