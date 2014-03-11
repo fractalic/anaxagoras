@@ -40,6 +40,8 @@ void main(void)
 		
 		lights(0x01);
 		delay();
+		
+		display_time();
 	}		
 }
 
@@ -62,5 +64,7 @@ void lights(char i) {
 void display_time()
 {
 	time_string[0] = (char)(tenths%10);
+	time_string[1] = (char)(tenths%100);
+	LCD_writeString(time_string);
 }
 
