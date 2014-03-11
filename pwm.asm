@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Mar 10 19:15:50 2014
+; This file was generated Mon Mar 10 20:11:58 2014
 ;--------------------------------------------------------
 $name pwm
 $optc51 --model-small
@@ -432,13 +432,13 @@ _left_wheel_pwm:
 _right_wheel_pwm:
 	ds 1
 _tenths_count:
-	ds 4
+	ds 2
 _tenths:
-	ds 4
+	ds 1
 _hundredths_count:
-	ds 4
+	ds 1
 _hundredths:
-	ds 4
+	ds 1
 _drive_right:
 	ds 2
 _drive_left:
@@ -589,118 +589,26 @@ _timer0_event:
 	jnc	L002002?
 	mov	_pwmcount,#0x00
 L002002?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:57: if (drive_left) {
-	mov	a,_drive_left
-	orl	a,(_drive_left + 1)
-	jz	L002004?
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:58: left_wheel=(left_wheel_pwm>pwmcount)?1:0;
-	clr	c
-	mov	a,_pwmcount
-	subb	a,_left_wheel_pwm
-	mov	_P3_0,c
-L002004?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:60: if (drive_right) {
-	mov	a,_drive_right
-	orl	a,(_drive_right + 1)
-	jz	L002006?
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:61: right_wheel = (right_wheel_pwm>pwmcount)?1:0;
-	clr	c
-	mov	a,_pwmcount
-	subb	a,_right_wheel_pwm
-	mov	_P3_1,c
-L002006?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:66: if(++tenths_count>1000){
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:69: if(++tenths_count>1000){
 	mov	a,#0x01
 	add	a,_tenths_count
 	mov	_tenths_count,a
 	clr	a
 	addc	a,(_tenths_count + 1)
 	mov	(_tenths_count + 1),a
-	clr	a
-	addc	a,(_tenths_count + 2)
-	mov	(_tenths_count + 2),a
-	clr	a
-	addc	a,(_tenths_count + 3)
-	mov	(_tenths_count + 3),a
 	clr	c
 	mov	a,#0xE8
 	subb	a,_tenths_count
 	mov	a,#0x03
 	subb	a,(_tenths_count + 1)
-	clr	a
-	subb	a,(_tenths_count + 2)
-	clr	a
-	xrl	a,#0x80
-	mov	b,(_tenths_count + 3)
-	xrl	b,#0x80
-	subb	a,b
-	jnc	L002008?
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:67: tenths_count = 0;
+	jnc	L002005?
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:70: tenths_count = 0;
 	clr	a
 	mov	_tenths_count,a
 	mov	(_tenths_count + 1),a
-	mov	(_tenths_count + 2),a
-	mov	(_tenths_count + 3),a
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:68: tenths++;
-	mov	a,#0x01
-	add	a,_tenths
-	mov	_tenths,a
-	clr	a
-	addc	a,(_tenths + 1)
-	mov	(_tenths + 1),a
-	clr	a
-	addc	a,(_tenths + 2)
-	mov	(_tenths + 2),a
-	clr	a
-	addc	a,(_tenths + 3)
-	mov	(_tenths + 3),a
-L002008?:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:71: if(++hundredths_count>100){
-	mov	a,#0x01
-	add	a,_hundredths_count
-	mov	_hundredths_count,a
-	clr	a
-	addc	a,(_hundredths_count + 1)
-	mov	(_hundredths_count + 1),a
-	clr	a
-	addc	a,(_hundredths_count + 2)
-	mov	(_hundredths_count + 2),a
-	clr	a
-	addc	a,(_hundredths_count + 3)
-	mov	(_hundredths_count + 3),a
-	clr	c
-	mov	a,#0x64
-	subb	a,_hundredths_count
-	clr	a
-	subb	a,(_hundredths_count + 1)
-	clr	a
-	subb	a,(_hundredths_count + 2)
-	clr	a
-	xrl	a,#0x80
-	mov	b,(_hundredths_count + 3)
-	xrl	b,#0x80
-	subb	a,b
-	jnc	L002011?
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:72: hundredths_count = 0;
-	clr	a
-	mov	_hundredths_count,a
-	mov	(_hundredths_count + 1),a
-	mov	(_hundredths_count + 2),a
-	mov	(_hundredths_count + 3),a
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:73: hundredths++;
-	mov	a,#0x01
-	add	a,_hundredths
-	mov	_hundredths,a
-	clr	a
-	addc	a,(_hundredths + 1)
-	mov	(_hundredths + 1),a
-	clr	a
-	addc	a,(_hundredths + 2)
-	mov	(_hundredths + 2),a
-	clr	a
-	addc	a,(_hundredths + 3)
-	mov	(_hundredths + 3),a
-L002011?:
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:71: tenths++;
+	inc	_tenths
+L002005?:
 	pop	psw
 	pop	(0+1)
 	pop	(0+0)
@@ -720,68 +628,63 @@ L002011?:
 ;Allocation info for local variables in function 'timer0_init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:79: void timer0_init (void)
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:84: void timer0_init (void)
 ;	-----------------------------------------
 ;	 function timer0_init
 ;	-----------------------------------------
 _timer0_init:
 	using	0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:82: TR0=0; // Stop timer 0
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:87: TR0=0; // Stop timer 0
 	clr	_TR0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:83: TF0=0; // Clear the overflow flag
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:88: TF0=0; // Clear the overflow flag
 	clr	_TF0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:85: TMOD=(TMOD&0xf0)|0x01; // 16-bit timer
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:90: TMOD=(TMOD&0xf0)|0x01; // 16-bit timer
 	mov	a,#0xF0
 	anl	a,_TMOD
 	orl	a,#0x01
 	mov	_TMOD,a
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:88: timer0_restart();
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:93: timer0_restart();
 	lcall	_timer0_restart
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:90: ET0=1; // Enable timer 0 interrupt
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:95: ET0=1; // Enable timer 0 interrupt
 	setb	_ET0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:91: EA=1;  // Enable global interrupts
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:96: EA=1;  // Enable global interrupts
 	setb	_EA
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:98: tenths = 23;
+	mov	_tenths,#0x17
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'timer0_restart'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:96: void timer0_restart()
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:103: void timer0_restart()
 ;	-----------------------------------------
 ;	 function timer0_restart
 ;	-----------------------------------------
 _timer0_restart:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:98: TF0=0; // Clear the overflow flag
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:105: TF0=0; // Clear the overflow flag
 	clr	_TF0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:100: TR0=0; // Stop timer 0
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:107: TR0=0; // Stop timer 0
 	clr	_TR0
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:103: TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:110: TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
 	mov	_TH0,#0xFE
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:104: TL0=TIMER0_RELOAD_VALUE%0x100;
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:111: TL0=TIMER0_RELOAD_VALUE%0x100;
 	mov	_TL0,#0x90
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:106: TR0=1; // Start timer 0
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:113: TR0=1; // Start timer 0
 	setb	_TR0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'reset_time'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:111: void reset_time()
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:118: void reset_time()
 ;	-----------------------------------------
 ;	 function reset_time
 ;	-----------------------------------------
 _reset_time:
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:113: tenths = 0;
-;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:114: hundredths = 0;
-	clr	a
-	mov	_tenths,a
-	mov	(_tenths + 1),a
-	mov	(_tenths + 2),a
-	mov	(_tenths + 3),a
-	mov	_hundredths,a
-	mov	(_hundredths + 1),a
-	mov	(_hundredths + 2),a
-	mov	(_hundredths + 3),a
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:120: tenths = 0;
+	mov	_tenths,#0x00
+;	C:\Users\Ben\Documents\unison\UBC\EECE284-rover\code\anaxagoras\pwm.c:121: hundredths = 0;
+	mov	_hundredths,#0x00
 	ret
 	rseg R_CSEG
 

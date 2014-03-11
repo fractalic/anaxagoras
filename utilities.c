@@ -8,13 +8,27 @@
 // waitabit
 void delay(void);
 
+// num2char(unsigned int)
+// convert an integer from 0 to 9
+// to its ascii equivalent
+void num2char(unsigned char number);
+
 // waitabit
 void delay(void)
 {
     int j, k;
     for(j=0; j<100; j++)
     {
-        for(k=0; k<1000; k++);
+        for(k=0; k<100; k++);
     }
 }
+
+// num2char(unsigned int)
+// convert an integer from 0 to 9
+// to its ascii equivalent
+char num2char(unsigned char number)
+{
+	return num2char % 10 + 48;
+}
+
 #endif

@@ -21,10 +21,10 @@ volatile unsigned char left_wheel_pwm;
 volatile unsigned char right_wheel_pwm;
 
 // count fractions of a second
-volatile long int tenths_count;
-volatile long int tenths;
-volatile long int hundredths_count;
-volatile long int hundredths;
+volatile unsigned int tenths_count;
+volatile unsigned char tenths;
+volatile unsigned char hundredths_count;
+volatile unsigned char hundredths;
 
 // TODO: set these in the state machine
 int drive_right = 0;
@@ -54,24 +54,29 @@ void timer0_event (void) interrupt 1 using 1
 	// count timer interrupts
 	if(++pwmcount>99) pwmcount=0;
 
+	//tenths = pwmcount;
+
+	/*
 	if (drive_left) {
 		left_wheel=(left_wheel_pwm>pwmcount)?1:0;
 	}
 	if (drive_right) {
 		right_wheel = (right_wheel_pwm>pwmcount)?1:0;
 	}
-	
+	*/
 
 	// count tenths of a second since latest reset
 	if(++tenths_count>1000){
 		tenths_count = 0;
 		tenths++;
 	}
+	/*
 	// count hundredths of a second since latest reset
 	if(++hundredths_count>100){
 		hundredths_count = 0;
 		hundredths++;
-	}
+	}*/
+	
 }
 
 // timer0_init()
@@ -89,6 +94,8 @@ void timer0_init (void)
 
 	ET0=1; // Enable timer 0 interrupt
 	EA=1;  // Enable global interrupts
+	
+	tenths = 23;
 }
 
 // timer0_restart()
