@@ -1,12 +1,12 @@
 #################
 ## anaxagoras
 #################
-.asm
-.lkr
-.hex
-.lst
-.map
-.obj
+*.asm
+*.lkr
+*.hex
+*.lst
+*.map
+*.obj
 
 #################
 ## Eclipse
