@@ -31,9 +31,11 @@ right-to-left with usb connector to your right
 	P2.7
 */
 
+//miscellaneous pins
 #define light_0 P1_2
 #define light_1 P1_3
 
+// lcd pins
 #define	lcd_data_0	P1_4
 #define lcd_data_1	P1_6
 #define lcd_data_2	P1_7
@@ -45,5 +47,9 @@ right-to-left with usb connector to your right
 #define lcd_dc		P2_7 // lcd data-command select
 #define lcd_rw		P2_6 // lcd read-write select
 #define lcd_enable	P2_5 // lcd clock pulse pin
+
+// motor pins
+#define	motor_left	P3_0
+#define motor_right	P3_1
 
 #endif
