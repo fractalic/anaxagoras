@@ -36,7 +36,7 @@ void main(void)
 		delay();
 	//	LCD_write(0x42);
 		LCD_writeString("HI");
-		LCD_setCursor(0,4);
+		LCD_setCursor(4,0);
 		LCD_writeString("HI");
 		LCD_setCursor(1,1);
 		LCD_writeString("Hello");
