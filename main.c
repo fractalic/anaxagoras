@@ -29,6 +29,11 @@ void main(void)
 	// wake up the LCD
 	LCD_init();
 	
+	// start timer
+	timer0_init();
+	
+	reset_time();
+	
 	while(1)
 	{
 		LCD_cmd(0x01); //clear screen
