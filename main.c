@@ -100,7 +100,7 @@ void display_battery()
 	battery_string[1] = '.';
 	battery_string[2] = num2char(battery);
 	LCD_writeString("Battery: ");
-	LCD_writeString(battery_string);		
+	LCD_writeString(battery_string);	
 }
 
 // statemachine
