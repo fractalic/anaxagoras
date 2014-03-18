@@ -18,7 +18,7 @@
 typedef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t RobotState = RTest;
 
-char time_string[8];
+char time_string[10];
 
 // display the current time on the LCD
 void display_time(void);
@@ -55,7 +55,6 @@ void main(void)
 	{
 		display_time();
 		display_battery();
-		delay();
 		LCD_setCursor(0,0);
 	}		
 }
@@ -78,7 +77,8 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	int seconds = millis()/1000;
+	int i = 0;
+	/*int seconds = millis()/1000;
 	int minutes = seconds / 60;
 	if (seconds >= 60) seconds-=minutes*60;
 
@@ -90,16 +90,26 @@ void display_time()
 	time_string[5] = '.';
 	time_string[6] = num2char(millis()/100);
 	time_string[7] = '\0';
+	LCD_writeString(time_string);*/
+	
+	unsigned long time = millis();
+	unsigned seconds = time/1000;
+	unsigned minutes = seconds / 60;
+	if (seconds >= 60) seconds-=minutes*60;
+	
+	sprintf(time_string,"%u:%u",minutes,seconds);
 	LCD_writeString(time_string);
 }
 
 // display the current battery on the LCD TODO: TEST THIS
 void display_battery()
 {
+
 	//batterypin = AD1DAT3;
 	//char battery_string[4];	
 	int battery = AD1DAT3*5.0/255/1.2927-0.2439;
 	int batterydec = AD1DAT3*50.0/255/1.2927-0.2439-battery*10;
+
 	
 	char str[4];
 	char strdec[4];
@@ -111,10 +121,14 @@ void display_battery()
 	//battery_string[2] = num2char(batterydec);
 	//battery_string[3] = '\0';
 	LCD_writeString("Battery: ");
+<<<<<<< HEAD
 	//LCD_writeString(battery_string);	
 	LCD_writeString(str);
 	LCD_writeString(".");
 	LCD_writeString(strdec);
+=======
+	LCD_writeString(battery_string);
+>>>>>>> 463747a8a977fc2d75bbbfb958516e3428ce5e08
 }
 
 // statemachine
