@@ -72,7 +72,7 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	int seconds = millis();
+	int seconds = (int)millis();
 	int minutes = seconds / 60;
 	if (seconds >= 60) seconds-=minutes*60;
 
@@ -92,8 +92,8 @@ void display_battery()
 {
 	char battery_string[4];
 	//float battery = 5; //batterypin*5.0/1048;
-	float batterydec = batterypin*5.0/10480;
-	float battery = batterypin*5.0/1048;
+	float batterydec = (batterypin*5)/10480;
+	float battery = (batterypin * 5)/1048;
 	
 	LCD_setCursor(0,1);
 	battery_string[0] = num2char(battery);
@@ -101,7 +101,7 @@ void display_battery()
 	battery_string[2] = num2char(batterydec);
 	battery_string[3] = '\0';
 	LCD_writeString("Battery: ");
-	LCD_writeString(battery_string);	
+	LCD_writeString(battery_string);
 }
 
 // statemachine

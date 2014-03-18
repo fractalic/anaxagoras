@@ -22,7 +22,7 @@ volatile unsigned char right_wheel_pwm;
 
 // count timer0 ticks (every 100us)
 volatile unsigned short int t0_ticks = 0;
-volatile unsigned long int millis_v;
+volatile unsigned int millis_v;
 
 // TODO: set these in the state machine
 short int drive_right = 0;
@@ -40,7 +40,7 @@ void timer0_restart();
 
 // millis()
 // gets the number of milliseconds since last reset
-unsigned long int millis();
+unsigned int millis();
 
 // reset_millis()
 // reset the global tenths and hundredths counters
@@ -109,7 +109,7 @@ void timer0_restart()
 
 // millis()
 // gets the number of milliseconds since last reset
-unsigned long int millis()
+unsigned int millis()
 {
 	return millis_v;
 }
