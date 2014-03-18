@@ -72,7 +72,7 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	int seconds = millis()/1000;
+	int seconds = millis();
 	int minutes = seconds / 60;
 	if (seconds >= 60) seconds-=minutes*60;
 
