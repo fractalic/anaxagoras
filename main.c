@@ -82,7 +82,7 @@ void display_time()
 	time_string[3] = num2char(seconds/10);
 	time_string[4] = num2char(seconds);
 	time_string[5] = '.';
-	time_string[6] = num2char(tenths);
+	time_string[6] = num2char(millis()/100);
 	time_string[7] = '\0';
 	LCD_writeString(time_string);
 }
