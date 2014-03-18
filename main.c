@@ -18,7 +18,7 @@
 typedef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t RobotState = RTest;
 
-char time_string[8];
+char time_string[10];
 
 // display the current time on the LCD
 void display_time(void);
@@ -49,7 +49,6 @@ void main(void)
 	{
 		display_time();
 		display_battery();
-		delay();
 		LCD_setCursor(0,0);
 	}		
 }
@@ -72,7 +71,8 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	int seconds = (int)millis();
+	int i = 0;
+	/*int seconds = millis()/1000;
 	int minutes = seconds / 60;
 	if (seconds >= 60) seconds-=minutes*60;
 
@@ -84,6 +84,14 @@ void display_time()
 	time_string[5] = '.';
 	time_string[6] = num2char(millis()/100);
 	time_string[7] = '\0';
+	LCD_writeString(time_string);*/
+	
+	unsigned long time = millis();
+	unsigned seconds = time/1000;
+	unsigned minutes = seconds / 60;
+	if (seconds >= 60) seconds-=minutes*60;
+	
+	sprintf(time_string,"%u:%u",minutes,seconds);
 	LCD_writeString(time_string);
 }
 

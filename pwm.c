@@ -21,8 +21,8 @@ volatile unsigned char left_wheel_pwm;
 volatile unsigned char right_wheel_pwm;
 
 // count timer0 ticks (every 100us)
-volatile unsigned short int t0_ticks = 0;
-volatile unsigned int millis_v;
+volatile unsigned int t0_ticks = 0;
+volatile unsigned long int millis_v;
 
 // TODO: set these in the state machine
 short int drive_right = 0;
@@ -40,7 +40,7 @@ void timer0_restart();
 
 // millis()
 // gets the number of milliseconds since last reset
-unsigned int millis();
+unsigned long int millis();
 
 // reset_millis()
 // reset the global tenths and hundredths counters
@@ -57,7 +57,7 @@ void timer0_event (void) interrupt 1 using 1
 
 	// only count 100 ticks before setting to zero
 	// (arbitrary, but should be multiple of 10 and 100)
-	if(++t0_ticks>99) t0_ticks=0;
+	if(++t0_ticks>999) t0_ticks=0;
 
 	// turn the motors on for the fraction of time specified by
 	// X_pwm, as a fraction of 100
@@ -69,9 +69,9 @@ void timer0_event (void) interrupt 1 using 1
 	}
 	
 	// count milliseconds (every ten 100us timer ticks) 
-	//if(! ((++t0_ticks)%10) ) {
+	if( ((t0_ticks)%10) == 0 ) {
 		millis_v++;
-	//}
+	}
 	
 }
 
@@ -109,7 +109,7 @@ void timer0_restart()
 
 // millis()
 // gets the number of milliseconds since last reset
-unsigned int millis()
+unsigned long int millis()
 {
 	return millis_v;
 }
