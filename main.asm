@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Mar 17 18:39:44 2014
+; This file was generated Mon Mar 17 19:06:16 2014
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -464,7 +464,7 @@ _drive_left:
 _time_string:
 	ds 8
 _display_battery_battery_string_1_84:
-	ds 3
+	ds 2
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -1200,77 +1200,37 @@ L018002?:
 ;Allocation info for local variables in function 'display_battery'
 ;------------------------------------------------------------
 ;battery_string            Allocated with name '_display_battery_battery_string_1_84'
-;battery                   Allocated to registers r2 r3 
-;batterydec                Allocated to registers r4 r5 
+;batterydec                Allocated to registers 
+;battery                   Allocated to registers 
 ;------------------------------------------------------------
 ;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:89: void display_battery()
 ;	-----------------------------------------
 ;	 function display_battery
 ;	-----------------------------------------
 _display_battery:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:92: int battery = batterypin*5/1048;
-	mov	c,_P0_0
-	clr	a
-	rlc	a
-	mov	__mulint_PARM_2,a
-	mov	(__mulint_PARM_2 + 1),#0x00
-	mov	dptr,#0x0005
-	lcall	__mulint
-	mov	__divsint_PARM_2,#0x18
-	mov	(__divsint_PARM_2 + 1),#0x04
-	lcall	__divsint
-	mov	r2,dpl
-	mov	r3,dph
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:93: int batterydec = batterypin*5/10480;
-	mov	c,_P0_0
-	clr	a
-	rlc	a
-	mov	__mulint_PARM_2,a
-	mov	(__mulint_PARM_2 + 1),#0x00
-	mov	dptr,#0x0005
-	push	ar2
-	push	ar3
-	lcall	__mulint
-	mov	__divsint_PARM_2,#0xF0
-	mov	(__divsint_PARM_2 + 1),#0x28
-	lcall	__divsint
-	mov	r4,dpl
-	mov	r5,dph
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:95: LCD_setCursor(0,1);
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:96: LCD_setCursor(0,1);
 	mov	_LCD_setCursor_PARM_2,#0x01
 	clr	a
 	mov	(_LCD_setCursor_PARM_2 + 1),a
 	mov	dptr,#0x0000
-	push	ar4
-	push	ar5
 	lcall	_LCD_setCursor
-	pop	ar5
-	pop	ar4
-	pop	ar3
-	pop	ar2
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:96: battery_string[0] = num2char(battery);
-	mov	dpl,r2
-	mov	dph,r3
-	push	ar4
-	push	ar5
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:97: battery_string[0] = num2char(battery);
+	mov	dptr,#0x0415
 	lcall	_num2char
 	mov	a,dpl
-	pop	ar5
-	pop	ar4
 	mov	_display_battery_battery_string_1_84,a
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:97: battery_string[1] = '.';
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:98: battery_string[1] = '.';
 	mov	(_display_battery_battery_string_1_84 + 0x0001),#0x2E
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:98: battery_string[2] = num2char(batterydec);
-	mov	dpl,r4
-	mov	dph,r5
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:99: battery_string[2] = num2char(battery);
+	mov	dptr,#0x0415
 	lcall	_num2char
 	mov	a,dpl
 	mov	(_display_battery_battery_string_1_84 + 0x0002),a
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:99: LCD_writeString("Battery: ");
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:100: LCD_writeString("Battery: ");
 	mov	dptr,#__str_0
 	mov	b,#0x80
 	lcall	_LCD_writeString
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:100: LCD_writeString(battery_string);		
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:101: LCD_writeString(battery_string);		
 	mov	dptr,#_display_battery_battery_string_1_84
 	mov	b,#0x40
 	ljmp	_LCD_writeString

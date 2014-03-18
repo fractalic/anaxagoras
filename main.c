@@ -90,14 +90,15 @@ void display_time()
 // display the current battery on the LCD TODO: TEST THIS
 void display_battery()
 {
-	char battery_string[3];
-	int battery = batterypin*5/1048;
-	int batterydec = batterypin*5/10480;
+	char battery_string[2];
+	//float battery = 5; //batterypin*5.0/1048;
+	float batterydec = 5;// batterypin*5.0/10480;
+	float battery = 1045*5.0/1048;
 	
 	LCD_setCursor(0,1);
 	battery_string[0] = num2char(battery);
 	battery_string[1] = '.';
-	battery_string[2] = num2char(batterydec);
+	battery_string[2] = num2char(battery);
 	LCD_writeString("Battery: ");
 	LCD_writeString(battery_string);		
 }
