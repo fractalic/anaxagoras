@@ -41,7 +41,6 @@ right-to-left with usb connector to your right
 #define light_1 P1_3
 #define batterypin P0_0 //battery input pin	
 
-
 // lcd pins
 #define	lcd_data_0	P1_4
 #define lcd_data_1	P1_6
@@ -54,9 +53,13 @@ right-to-left with usb connector to your right
 #define lcd_dc		P2_7 // lcd data-command select
 #define lcd_rw		P2_6 // lcd read-write select
 #define lcd_enable	P2_5 // lcd clock pulse pin
+
+// sensor pins
 #define inductor_left	P0_5 // read in voltage signal from left inductor for PID
 #define	inductor_right	P0_6 // read in voltage signal from right inductor for PID
 #define inductor_front	P0_7 // read in voltage signal from front inductor to detect 'traffic signals'
+
+// pwm pins
 #define left_wheel	P3_0 // output motor speed from PID to pwm signal for left wheel 
 #define right_wheel	P3_1 // output motor speed from PID to pwm signal for right wheels
 
