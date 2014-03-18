@@ -10,15 +10,10 @@
 #include "lcd.c"
 #include "pwm.c"
 
-
-//////////////////////////////////////////////////
-// from pwm.c
-/////////////////////////////////////////////////////
-
 typedef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t RobotState = RTest;
 
-char time_string[10];
+char time_string[12];
 
 // display the current time on the LCD
 void display_time(void);
@@ -77,7 +72,6 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	int i = 0;
 	/*int seconds = millis()/1000;
 	int minutes = seconds / 60;
 	if (seconds >= 60) seconds-=minutes*60;
@@ -92,12 +86,12 @@ void display_time()
 	time_string[7] = '\0';
 	LCD_writeString(time_string);*/
 	
-	unsigned long time = millis();
-	unsigned seconds = time/1000;
-	unsigned minutes = seconds / 60;
-	if (seconds >= 60) seconds-=minutes*60;
+	long time = millis();
+	long seconds = time/1000.0;
+	long minutes = seconds / 60.0;
+	if (seconds >= 60.0) seconds-=minutes*60.0;
 	
-	sprintf(time_string,"%u:%u",minutes,seconds);
+	sprintf(time_string,"%li XX %li:%li",time,minutes,seconds);
 	LCD_writeString(time_string);
 }
 
