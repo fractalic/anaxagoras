@@ -17,6 +17,7 @@
 
 
 char time_string[8];
+
 // display the current time on the LCD
 void display_time(void);
 
@@ -45,6 +46,7 @@ void main(void)
 	while(1)
 	{
 		display_time();
+		display_battery();
 		delay();
 		LCD_setCursor(0,0);
 	}		
@@ -83,14 +85,18 @@ void display_time()
 	LCD_writeString(time_string);
 }
 
-// display the current battery on the LCD
+// display the current battery on the LCD TODO: TEST THIS
 void display_battery()
 {
-	float battery;
-	LCD_setCursor(0,1);
-	// TO DO: read in from a pins
-	// battery = readpin(yyy);
-	// lcd_writeString("Battery: " + numtostring(battery));
+	char battery_string[3];
+	int battery = batterypin*5/1048;
+	int batterydec = batterypin*5/10480;
 	
+	LCD_setCursor(0,1);
+	battery_string[0] = num2char(battery);
+	battery_string[1] = '.';
+	battery_string[2] = num2char(batterydec);
+	LCD_writeString("Battery: ");
+	LCD_writeString(battery_string);		
 }
 
