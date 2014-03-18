@@ -15,7 +15,7 @@
 // from pwm.c
 /////////////////////////////////////////////////////
 
-typdef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
+typedef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t RobotState = RTest;
 
 char time_string[8];
@@ -90,7 +90,7 @@ void display_time()
 // display the current battery on the LCD TODO: TEST THIS
 void display_battery()
 {
-	char battery_string[2];
+	char battery_string[4];
 	//float battery = 5; //batterypin*5.0/1048;
 	float batterydec = 5;// batterypin*5.0/10480;
 	float battery = 1045*5.0/1048;
@@ -99,6 +99,7 @@ void display_battery()
 	battery_string[0] = num2char(battery);
 	battery_string[1] = '.';
 	battery_string[2] = num2char(battery);
+	battery_string[3] = '\0';
 	LCD_writeString("Battery: ");
 	LCD_writeString(battery_string);	
 }
@@ -108,7 +109,7 @@ void display_battery()
 void statemachine()
 {
 	// state transitions
-	switcth (RobotState) {
+	switch (RobotState) {
 		case RStart:
 			// TODO: output: pid
 			// TODO: transition: 4blips -> RStraight

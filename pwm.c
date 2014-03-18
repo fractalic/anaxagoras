@@ -26,8 +26,9 @@ volatile unsigned long long int millis_v;
 
 // TODO: set these in the state machine
 short int drive_right = 0;
-short int drive_right_speed = 
+short int drive_right_speed = 0;
 short int drive_left = 0;
+short int drive_left_speed = 0;
 
 // timer0_init()
 // setup the timer0 and begin running it
@@ -89,8 +90,6 @@ void timer0_init (void)
 
 	ET0=1; // Enable timer 0 interrupt
 	EA=1;  // Enable global interrupts
-	
-	tenths = 23;
 }
 
 // timer0_restart()
