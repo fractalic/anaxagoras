@@ -44,8 +44,6 @@ unsigned long long int millis();
 // reset the global tenths and hundredths counters
 void reset_millis();
 
-
-
 // crosside got made when I tried to make this a prototype
 // timer0_event()
 // called whenever the timer overflows
