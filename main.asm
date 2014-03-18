@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Mon Mar 10 19:05:11 2014
+; This file was generated Mon Mar 17 18:39:44 2014
 ;--------------------------------------------------------
 $name main
 $optc51 --model-small
@@ -37,6 +37,7 @@ $optc51 --model-small
 	public _pwmcount
 	public _LCD_setCursor_PARM_2
 	public _delay
+	public _num2char
 	public _LCD_write
 	public _LCD_writeString
 	public _LCD_setCursor
@@ -50,6 +51,7 @@ $optc51 --model-small
 	public _init_ports
 	public _lights
 	public _display_time
+	public _display_battery
 ;--------------------------------------------------------
 ; Special Function Registers
 ;--------------------------------------------------------
@@ -448,19 +450,21 @@ _left_wheel_pwm:
 _right_wheel_pwm:
 	ds 1
 _tenths_count:
-	ds 4
+	ds 2
 _tenths:
-	ds 4
+	ds 2
 _hundredths_count:
-	ds 4
+	ds 1
 _hundredths:
-	ds 4
+	ds 1
 _drive_right:
 	ds 2
 _drive_left:
 	ds 2
 _time_string:
 	ds 8
+_display_battery_battery_string_1_84:
+	ds 3
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -582,13 +586,13 @@ _RTCDATL: ds 1
 ;j                         Allocated to registers r2 r3 
 ;k                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:12: void delay(void)
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:17: void delay(void)
 ;	-----------------------------------------
 ;	 function delay
 ;	-----------------------------------------
 _delay:
 	using	0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:15: for(j=0; j<100; j++)
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:20: for(j=0; j<100; j++)
 	mov	r2,#0x00
 	mov	r3,#0x00
 L002004?:
@@ -599,9 +603,9 @@ L002004?:
 	xrl	a,#0x80
 	subb	a,#0x80
 	jnc	L002008?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:17: for(k=0; k<1000; k++);
-	mov	r4,#0xE8
-	mov	r5,#0x03
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:22: for(k=0; k<100; k++);
+	mov	r4,#0x64
+	mov	r5,#0x00
 L002003?:
 	dec	r4
 	cjne	r4,#0xff,L002017?
@@ -610,12 +614,32 @@ L002017?:
 	mov	a,r4
 	orl	a,r5
 	jnz	L002003?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:15: for(j=0; j<100; j++)
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:20: for(j=0; j<100; j++)
 	inc	r2
 	cjne	r2,#0x00,L002004?
 	inc	r3
 	sjmp	L002004?
 L002008?:
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'num2char'
+;------------------------------------------------------------
+;number                    Allocated to registers 
+;------------------------------------------------------------
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:29: char num2char(unsigned short number)
+;	-----------------------------------------
+;	 function num2char
+;	-----------------------------------------
+_num2char:
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/utilities.c:31: return (char)((number % 10) + 48);
+	mov	__moduint_PARM_2,#0x0A
+	clr	a
+	mov	(__moduint_PARM_2 + 1),a
+	lcall	__moduint
+	mov	r2,dpl
+	mov	a,#0x30
+	add	a,r2
+	mov	dpl,a
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_write'
@@ -652,7 +676,7 @@ _LCD_writeString:
 ;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:65: while (string[i] != 0)
 	mov	r5,#0x00
 	mov	r6,#0x00
-L004001?:
+L005001?:
 	mov	a,r5
 	add	a,r2
 	mov	r7,a
@@ -665,7 +689,7 @@ L004001?:
 	mov	b,r1
 	lcall	__gptrget
 	mov	r7,a
-	jz	L004004?
+	jz	L005004?
 ;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:67: LCD_write(string[i]);
 	mov	dpl,r7
 	push	ar2
@@ -681,17 +705,16 @@ L004001?:
 	pop	ar2
 ;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:68: i++;
 	inc	r5
-	cjne	r5,#0x00,L004001?
+	cjne	r5,#0x00,L005001?
 	inc	r6
-	sjmp	L004001?
-L004004?:
+	sjmp	L005001?
+L005004?:
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_setCursor'
 ;------------------------------------------------------------
 ;row                       Allocated with name '_LCD_setCursor_PARM_2'
 ;col                       Allocated to registers r2 r3 
-;where                     Allocated to registers r4 r5 
 ;------------------------------------------------------------
 ;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:74: void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
 ;	-----------------------------------------
@@ -700,124 +723,82 @@ L004004?:
 _LCD_setCursor:
 	mov	r2,dpl
 	mov	r3,dph
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:77: LCD_cmd(0x10); // set cursor home
-	mov	dpl,#0x10
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:77: LCD_cmd(0x80); // set cursor home
+	mov	dpl,#0x80
 	push	ar2
 	push	ar3
 	lcall	_LCD_cmd
 	pop	ar3
 	pop	ar2
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:78: for(where = 0; where < (col+row*16); where++)
-	mov	r4,_LCD_setCursor_PARM_2
-	mov	a,(_LCD_setCursor_PARM_2 + 1)
-	swap	a
-	anl	a,#0xf0
-	xch	a,r4
-	swap	a
-	xch	a,r4
-	xrl	a,r4
-	xch	a,r4
-	anl	a,#0xf0
-	xch	a,r4
-	xrl	a,r4
-	mov	r5,a
-	mov	a,r4
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:78: LCD_cmd(col+row*40+0x80);
+	mov	a,_LCD_setCursor_PARM_2
+	mov	b,#0x28
+	mul	ab
 	add	a,r2
-	mov	r2,a
-	mov	a,r5
-	addc	a,r3
-	mov	r3,a
-	mov	r4,#0x00
-	mov	r5,#0x00
-L005001?:
-	clr	c
-	mov	a,r4
-	subb	a,r2
-	mov	a,r5
-	xrl	a,#0x80
-	mov	b,r3
-	xrl	b,#0x80
-	subb	a,b
-	jnc	L005005?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:80: LCD_cmd(0x14);
-	mov	dpl,#0x14
-	push	ar2
-	push	ar3
-	push	ar4
-	push	ar5
-	lcall	_LCD_cmd
-	pop	ar5
-	pop	ar4
-	pop	ar3
-	pop	ar2
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:78: for(where = 0; where < (col+row*16); where++)
-	inc	r4
-	cjne	r4,#0x00,L005001?
-	inc	r5
-	sjmp	L005001?
-L005005?:
-	ret
+	add	a,#0x80
+	mov	dpl,a
+	ljmp	_LCD_cmd
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_cmd'
 ;------------------------------------------------------------
 ;i                         Allocated to registers 
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:87: void LCD_cmd(char i) {
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:88: void LCD_cmd(char i) {
 ;	-----------------------------------------
 ;	 function LCD_cmd
 ;	-----------------------------------------
 _LCD_cmd:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:88: lcd_dc = 0; // set RS for command
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:89: lcd_dc = 0; // set RS for command
 	clr	_P2_7
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:89: lcd_rw = 0; // set RW for write
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:90: lcd_rw = 0; // set RW for write
 	clr	_P2_6
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:92: LCD_apply(i);
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:93: LCD_apply(i);
 	lcall	_LCD_apply
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:93: LCD_clock();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:94: LCD_clock();
 	ljmp	_LCD_clock
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:98: void LCD_init() {
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:99: void LCD_init() {
 ;	-----------------------------------------
 ;	 function LCD_init
 ;	-----------------------------------------
 _LCD_init:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:99: lcd_enable = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:100: lcd_enable = 0;
 	clr	_P2_5
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:100: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:101: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:101: LCD_cmd(0x30); // wake up
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:102: LCD_cmd(0x30); // wake up
 	mov	dpl,#0x30
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:102: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:103: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:103: LCD_cmd(0x30); // wake up 2
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:104: LCD_cmd(0x30); // wake up 2
 	mov	dpl,#0x30
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:104: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:105: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:105: LCD_cmd(0x30); // wake up 3
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:106: LCD_cmd(0x30); // wake up 3
 	mov	dpl,#0x30
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:106: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:107: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:108: LCD_cmd(0x38); // 8bit/2line
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:109: LCD_cmd(0x38); // 8bit/2line
 	mov	dpl,#0x38
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:110: LCD_cmd(0x10); // function set
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:111: LCD_cmd(0x10); // function set
 	mov	dpl,#0x10
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:111: LCD_cmd(0x0c); // display on cursor on
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:112: LCD_cmd(0x0c); // display on cursor on
 	mov	dpl,#0x0C
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:112: LCD_cmd(0x06); // set display mode
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:113: LCD_cmd(0x06); // set display mode
 	mov	dpl,#0x06
 	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:113: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:114: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:114: LCD_cmd(0x01); // clear screen
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:115: LCD_cmd(0x01); // clear screen
 	mov	dpl,#0x01
 	ljmp	_LCD_cmd
 ;------------------------------------------------------------
@@ -825,41 +806,41 @@ _LCD_init:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:120: void LCD_apply(char i) {
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:121: void LCD_apply(char i) {
 ;	-----------------------------------------
 ;	 function LCD_apply
 ;	-----------------------------------------
 _LCD_apply:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:121: lcd_data_7 = i & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:122: lcd_data_7 = i & 1;
 	mov	a,dpl
 	mov	r2,a
 	rrc	a
 	mov	_P2_4,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:122: lcd_data_6 = (i >> 1) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:123: lcd_data_6 = (i >> 1) & 1;
 	mov	a,r2
 	mov	c,acc.1
 	mov	_P2_3,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:123: lcd_data_5 = (i >> 2) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:124: lcd_data_5 = (i >> 2) & 1;
 	mov	a,r2
 	mov	c,acc.2
 	mov	_P2_2,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:124: lcd_data_4 = (i >> 3) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:125: lcd_data_4 = (i >> 3) & 1;
 	mov	a,r2
 	mov	c,acc.3
 	mov	_P2_1,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:126: lcd_data_3 = (i >> 4) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:127: lcd_data_3 = (i >> 4) & 1;
 	mov	a,r2
 	mov	c,acc.4
 	mov	_P2_0,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:127: lcd_data_2 = (i >> 5) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:128: lcd_data_2 = (i >> 5) & 1;
 	mov	a,r2
 	mov	c,acc.5
 	mov	_P1_7,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:128: lcd_data_1 = (i >> 6) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_data_1 = (i >> 6) & 1;
 	mov	a,r2
 	mov	c,acc.6
 	mov	_P1_6,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:129: lcd_data_0 = (i >> 7) & 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:130: lcd_data_0 = (i >> 7) & 1;
 	mov	a,r2
 	rlc	a
 	mov	_P1_4,c
@@ -868,16 +849,16 @@ _LCD_apply:
 ;Allocation info for local variables in function 'LCD_clock'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:136: void LCD_clock()
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:137: void LCD_clock()
 ;	-----------------------------------------
 ;	 function LCD_clock
 ;	-----------------------------------------
 _LCD_clock:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:139: lcd_enable = 1;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:140: lcd_enable = 1;
 	setb	_P2_5
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:140: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:141: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:141: lcd_enable = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/lcd.c:142: lcd_enable = 0;
 	clr	_P2_5
 	ret
 ;------------------------------------------------------------
@@ -912,121 +893,34 @@ _timer0_event:
 	inc	_pwmcount
 	mov	a,_pwmcount
 	add	a,#0xff - 0x63
-	jnc	L010002?
+	jnc	L011002?
 	mov	_pwmcount,#0x00
-L010002?:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:57: if (drive_left) {
-	mov	a,_drive_left
-	orl	a,(_drive_left + 1)
-	jz	L010004?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:58: left_wheel=(left_wheel_pwm>pwmcount)?1:0;
-	clr	c
-	mov	a,_pwmcount
-	subb	a,_left_wheel_pwm
-	mov	_P3_0,c
-L010004?:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:60: if (drive_right) {
-	mov	a,_drive_right
-	orl	a,(_drive_right + 1)
-	jz	L010006?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:61: right_wheel = (right_wheel_pwm>pwmcount)?1:0;
-	clr	c
-	mov	a,_pwmcount
-	subb	a,_right_wheel_pwm
-	mov	_P3_1,c
-L010006?:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:66: if(++tenths_count>1000){
+L011002?:
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:69: if(++tenths_count>1000){
 	mov	a,#0x01
 	add	a,_tenths_count
 	mov	_tenths_count,a
 	clr	a
 	addc	a,(_tenths_count + 1)
 	mov	(_tenths_count + 1),a
-	clr	a
-	addc	a,(_tenths_count + 2)
-	mov	(_tenths_count + 2),a
-	clr	a
-	addc	a,(_tenths_count + 3)
-	mov	(_tenths_count + 3),a
 	clr	c
 	mov	a,#0xE8
 	subb	a,_tenths_count
 	mov	a,#0x03
 	subb	a,(_tenths_count + 1)
-	clr	a
-	subb	a,(_tenths_count + 2)
-	clr	a
-	xrl	a,#0x80
-	mov	b,(_tenths_count + 3)
-	xrl	b,#0x80
-	subb	a,b
-	jnc	L010008?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:67: tenths_count = 0;
+	jnc	L011005?
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:70: tenths_count = 0;
 	clr	a
 	mov	_tenths_count,a
 	mov	(_tenths_count + 1),a
-	mov	(_tenths_count + 2),a
-	mov	(_tenths_count + 3),a
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:68: tenths++;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:71: tenths++;
 	mov	a,#0x01
 	add	a,_tenths
 	mov	_tenths,a
 	clr	a
 	addc	a,(_tenths + 1)
 	mov	(_tenths + 1),a
-	clr	a
-	addc	a,(_tenths + 2)
-	mov	(_tenths + 2),a
-	clr	a
-	addc	a,(_tenths + 3)
-	mov	(_tenths + 3),a
-L010008?:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:71: if(++hundredths_count>100){
-	mov	a,#0x01
-	add	a,_hundredths_count
-	mov	_hundredths_count,a
-	clr	a
-	addc	a,(_hundredths_count + 1)
-	mov	(_hundredths_count + 1),a
-	clr	a
-	addc	a,(_hundredths_count + 2)
-	mov	(_hundredths_count + 2),a
-	clr	a
-	addc	a,(_hundredths_count + 3)
-	mov	(_hundredths_count + 3),a
-	clr	c
-	mov	a,#0x64
-	subb	a,_hundredths_count
-	clr	a
-	subb	a,(_hundredths_count + 1)
-	clr	a
-	subb	a,(_hundredths_count + 2)
-	clr	a
-	xrl	a,#0x80
-	mov	b,(_hundredths_count + 3)
-	xrl	b,#0x80
-	subb	a,b
-	jnc	L010011?
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:72: hundredths_count = 0;
-	clr	a
-	mov	_hundredths_count,a
-	mov	(_hundredths_count + 1),a
-	mov	(_hundredths_count + 2),a
-	mov	(_hundredths_count + 3),a
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:73: hundredths++;
-	mov	a,#0x01
-	add	a,_hundredths
-	mov	_hundredths,a
-	clr	a
-	addc	a,(_hundredths + 1)
-	mov	(_hundredths + 1),a
-	clr	a
-	addc	a,(_hundredths + 2)
-	mov	(_hundredths + 2),a
-	clr	a
-	addc	a,(_hundredths + 3)
-	mov	(_hundredths + 3),a
-L010011?:
+L011005?:
 	pop	psw
 	pop	(0+1)
 	pop	(0+0)
@@ -1046,136 +940,117 @@ L010011?:
 ;Allocation info for local variables in function 'timer0_init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:79: void timer0_init (void)
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:84: void timer0_init (void)
 ;	-----------------------------------------
 ;	 function timer0_init
 ;	-----------------------------------------
 _timer0_init:
 	using	0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:82: TR0=0; // Stop timer 0
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:87: TR0=0; // Stop timer 0
 	clr	_TR0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:83: TF0=0; // Clear the overflow flag
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:88: TF0=0; // Clear the overflow flag
 	clr	_TF0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:85: TMOD=(TMOD&0xf0)|0x01; // 16-bit timer
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:90: TMOD=(TMOD&0xf0)|0x01; // 16-bit timer
 	mov	a,#0xF0
 	anl	a,_TMOD
 	orl	a,#0x01
 	mov	_TMOD,a
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:88: timer0_restart();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:93: timer0_restart();
 	lcall	_timer0_restart
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:90: ET0=1; // Enable timer 0 interrupt
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:95: ET0=1; // Enable timer 0 interrupt
 	setb	_ET0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:91: EA=1;  // Enable global interrupts
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:96: EA=1;  // Enable global interrupts
 	setb	_EA
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:98: tenths = 23;
+	mov	_tenths,#0x17
+	clr	a
+	mov	(_tenths + 1),a
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'timer0_restart'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:96: void timer0_restart()
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:103: void timer0_restart()
 ;	-----------------------------------------
 ;	 function timer0_restart
 ;	-----------------------------------------
 _timer0_restart:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:98: TF0=0; // Clear the overflow flag
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:105: TF0=0; // Clear the overflow flag
 	clr	_TF0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:100: TR0=0; // Stop timer 0
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:107: TR0=0; // Stop timer 0
 	clr	_TR0
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:103: TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:110: TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
 	mov	_TH0,#0xFE
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:104: TL0=TIMER0_RELOAD_VALUE%0x100;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:111: TL0=TIMER0_RELOAD_VALUE%0x100;
 	mov	_TL0,#0x90
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:106: TR0=1; // Start timer 0
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:113: TR0=1; // Start timer 0
 	setb	_TR0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'reset_time'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:111: void reset_time()
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:118: void reset_time()
 ;	-----------------------------------------
 ;	 function reset_time
 ;	-----------------------------------------
 _reset_time:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:113: tenths = 0;
-;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:114: hundredths = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:120: tenths = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\/pwm.c:121: hundredths = 0;
 	clr	a
 	mov	_tenths,a
 	mov	(_tenths + 1),a
-	mov	(_tenths + 2),a
-	mov	(_tenths + 3),a
 	mov	_hundredths,a
-	mov	(_hundredths + 1),a
-	mov	(_hundredths + 2),a
-	mov	(_hundredths + 3),a
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:23: void main(void)
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:33: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:26: init_ports();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:36: init_ports();
 	lcall	_init_ports
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:29: LCD_init();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:39: LCD_init();
 	lcall	_LCD_init
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:31: while(1)
-L014002?:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:33: LCD_cmd(0x01); //clear screen
-	mov	dpl,#0x01
-	lcall	_LCD_cmd
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:34: lights(0x02);
-	mov	dpl,#0x02
-	lcall	_lights
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:36: delay();
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:42: timer0_init();
+	lcall	_timer0_init
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:44: reset_time();
+	lcall	_reset_time
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:46: while(1)
+L015002?:
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:48: display_time();
+	lcall	_display_time
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:49: display_battery();
+	lcall	_display_battery
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:50: delay();
 	lcall	_delay
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:38: LCD_writeString("HI");
-	mov	dptr,#__str_0
-	mov	b,#0x80
-	lcall	_LCD_writeString
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:39: LCD_setCursor(3,0);
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:51: LCD_setCursor(0,0);
 	clr	a
 	mov	_LCD_setCursor_PARM_2,a
 	mov	(_LCD_setCursor_PARM_2 + 1),a
-	mov	dptr,#0x0003
+	mov	dpl,a
+	mov	dph,a
 	lcall	_LCD_setCursor
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:40: display_time();
-	lcall	_display_time
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:41: LCD_setCursor(1,1);
-	mov	_LCD_setCursor_PARM_2,#0x01
-	clr	a
-	mov	(_LCD_setCursor_PARM_2 + 1),a
-	mov	dptr,#0x0001
-	lcall	_LCD_setCursor
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:42: LCD_writeString("Hello");
-	mov	dptr,#__str_1
-	mov	b,#0x80
-	lcall	_LCD_writeString
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:44: lights(0x01);
-	mov	dpl,#0x01
-	lcall	_lights
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:45: delay();
-	lcall	_delay
-	sjmp	L014002?
+	sjmp	L015002?
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'init_ports'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:49: void init_ports() {
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:55: void init_ports() {
 ;	-----------------------------------------
 ;	 function init_ports
 ;	-----------------------------------------
 _init_ports:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:51: P1M1 = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:57: P1M1 = 0;
 	mov	_P1M1,#0x00
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:52: P1M2 = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:58: P1M2 = 0;
 	mov	_P1M2,#0x00
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:54: P2M1 = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:60: P2M1 = 0;
 	mov	_P2M1,#0x00
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:55: P2M2 = 0;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:61: P2M2 = 0;
 	mov	_P2M2,#0x00
 	ret
 ;------------------------------------------------------------
@@ -1183,17 +1058,17 @@ _init_ports:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:58: void lights(char i) {
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:64: void lights(char i) {
 ;	-----------------------------------------
 ;	 function lights
 ;	-----------------------------------------
 _lights:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:60: light_0 = (i) & 0x01;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:66: light_0 = (i) & 0x01;
 	mov	a,dpl
 	mov	r2,a
 	rrc	a
 	mov	_P1_2,c
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:61: light_1 = (i>>1) & 0x01;
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:67: light_1 = (i>>1) & 0x01;
 	mov	a,r2
 	mov	c,acc.1
 	mov	_P1_3,c
@@ -1201,52 +1076,202 @@ _lights:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'display_time'
 ;------------------------------------------------------------
+;seconds                   Allocated to registers r2 r3 
+;minutes                   Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:65: void display_time()
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:71: void display_time()
 ;	-----------------------------------------
 ;	 function display_time
 ;	-----------------------------------------
 _display_time:
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:67: time_string[0] = (char)(tenths%10);
-	mov	__modslong_PARM_2,#0x0A
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:73: int seconds = tenths/10;
+	mov	__divuint_PARM_2,#0x0A
 	clr	a
-	mov	(__modslong_PARM_2 + 1),a
-	mov	(__modslong_PARM_2 + 2),a
-	mov	(__modslong_PARM_2 + 3),a
+	mov	(__divuint_PARM_2 + 1),a
 	mov	dpl,_tenths
 	mov	dph,(_tenths + 1)
-	mov	b,(_tenths + 2)
-	mov	a,(_tenths + 3)
-	lcall	__modslong
+	lcall	__divuint
 	mov	r2,dpl
-	mov	_time_string,r2
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:68: time_string[1] = (char)(tenths%100);
-	mov	__modslong_PARM_2,#0x64
+	mov	r3,dph
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:74: int minutes = seconds / 60;
+	mov	__divsint_PARM_2,#0x3C
 	clr	a
-	mov	(__modslong_PARM_2 + 1),a
-	mov	(__modslong_PARM_2 + 2),a
-	mov	(__modslong_PARM_2 + 3),a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,r2
+	mov	dph,r3
+	push	ar2
+	push	ar3
+	lcall	__divsint
+	mov	r4,dpl
+	mov	r5,dph
+	pop	ar3
+	pop	ar2
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:75: if (seconds >= 60) seconds-=minutes*60;
+	clr	c
+	mov	a,r2
+	subb	a,#0x3C
+	mov	a,r3
+	xrl	a,#0x80
+	subb	a,#0x80
+	jc	L018002?
+	mov	__mulint_PARM_2,r4
+	mov	(__mulint_PARM_2 + 1),r5
+	mov	dptr,#0x003C
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	__mulint
+	mov	r6,dpl
+	mov	r7,dph
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	mov	a,r2
+	clr	c
+	subb	a,r6
+	mov	r2,a
+	mov	a,r3
+	subb	a,r7
+	mov	r3,a
+L018002?:
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:77: time_string[0] = num2char(minutes/10);
+	mov	__divsint_PARM_2,#0x0A
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,r4
+	mov	dph,r5
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	__divsint
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar5
+	pop	ar4
+	mov	_time_string,a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:78: time_string[1] = num2char(minutes);
+	mov	dpl,r4
+	mov	dph,r5
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar3
+	pop	ar2
+	mov	(_time_string + 0x0001),a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:79: time_string[2] = ':';
+	mov	(_time_string + 0x0002),#0x3A
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:80: time_string[3] = num2char(seconds/10);
+	mov	__divsint_PARM_2,#0x0A
+	clr	a
+	mov	(__divsint_PARM_2 + 1),a
+	mov	dpl,r2
+	mov	dph,r3
+	push	ar2
+	push	ar3
+	lcall	__divsint
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar3
+	pop	ar2
+	mov	(_time_string + 0x0003),a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:81: time_string[4] = num2char(seconds);
+	mov	dpl,r2
+	mov	dph,r3
+	lcall	_num2char
+	mov	a,dpl
+	mov	(_time_string + 0x0004),a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:82: time_string[5] = '.';
+	mov	(_time_string + 0x0005),#0x2E
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:83: time_string[6] = num2char(tenths);
 	mov	dpl,_tenths
 	mov	dph,(_tenths + 1)
-	mov	b,(_tenths + 2)
-	mov	a,(_tenths + 3)
-	lcall	__modslong
-	mov	r2,dpl
-	mov	(_time_string + 0x0001),r2
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:69: time_string[2] = 'A';
-	mov	(_time_string + 0x0002),#0x41
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:70: time_string[3] = 'B';
-	mov	(_time_string + 0x0003),#0x42
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:71: time_string[4] = 'C';
-	mov	(_time_string + 0x0004),#0x43
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:72: time_string[5] = 'D';
-	mov	(_time_string + 0x0005),#0x44
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:73: time_string[6] = 'E';
-	mov	(_time_string + 0x0006),#0x45
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:74: time_string[7] = '\0';
+	lcall	_num2char
+	mov	a,dpl
+	mov	(_time_string + 0x0006),a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:84: time_string[7] = '\0';
 	mov	(_time_string + 0x0007),#0x00
-;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:75: LCD_writeString(time_string);
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:85: LCD_writeString(time_string);
 	mov	dptr,#_time_string
+	mov	b,#0x40
+	ljmp	_LCD_writeString
+;------------------------------------------------------------
+;Allocation info for local variables in function 'display_battery'
+;------------------------------------------------------------
+;battery_string            Allocated with name '_display_battery_battery_string_1_84'
+;battery                   Allocated to registers r2 r3 
+;batterydec                Allocated to registers r4 r5 
+;------------------------------------------------------------
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:89: void display_battery()
+;	-----------------------------------------
+;	 function display_battery
+;	-----------------------------------------
+_display_battery:
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:92: int battery = batterypin*5/1048;
+	mov	c,_P0_0
+	clr	a
+	rlc	a
+	mov	__mulint_PARM_2,a
+	mov	(__mulint_PARM_2 + 1),#0x00
+	mov	dptr,#0x0005
+	lcall	__mulint
+	mov	__divsint_PARM_2,#0x18
+	mov	(__divsint_PARM_2 + 1),#0x04
+	lcall	__divsint
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:93: int batterydec = batterypin*5/10480;
+	mov	c,_P0_0
+	clr	a
+	rlc	a
+	mov	__mulint_PARM_2,a
+	mov	(__mulint_PARM_2 + 1),#0x00
+	mov	dptr,#0x0005
+	push	ar2
+	push	ar3
+	lcall	__mulint
+	mov	__divsint_PARM_2,#0xF0
+	mov	(__divsint_PARM_2 + 1),#0x28
+	lcall	__divsint
+	mov	r4,dpl
+	mov	r5,dph
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:95: LCD_setCursor(0,1);
+	mov	_LCD_setCursor_PARM_2,#0x01
+	clr	a
+	mov	(_LCD_setCursor_PARM_2 + 1),a
+	mov	dptr,#0x0000
+	push	ar4
+	push	ar5
+	lcall	_LCD_setCursor
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:96: battery_string[0] = num2char(battery);
+	mov	dpl,r2
+	mov	dph,r3
+	push	ar4
+	push	ar5
+	lcall	_num2char
+	mov	a,dpl
+	pop	ar5
+	pop	ar4
+	mov	_display_battery_battery_string_1_84,a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:97: battery_string[1] = '.';
+	mov	(_display_battery_battery_string_1_84 + 0x0001),#0x2E
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:98: battery_string[2] = num2char(batterydec);
+	mov	dpl,r4
+	mov	dph,r5
+	lcall	_num2char
+	mov	a,dpl
+	mov	(_display_battery_battery_string_1_84 + 0x0002),a
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:99: LCD_writeString("Battery: ");
+	mov	dptr,#__str_0
+	mov	b,#0x80
+	lcall	_LCD_writeString
+;	C:\Users\Em\Documents\GitHub\anaxagoras\main.c:100: LCD_writeString(battery_string);		
+	mov	dptr,#_display_battery_battery_string_1_84
 	mov	b,#0x40
 	ljmp	_LCD_writeString
 	rseg R_CSEG
@@ -1255,10 +1280,7 @@ _display_time:
 
 	rseg R_CONST
 __str_0:
-	db 'HI'
-	db 0x00
-__str_1:
-	db 'Hello'
+	db 'Battery: '
 	db 0x00
 
 	CSEG

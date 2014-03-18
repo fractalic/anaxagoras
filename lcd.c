@@ -73,12 +73,13 @@ void LCD_writeString(char *string)
 // set the cursor position of the LCD
 void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
 { 
-	int where;
-    LCD_cmd(0x10); // set cursor home
-    for(where = 0; where < (col+row*16); where++)
+	//int where;
+    LCD_cmd(0x80); // set cursor home
+    LCD_cmd(col+row*40+0x80);
+    /*for(where = 0; where < (col+row*40); where++)
     {
-    LCD_cmd(0x14);
-    }
+    	LCD_cmd(0x14);
+    }*/
 }
 
 // LCD_cmd(character) - TESTED WORKS
@@ -140,5 +141,7 @@ void LCD_clock()
 	delay();
 	lcd_enable = 0;
 }
+
+
 
 #endif

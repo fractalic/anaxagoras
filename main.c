@@ -10,9 +10,19 @@
 #include "lcd.c"
 #include "pwm.c"
 
+
+//////////////////////////////////////////////////
+// from pwm.c
+/////////////////////////////////////////////////////
+
+
 char time_string[8];
+
 // display the current time on the LCD
 void display_time(void);
+
+// display the current battery on the LCD
+void display_battery(void);
 
 // initialize the ports to proper I/O mode
 void init_ports();
@@ -28,21 +38,17 @@ void main(void)
 	// wake up the LCD
 	LCD_init();
 	
+	// start timer
+	timer0_init();
+	
+	reset_time();
+	
 	while(1)
 	{
-		LCD_cmd(0x01); //clear screen
-		lights(0x02);
-	//	LCD_write(0x41);
-		delay();
-	//	LCD_write(0x42);
-		LCD_writeString("HI");
-		LCD_setCursor(3,0);
 		display_time();
-		LCD_setCursor(1,1);
-		LCD_writeString("Hello");
-		
-		lights(0x01);
+		display_battery();
 		delay();
+		LCD_setCursor(0,0);
 	}		
 }
 
@@ -64,14 +70,33 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	time_string[0] = (char)(tenths%10);
-	time_string[1] = (char)(tenths%100);
-	time_string[2] = 'A';
-	time_string[3] = 'B';
-	time_string[4] = 'C';
-	time_string[5] = 'D';
-	time_string[6] = 'E';
+	int seconds = tenths/10;
+	int minutes = seconds / 60;
+	if (seconds >= 60) seconds-=minutes*60;
+
+	time_string[0] = num2char(minutes/10);
+	time_string[1] = num2char(minutes);
+	time_string[2] = ':';
+	time_string[3] = num2char(seconds/10);
+	time_string[4] = num2char(seconds);
+	time_string[5] = '.';
+	time_string[6] = num2char(tenths);
 	time_string[7] = '\0';
 	LCD_writeString(time_string);
+}
+
+// display the current battery on the LCD TODO: TEST THIS
+void display_battery()
+{
+	char battery_string[3];
+	int battery = batterypin*5/1048;
+	int batterydec = batterypin*5/10480;
+	
+	LCD_setCursor(0,1);
+	battery_string[0] = num2char(battery);
+	battery_string[1] = '.';
+	battery_string[2] = num2char(batterydec);
+	LCD_writeString("Battery: ");
+	LCD_writeString(battery_string);		
 }
 
