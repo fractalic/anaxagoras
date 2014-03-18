@@ -92,13 +92,13 @@ void display_battery()
 {
 	char battery_string[4];
 	//float battery = 5; //batterypin*5.0/1048;
-	float batterydec = 5;// batterypin*5.0/10480;
-	float battery = 1045*5.0/1048;
+	float batterydec = batterypin*5.0/10480;
+	float battery = batterypin*5.0/1048;
 	
 	LCD_setCursor(0,1);
 	battery_string[0] = num2char(battery);
 	battery_string[1] = '.';
-	battery_string[2] = num2char(battery);
+	battery_string[2] = num2char(batterydec);
 	battery_string[3] = '\0';
 	LCD_writeString("Battery: ");
 	LCD_writeString(battery_string);	
