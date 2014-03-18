@@ -29,6 +29,9 @@ void display_battery(void);
 // initialize the ports to proper I/O mode
 void init_ports();
 
+// initializa analogue inputs
+void InitADC(void);
+
 // make some lights flash
 void lights(char i);
 
@@ -36,6 +39,9 @@ void main(void)
 {
 	// set I/O mode of ports and pins on the microcontroller
 	init_ports();
+	
+	// set analog inputs
+	InitADC();
 	
 	// wake up the LCD
 	LCD_init();
@@ -90,18 +96,25 @@ void display_time()
 // display the current battery on the LCD TODO: TEST THIS
 void display_battery()
 {
-	char battery_string[4];
-	//float battery = 5; //batterypin*5.0/1048;
-	float batterydec = batterypin*5.0/10480;
-	float battery = batterypin*5.0/1048;
+	//batterypin = AD1DAT3;
+	//char battery_string[4];	
+	int battery = AD1DAT3*5.0/255/1.2927-0.2439;
+	int batterydec = AD1DAT3*50.0/255/1.2927-0.2439-battery*10;
 	
+	char str[4];
+	char strdec[4];
+    sprintf(str, "%d", battery);
+    sprintf(strdec, "%d", batterydec);
 	LCD_setCursor(0,1);
-	battery_string[0] = num2char(battery);
-	battery_string[1] = '.';
-	battery_string[2] = num2char(batterydec);
-	battery_string[3] = '\0';
+	//battery_string[0] = num2char(battery);
+	//battery_string[1] = '.';
+	//battery_string[2] = num2char(batterydec);
+	//battery_string[3] = '\0';
 	LCD_writeString("Battery: ");
-	LCD_writeString(battery_string);	
+	//LCD_writeString(battery_string);	
+	LCD_writeString(str);
+	LCD_writeString(".");
+	LCD_writeString(strdec);
 }
 
 // statemachine
@@ -142,4 +155,17 @@ void statemachine()
 		default:
 			// do nothing
 	}
+}
+
+void InitADC(void)
+{
+	// Set adc1 channel pins as input only 
+	P0M1 |= (P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
+	P0M2 &= ~(P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
+
+	BURST1 = 1; //Autoscan continuos conversion mode
+	ADMODB = CLK0; //ADC1 clock is 7.3728MHz/2
+	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
+	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
+	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
 }
