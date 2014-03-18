@@ -20,11 +20,9 @@ volatile unsigned char pwmcount;
 volatile unsigned char left_wheel_pwm;
 volatile unsigned char right_wheel_pwm;
 
-// count fractions of a second
-volatile unsigned int tenths_count;
-volatile unsigned int tenths;
-volatile unsigned char hundredths_count;
-volatile unsigned char hundredths;
+// count timer0 ticks (every 100us)
+volatile unsigned short int t0_ticks = 0;
+volatile unsigned long long int millis_v;
 
 // TODO: set these in the state machine
 int drive_right = 0;
@@ -38,9 +36,15 @@ void timer0_init();
 // stop, load a time value, and start timer0
 void timer0_restart();
 
-// reset_time()
+// millis()
+// gets the number of milliseconds since last reset
+unsigned long long int millis();
+
+// reset_millis()
 // reset the global tenths and hundredths counters
-void reset_time();
+void reset_millis();
+
+
 
 // crosside got made when I tried to make this a prototype
 // timer0_event()
@@ -51,31 +55,23 @@ void timer0_event (void) interrupt 1 using 1
 	// load the timer and start it
 	timer0_restart();
 
-	// count timer interrupts
-	if(++pwmcount>99) pwmcount=0;
+	// only count 100 ticks before setting to zero
+	// (arbitrary, but should be multiple of 10 and 100)
+	if(++t0_ticks>99) t0_ticks=0;
 
-	//tenths = pwmcount;
-
-	/*
+	// turn the motors on for the fraction of time specified by
+	// X_pwm, as a fraction of 100
 	if (drive_left) {
-		left_wheel=(left_wheel_pwm>pwmcount)?1:0;
+		left_wheel=(left_wheel_pwm> (t0_ticks%100))?1:0;
 	}
 	if (drive_right) {
-		right_wheel = (right_wheel_pwm>pwmcount)?1:0;
+		right_wheel = (right_wheel_pwm> (t0_ticks%100))?1:0;
 	}
-	*/
-
-	// count tenths of a second since latest reset
-	if(++tenths_count>1000){
-		tenths_count = 0;
-		tenths++;
+	
+	// count milliseconds (every ten 100us timer ticks) 
+	if(! ((++t0_ticks)%10) ) {
+		millis_v++;
 	}
-	/*
-	// count hundredths of a second since latest reset
-	if(++hundredths_count>100){
-		hundredths_count = 0;
-		hundredths++;
-	}*/
 	
 }
 
@@ -113,21 +109,18 @@ void timer0_restart()
 	TR0=1; // Start timer 0
 }
 
-// reset_time()
-// reset the global tenths and hundredths counters
-void reset_time()
+// millis()
+// gets the number of milliseconds since last reset
+unsigned long long int millis()
 {
-	tenths = 0;
-	hundredths = 0;
+	return millis_v;
 }
 
-/*
-void main (void)
+// reset_time()
+// reset the global tenths and hundredths counters
+void reset_millis()
 {
-	timer0_init();
-	// not sure I believe the duty cycle calculation, but maybe I just don't know
-	motor_left_pwm=20; //50% duty cycle wave at 100Hz
+	millis_v = 0;
 }
-*/
 
 #endif

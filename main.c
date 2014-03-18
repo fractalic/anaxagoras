@@ -15,6 +15,8 @@
 // from pwm.c
 /////////////////////////////////////////////////////
 
+typdef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
+RobotState_t RobotState = RTest;
 
 char time_string[8];
 
@@ -41,7 +43,7 @@ void main(void)
 	// start timer
 	timer0_init();
 	
-	reset_time();
+	reset_millis();
 	
 	while(1)
 	{
@@ -70,7 +72,7 @@ void lights(char i) {
 // display the current time on the LCD
 void display_time()
 {
-	int seconds = tenths/10;
+	int seconds = millis()/1000;
 	int minutes = seconds / 60;
 	if (seconds >= 60) seconds-=minutes*60;
 
@@ -100,3 +102,42 @@ void display_battery()
 	LCD_writeString(battery_string);		
 }
 
+// statemachine
+// control the current state of the robot
+void statemachine()
+{
+	// state transitions
+	switcth (RobotState) {
+		case RStart:
+			// TODO: output: pid
+			// TODO: transition: 4blips -> RStraight
+			break;
+		case RStraight:
+			// TODO: output: pid
+			// TODO: transition: 2?blips -> RRightPrep, 3?blips -> RLeftPrep, 4blips -> RFinish
+			break;
+		case RRightPrep:
+			// TODO: output: pid
+			// TODO: transition: 1blip -> RRight
+			break;
+		case RRight:
+			// TODO: output: right-biased pid for time or turn right for time
+			// TODO: transition: time? -> RStraight
+			break;
+		case RLeftPrep:
+			// TODO: output: pid
+			// TODO: transition: 1blip -> RLeft
+			break;
+		case RLeft:
+			// TODO: output: left-biased pid for time or turn left for time
+			// TODO: transition: time? -> RStraight
+			break;
+		case RFinish:
+			// TODO: output: stop driving
+			break;
+		case RTest:
+			// TODO: output test stuff
+		default:
+			// do nothing
+	}
+}
