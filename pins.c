@@ -36,10 +36,8 @@ right-to-left with usb connector to your right
 	P2.7
 */
 
-//miscellaneous pins
-#define light_0 P1_2
-#define light_1 P1_3
-//#define batterypin  P1_2 //battery input pin	
+// analog pins
+#define battery AD1DAT3 // ad1dat3 or P0_3 // battery input pin	
 
 // lcd pins
 #define	lcd_data_0	P1_4

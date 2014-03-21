@@ -21,7 +21,7 @@ volatile unsigned char left_wheel_pwm;
 volatile unsigned char right_wheel_pwm;
 
 // count timer0 ticks (every 100us)
-volatile unsigned int t0_ticks = 0;
+volatile char t0_ticks = 0;
 volatile long millis_v;
 
 // TODO: set these in the state machine
@@ -53,7 +53,16 @@ void reset_millis();
 void timer0_event (void) interrupt 1 using 1
 {
 	// load the timer and start it
-	timer0_restart();
+	//timer0_restart();
+	TF0=0; // Clear the overflow flag
+	
+	TR0=0; // Stop timer 0
+
+	// load the timer
+	TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
+	TL0=TIMER0_RELOAD_VALUE%0x100;
+
+	TR0=1; // Start timer 0
 
 	// only count 100 ticks before setting to zero
 	// (arbitrary, but should be multiple of 10 and 100)
@@ -69,7 +78,7 @@ void timer0_event (void) interrupt 1 using 1
 	}*/
 	
 	// count milliseconds (every ten 100us timer ticks) 
-	if( ((t0_ticks)%10) == 0 ) {
+	if( t0_ticks == 0 ) {
 		millis_v++;
 	}
 	
@@ -111,7 +120,7 @@ void timer0_restart()
 // gets the number of milliseconds since last reset
 long millis()
 {
-	long interim = millis_v;
+	long interim = millis_v*10.0;
 	return interim;
 }
 
