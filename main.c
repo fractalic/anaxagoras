@@ -115,8 +115,10 @@ void StateMachine()
 	switch (RobotState) {
 		case RStart:
 			pid();
-			// TODO: output: pid
-			// TODO: transition: 4blips -> RStraight
+			//TODO: read in from sensors function	
+			//TODO: determine pid output function
+			//TODO: output: pid to motors function
+			//TODO: transition: 4blips -> RStraight
 			break;
 		case RStraight:
 			// TODO: output: pid
@@ -163,4 +165,5 @@ void InitADC(void)
 
 void pid(void)
 {
+
 }
