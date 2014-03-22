@@ -113,9 +113,13 @@ unsigned char turn(char direction)
 
 void ShouldIStop(void)
 {
-	while((inductorL == 0) && (inductorR == 0))
+	if((inductorL <= 5) && (inductorR <= 5))
 	{
-	// do nothing until signal is detected
+	 	delay();
+	 	while((inductorL <= 5) && (inductorR <= 5))
+		{
+		//do nothing
+		}
 	} 
 }
 
