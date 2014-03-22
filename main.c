@@ -149,7 +149,7 @@ void StateMachine()
 			// TODO: transition: 1blip -> RRight
 			break;
 		case RRight:
-			turn(1);
+			turn(1); // turns right until hits wire 
 			// TODO: transition: time? -> RStraight
 			break;
 		case RLeftPrep:
@@ -157,11 +157,13 @@ void StateMachine()
 			// TODO: transition: 1blip -> RLeft
 			break;
 		case RLeft:
-			turn(0);
+			turn(0); // turns left until hits wire
 			// TODO: transition: time? -> RStraight
 			break;
 		case RFinish:
-			// TODO: output: stop driving
+			drive_left_speed = 0;
+			drive_right_speed = 0;
+			//TODO: do we need a reset?
 			break;
 		case RTest:
 			// TODO: output test stuff
