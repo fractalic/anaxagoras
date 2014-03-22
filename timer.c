@@ -145,4 +145,11 @@ void reset_millis()
 	t1_ticks = 0;
 }
 
+// freeze_millis()
+// freeze the lap timer
+void freeze_millis()
+{
+	TR1 = 0; // stop timer1
+}
+
 #endif
