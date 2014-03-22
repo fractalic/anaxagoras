@@ -14,7 +14,7 @@ void LCD_write(char i);
 
 // LCD_writeString(char*)
 // write a sequence of characters to the LCD
-void LCD_writeString(char *string);
+void LCD_writeString(const char *string);
 
 // LCD_setCursor(int, int)
 // set the cursor position of the LCD
