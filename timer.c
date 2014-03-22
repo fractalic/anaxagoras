@@ -28,12 +28,6 @@ volatile unsigned char right_wheel_pwm;
 volatile char pwm_ticks = 0;
 volatile int t1_ticks = 0;
 
-// TODO: set these in the state machine
-short int drive_right = 0;
-short int drive_right_speed = 0;
-short int drive_left = 0;
-short int drive_left_speed = 0;
-
 // timer0_init()
 // setup the timer0 and begin running it
 void Timer0Start();

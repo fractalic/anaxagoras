@@ -12,7 +12,6 @@
 // rover state machine information
 typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t robot_state = RTest;
-//char *state_names[8] ={ "s", "sg", "rp", "rt", "lp", "lt", "f","e" };
 
 // DisplayInfo()
 // show lap time, battery and status information on the screen
@@ -21,7 +20,8 @@ void DisplayInfo();
 // initialize the ports to proper I/O mode
 void InitPorts();
 
-// initialize analogue inputs
+// initadc()
+// set up adc 1, with four input channels
 void InitADC(void);
 
 // statemachine
@@ -70,6 +70,21 @@ void InitPorts() {
 	P2M2 = 0;
 }
 
+// initadc()
+// set up adc 1, with four input channels
+void InitADC(void)
+{
+	// Set adc1 channel pins as input only 
+	P0M1 |= (P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
+	P0M2 &= ~(P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
+
+	BURST1 = 1; //Autoscan continuos conversion mode
+	ADMODB = CLK0; //ADC1 clock is 7.3728MHz/2
+	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
+	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
+	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
+}
+
 void lights(char i) {
 	// run lights
 	/*light_0 = (i) & 0x01;
@@ -81,29 +96,32 @@ void lights(char i) {
 // show lap time, battery and status information on the screen
 void DisplayInfo()
 {
-	// Lap time settings
-	char time_string[12];
+	// compute lap time
+	char time_string[8];
 	long time = millis();
 	float seconds = time/1000.0;
 	long minutes = seconds / 60.0;
 
-	// battery level settings
+	// read pins and convert to voltage values
 	char battery_string[20];
-	float battery_d = 5.0 * (battery / 255.0); // TODO: Test that this works
+
+	// store string representation of current state
+	char state_string[2];
 
 	// write lap time to display
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
-	sprintf(time_string,"%li:%05.02f",minutes,seconds);
+	sprintf(time_string,"%1li:%05.02f",minutes,seconds);
 	LCD_writeString(time_string);
-/*
+
 	// write current state to display
 	LCD_setCursor(9,0);
-	LCD_writeString(state_names[(int)robot_state]);*/
+	sprintf(state_string,"%2d",(int)robot_state);
+	LCD_writeString(state_string);
 
 	// write battery indicator to display
 	LCD_setCursor(0,1);
-	sprintf(battery_string,"0x%02x,0x%02x,0x%02x",AD1DAT0, AD1DAT1, AD1DAT2);
+	sprintf(battery_string,"%3.1f,%3.1f,%3.1f,%3.1f", 5.0 * (inductorL / 255.0), 5.0 * (inductorM / 255.0), 5.0 * (inductorR / 255.0), 5.0 * (battery / 255.0));
 	LCD_writeString(battery_string);
 }
 
@@ -151,19 +169,6 @@ void StateMachine()
 		default:
 			// do nothing
 	}
-}
-
-void InitADC(void)
-{
-	// Set adc1 channel pins as input only 
-	P0M1 |= (P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
-	P0M2 &= ~(P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
-
-	BURST1 = 1; //Autoscan continuos conversion mode
-	ADMODB = CLK0; //ADC1 clock is 7.3728MHz/2
-	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
-	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
-	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
 }
 
 //Run pid for states

@@ -10,7 +10,7 @@
 // LCD_write(character)
 // write a character to the LCD
 // (sends a clock pulse)
-void LCD_write(char i);
+void LCD_write(const char i);
 
 // LCD_writeString(char*)
 // write a sequence of characters to the LCD
@@ -18,7 +18,7 @@ void LCD_writeString(const char *string);
 
 // LCD_setCursor(int, int)
 // set the cursor position of the LCD
-void LCD_setCursor(int col, int row);
+void LCD_setCursor(const int col, const int row);
 
 // LCD_cmd(character)
 // write a command to the LCD
@@ -48,38 +48,36 @@ void LCD_init();
 // LCD_write(character) - TESTED WORKS
 // write a character to the LCD
 // (sends a clock pulse)
-void LCD_write(char i) {
+void LCD_write(const char i) {
 	lcd_dc = 1; // set RS for data
 	lcd_rw = 0; // set RW for write
 	
 	LCD_apply(i);
-	
 	LCD_clock();
 }
 
 // LCD_writeString(char*) - TESTED WORKS
 // write a sequence of characters to the LCD
-void LCD_writeString(char *string)
+void LCD_writeString(const char *string)
 {
+	lcd_dc = 1; // set RS for data
+	lcd_rw = 0; // set RW for write
+
     int i = 0;
     while (string[i] != 0)
     {
-        LCD_write(string[i]);
+    	LCD_apply(string[i]);
+		LCD_clock();
         i++;
     }
 }
 
 // LCD_setCursor(int, int)
 // set the cursor position of the LCD
-void LCD_setCursor(int col, int row) // col is column [0,15], row is [0,1]
-{ 
-	//int where;
+void LCD_setCursor(const int col, const int row) // col is column [0,15], row is [0,1]
+{
     LCD_cmd(0x80); // set cursor home
     LCD_cmd(col+row*40+0x80);
-    /*for(where = 0; where < (col+row*40); where++)
-    {
-    	LCD_cmd(0x14);
-    }*/
 }
 
 // LCD_cmd(character) - TESTED WORKS
