@@ -36,8 +36,6 @@ void lights(char i);
 // 0 - no bias, 1 - left bias, 2 - right bias
 void pid(int); 
 
-// output values to motors
-void ToMotors (int, int);
 
 
 void main(void)
@@ -176,19 +174,13 @@ void pid(int bias)
 {
 		//TODO: set thresholds for whether no, left or right bias. 
 		// 0 - no bias, 1 - left bias, 2 - right bias
-		
-		
-		
+
 		// Inputs AD1DAT0, AD1DAT1, AD1DAT2
-		//read in from sensors 
-		
+		//read in from sensors 	
 		
 		//TODO: determine pid output function
+		
+		drive_right_speed = 0; //set right motor speed (between 0 and 100)
+		drive_left_speed = 0; // set left motor speed (between 0 and 100)
 }
 
-// Output values to motors... don't know if really neccessary
-void ToMotors (int left, int right)
-{
-	left_wheel = left;
-	right_wheel = right;
-}
