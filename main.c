@@ -32,9 +32,11 @@ void StateMachine();
 // make some lights flash
 void lights(char i);
 
-// determine the motor outputs using pid
-// 0 - no bias, 1 - left bias, 2 - right bias
-void pid(int); 
+//  output to motors using pid with lc sensor inputs
+void pid(void); 
+
+// turn robot until line is reached  0 - turn left, 1 - turn right
+void turn(char);
 
 // determine change state options
 void ChangeState(void);
@@ -140,23 +142,20 @@ void StateMachine()
 	// state transitions
 	switch (robot_state) {
 		case RStart:
-			pid(0); //TODO: fix up pid
+			pid(); 
 			ChangeState(); //TODO: write change state thinking maybe something where we pass in number of Xings passed
 			//TODO: transition: 4blips -> RStraight
 			break;
 		case RStraight:
-			pid(0);
-			// TODO: output: pid
+			pid();
 			// TODO: transition: 2?blips -> RRightPrep, 3?blips -> RLeftPrep, 4blips -> RFinish
 			break;
 		case RRightPrep:
-			pid(0);
-			// TODO: output: pid
+			pid();
 			// TODO: transition: 1blip -> RRight
 			break;
 		case RRight:
-			pid(2);
-			// TODO: output: right-biased pid for time or turn right for time
+			turn(1); // turns right until hits wire 
 			// TODO: transition: time? -> RStraight
 			break;
 		case RLeftPrep:
@@ -164,12 +163,13 @@ void StateMachine()
 			// TODO: transition: 1blip -> RLeft
 			break;
 		case RLeft:
-			pid(2);
-			// TODO: output: left-biased pid for time or turn left for time
+			turn(0); // turns left until hits wire
 			// TODO: transition: time? -> RStraight
 			break;
 		case RFinish:
-			// TODO: output: stop driving
+			drive_left_speed = 0;
+			drive_right_speed = 0;
+			//TODO: do we need a reset?
 			break;
 		case RTest:
 			// TODO: output test stuff
