@@ -4,31 +4,21 @@
 extern volatile unsigned char drive_right_speed;
 extern volatile unsigned char drive_left_speed;
 
-
-
+	short error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
+	short error_last=-1, error_step = 0; // record error at last measurement and error at last change
+	int time = 1, time_step=0; // track number of interations since the start of this error
+	char sensor_left = 0, sensor_right = 0, sensor_front = 0;
+	
 //Run pid for states
 void pid(int bias)
 {	
-	//time counting
-	int time_init = 0;
-	int time_abs = 0;
-	int wait = 1; //while wait is 1 we need to wait for signal
-
-	//sensor states
-	int sensor_left = 0, sensor_right = 0, sensor_front = 0; //this will be a count of how many perpendicular wires have been observed
-
 	// threshold of signal 
-	double threshold_left = 0, threshold_right = 0, threshold_front = 0;
+	int threshold_left = 0, threshold_right = 0, threshold_front = 0;
 
 	// proportional, integral, derivative gains
-	float kp=0, ki=0, kd=0;
-
-	float error=0, d_error=0, s_error=0; // error, derivative of error, integral of error
-	int error_last=-1, error_step=0; // record error at last measurement and error at last change
-	int time = 1, time_step=0; // track number of interations since the start of this error
-
-	int speed_change = 0;
-	int direction_change=0;
+	int kp = 0, ki = 0, kd = 0;
+	short speed_change = 0;
+	//short direction_change=0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
 	// 0 - no bias, 1 - left bias, 2 - right bias
@@ -70,7 +60,6 @@ void pid(int bias)
 	//set wheel speeds
 	drive_left_speed = drive_left_speed + speed_change;
 	drive_right_speed = drive_right_speed - speed_change;
-	
 }
 		
 //TODO: write this	
