@@ -177,7 +177,12 @@ void pid(int bias)
 		//TODO: set thresholds for whether no, left or right bias. 
 		// 0 - no bias, 1 - left bias, 2 - right bias
 		
-		//TODO: read in from sensors function	
+		
+		
+		// Inputs AD1DAT0, AD1DAT1, AD1DAT2
+		//read in from sensors 
+		
+		
 		//TODO: determine pid output function
 }
 
