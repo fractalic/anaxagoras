@@ -15,7 +15,7 @@
 //16 bit timer, counting upwards
 #define TIMER0_RELOAD_VALUE (65536L-((XTAL)/(2*TIMER0_FREQ)))
 
-//We want timer 1 to interrupt every 10000 microseconds ((1/100Hz)=10000 us)
+//We want timer 1 to interrupt every 10 milliseconds ((1/100Hz)=10 ms)
 #define TIMER1_FREQ 100L // don't change this from 100L
 //16 bit timer, counting upwards
 #define TIMER1_RELOAD_VALUE (65536L-((XTAL)/(2*TIMER1_FREQ)))
@@ -90,13 +90,8 @@ void Timer0Tick (void) interrupt 1 using 1
 
 	// turn the motors on for the fraction of time specified by
 	// X_pwm, as a fraction of 100
-	/*if (drive_left) {
-		left_wheel=(left_wheel_pwm> (t0_ticks%100))?1:0;
-	}
-	if (drive_right) {
-		right_wheel = (right_wheel_pwm> (t0_ticks%100))?1:0;
-	}*/
-	
+	left_wheel = (left_wheel_pwm > pwm_ticks)?1:0;
+	right_wheel = (right_wheel_pwm > pwm_ticks)?1:0;
 }
 
 // timer1_init()

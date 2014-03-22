@@ -44,6 +44,9 @@ void ShouldIStop(void);
 // determine change state options
 void ChangeState(void);
 
+// count iterations of the main control sequence
+int loopcount = 0;
+
 void main(void)
 {
 	// set I/O mode of ports and pins on the microcontroller
@@ -53,7 +56,7 @@ void main(void)
 	InitADC();
 	
 	// wake up the LCD
-	LCD_init();
+	InitLCD();
 	
 	// start timer
 	Timer0Start();
@@ -63,8 +66,11 @@ void main(void)
 	
 	while(1)
 	{
-		DisplayInfo();
-		delay();
+		// don't refresh the display all the time
+		if (++loopcount>19) {
+			loopcount = 0;
+			DisplayInfo();
+		}
 	}		
 }
 

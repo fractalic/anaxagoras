@@ -1,8 +1,11 @@
 #ifndef PID
 #define PID
 
+// access the motor speed settings
+// (declared in timer.c)
 extern volatile unsigned char drive_right_speed;
 extern volatile unsigned char drive_left_speed;
+
 
 	short error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
 	short error_last=-1, error_step = 0; // record error at last measurement and error at last change
@@ -70,6 +73,7 @@ void pid(void)
 	drive_right_speed = drive_right_speed - speed_change;
 }
 
+
 void turn(char direction)
 {
 	while(!((inductorL >= 100) && (inductorR >= 100)))
@@ -87,6 +91,7 @@ void turn(char direction)
 	}
 }
 
+<<<<<<< HEAD
 void ShouldIStop(void)
 {
 	while((inductorL == 0) && (inductorR == 0))
@@ -97,82 +102,42 @@ void ShouldIStop(void)
 		
 //TODO: write this	
 void ChangeState (void)	
+=======
+char blips = 0;
+const char blip_threshold_upward = 100; // threshold to begin checking for blip
+const char blip_threshold_downward = 100; // threshold where we assume we've passed the blip
+unsigned blip_high_time = 0; // time of most recent blip
+unsigned blip_low_time = 0; // time of most recent signal drop
+char blip_ready = 0; // ready to detect blip
+char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
+char blip_pattern_length = 10; // minimum length in hundredths of a second for blip signal drop
+>>>>>>> ad1400aa3bf45e5f2a62f7cc6680a7f90d8e4d2f
 
-{	
-/*
-	//sensor states
-		int sensor_left = 0, sensor_right = 0, sensor_front = 0; //this will be a count of how many perpendicular wires have been observed
+// blip detection	
+void CheckSensors (void)	
+{
+	char recent = 0; // was there a blip recently
+	unsigned now = millis();
 
-		// threshold of signal 
-		double threshold_left = 0, threshold_right = 0, threshold_front = 0;
-				
-		int direction_change=0;
-		int time_init = 0;
-		int time_abs = 0;
-		int wait = 1; //while wait is 1 we need to wait for signal
-int time = 1, time_step=0; // track number of interations since the start of this error
-		
-	
-
-	//check state of the front inductor to store which way to turn if we enter an intersection
-	if (inductorM > threshold_front)
-	{	
-		wait = 1;
-		sensor_front = 1;
-		time_init = time;
-		while(wait == 1)//TODO: Make it so that this counts actual crossings
-		{
-			if (time-time_init > 500)wait = 0;
-			if(inductor_M > threshold_front)
-			{
-				sensor_front++;
-				time_init = time;
+	// check if we are ready to detect a blip
+	if (blip_ready) {
+		// blip sensor is high and has been that way for a while
+		if (inductorM > blip_threshold_upward) {
+			if (now - blip_prev_time > blip_length) {
+				blip++;
+				blip_prev_time = now;
+				blip_ready = 0;
 			}
-		}	
-	}
-	if (sensor_front == 4) //we are at a start or stop
-	{
-		if(time == 0)
-		{
-			reset_millis();	
-		}else //TODO: stop clock
-		{
-			
 		}
-	}
-	else
-	{	
-		if (sensor_front==3) //turn right
-		{	
-			wait=1;
-			while(wait==1)
-			{
-				if(sensor_front>threshold_front)
-				{
-					wait=0;
-				}
-			}
-				direction_change=100;//wait until the next perpendicular line (ie wait till the intersection)	
-		}
-	    else
-		{
-			if (sensor_front==2) // turn left!
-			{
-			wait=1;
-			while(wait==1)
-			{
-				if(sensor_front>threshold_front)
-				{
-					wait=0;
-				}
-			}
-				direction_change=-100;//wait until the next perpendicular line (ie wait till the intersection)
-			}else //lets go straight!
-			{
-				direction_change=0; //don't change the speed of the wheels
+	} else {
+		// check the length of signal decrease
+		if (inductorM < blip_threshold_downward) {
+			if (now - blip_prev_time > blip_length_low) {
+				blip_ready = 1;
+			} else {
+				blip_low_time = now;
 			}
 		}
 	}
-	*/
 }
 #endif
