@@ -1,4 +1,3 @@
-#include <string.h>
 #include <stdio.h>
 #include <p89lpc9351.h>
 
@@ -12,8 +11,8 @@
 
 // rover state machine information
 typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
-RobotState_t RobotState = RTest;
-const char *state_names[8] ={ "St", "stgt", "rpr", "rtn", "lpr", "ltn", "fn","tst" };
+RobotState_t robot_state = RTest;
+//char *state_names[8] ={ "s", "sg", "rp", "rt", "lp", "lt", "f","e" };
 
 // DisplayInfo()
 // show lap time, battery and status information on the screen
@@ -75,6 +74,7 @@ void lights(char i) {
 	// run lights
 	/*light_0 = (i) & 0x01;
 	light_1 = (i>>1) & 0x01;*/
+	i;
 }
 
 // DisplayInfo()
@@ -91,18 +91,15 @@ void DisplayInfo()
 	char battery_string[20];
 	float battery_d = 5.0 * (battery / 255.0); // TODO: Test that this works
 
-	// current state display
-	char state_string[6];
-
 	// write lap time to display
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
 	sprintf(time_string,"%li:%05.02f",minutes,seconds);
 	LCD_writeString(time_string);
-
+/*
 	// write current state to display
 	LCD_setCursor(9,0);
-	strcpy(state_string,state_names[0]);
+	LCD_writeString(state_names[(int)robot_state]);*/
 
 	// write battery indicator to display
 	LCD_setCursor(0,1);
@@ -115,7 +112,7 @@ void DisplayInfo()
 void StateMachine()
 {
 	// state transitions
-	switch (RobotState) {
+	switch (robot_state) {
 		case RStart:
 			pid(0);
 			//TODO: output: pid to motors function
@@ -184,3 +181,12 @@ void pid(int bias)
 		drive_left_speed = 0; // set left motor speed (between 0 and 100)
 }
 
+<<<<<<< HEAD
+=======
+// Output values to motors... don't know if really neccessary
+void ToMotors (int left, int right)
+{
+	left_wheel = left;
+	right_wheel = right;
+}
+>>>>>>> 853322b70963989df26b6049d9c73e4d7ede78e5
