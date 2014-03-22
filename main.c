@@ -174,7 +174,7 @@ void StateMachine()
 //Run pid for states
 void pid(int bias)
 {
-	/*
+	
 	//time counting
 	int time_init = 0;
 	int time_abs = 0;
@@ -193,9 +193,8 @@ void pid(int bias)
 	int error_last=-1, error_step=0; // record error at last measurement and error at last change
 	int time = 1, time_step=0; // track number of interations since the start of this error
 
-	void run_rep() {
 	//float fudge = 10;
-	int speed_change=0;
+	int speed_change = 0;
 	int direction_change=0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
@@ -243,9 +242,9 @@ void pid(int bias)
 	error_last = error;
 	
 	//set wheel speeds
-	drive_left_speed = speed + speed_change;
-	drive_right_speed = speed - speed_change;
-		*/
+	drive_left_speed = drive_left_speed + speed_change;
+	drive_right_speed = drive_right_speed - speed_change;
+	
 }
 		
 //TODO: write this	
