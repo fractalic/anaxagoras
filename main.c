@@ -181,12 +181,4 @@ void pid(int bias)
 		drive_left_speed = 0; // set left motor speed (between 0 and 100)
 }
 
-<<<<<<< HEAD
-=======
-// Output values to motors... don't know if really neccessary
-void ToMotors (int left, int right)
-{
-	left_wheel = left;
-	right_wheel = right;
-}
->>>>>>> 853322b70963989df26b6049d9c73e4d7ede78e5
+
