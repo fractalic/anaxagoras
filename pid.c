@@ -91,7 +91,7 @@ void turn(char direction)
 	}
 }
 
-<<<<<<< HEAD
+
 void ShouldIStop(void)
 {
 	while((inductorL == 0) && (inductorR == 0))
@@ -100,9 +100,7 @@ void ShouldIStop(void)
 	} 
 }
 		
-//TODO: write this	
-void ChangeState (void)	
-=======
+
 char blips = 0;
 const char blip_threshold_upward = 100; // threshold to begin checking for blip
 const char blip_threshold_downward = 100; // threshold where we assume we've passed the blip
@@ -111,7 +109,7 @@ unsigned blip_low_time = 0; // time of most recent signal drop
 char blip_ready = 0; // ready to detect blip
 char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
 char blip_pattern_length = 10; // minimum length in hundredths of a second for blip signal drop
->>>>>>> ad1400aa3bf45e5f2a62f7cc6680a7f90d8e4d2f
+
 
 // blip detection	
 void CheckSensors (void)	
