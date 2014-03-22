@@ -3,8 +3,8 @@
 
 // access the motor speed settings
 // (declared in timer.c)
-extern volatile unsigned char drive_right_speed;
-extern volatile unsigned char drive_left_speed;
+/*extern volatile unsigned char drive_right_speed;
+extern volatile unsigned char drive_left_speed;*/
 
 // blip detection ---------------------
 // get time in hundredths

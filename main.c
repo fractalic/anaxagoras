@@ -46,7 +46,7 @@ void main(void)
 	// wake up the LCD
 	InitLCD();
 	
-	// start timer
+	// start timers
 	Timer0Start();
 	Timer1Start();
 	
@@ -77,6 +77,11 @@ void InitPorts() {
 	// set port 2 to quasi-bidirectional
 	P2M1 = 0;
 	P2M2 = 0;
+
+	P3M1.0 = 1;
+	P3M2.0 = 0;
+	P3M1.1 = 1;
+	P3M2.1 = 0;
 }
 
 
