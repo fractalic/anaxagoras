@@ -101,6 +101,14 @@ void turn(char direction)
 	}
 }
 
+void ShouldIStop(void)
+{
+	while((inductorL == 0) && (inductorR == 0))
+	{
+	// do nothing until signal is detected
+	} 
+}
+
 // blip detection	
 void CheckSensors (void)	
 {
