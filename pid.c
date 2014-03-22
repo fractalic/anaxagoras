@@ -13,14 +13,21 @@ const unsigned char blip_threshold_downward = 100; // threshold where we assume 
 unsigned blip_high_time = 0; // time of most recent blip
 unsigned blip_low_time = 0; // time of most recent signal drop
 char blip_ready = 0; // ready to detect blip
-char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
-char blip_length_low = 10; // minimum length in hundredths of a second for blip signal drop
+unsigned char blip_sequence_finished = 1; // signal that there are no more blips in pattern
+const char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
+const unsigned char blip_sequence_length = 200; // the maximum expected time distance between two blips
 
 // pid control --------------------------
-short error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
-short error_last=-1, error_step = 0; // record error at last measurement and error at last change
+char error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
+char error_last=-1, error_step = 0; // record error at last measurement and error at last change
 int time = 1, time_step=0; // track number of interations since the start of this error
 char sensor_left = 0, sensor_right = 0, sensor_front = 0;
+
+//  output to motors using pid with lc sensor inputs
+void pid(void); 
+
+// turn robot until line is reached  0 - turn left, 1 - turn right
+unsigned char turn(char);
 
 //Run pid for states
 void pid(void)
@@ -84,20 +91,23 @@ void pid(void)
 }
 
 
-void turn(char direction)
+unsigned char turn(char direction)
 {
-	while(!((inductorL >= 100) && (inductorR >= 100)))
+	if(!((inductorL >= 100) && (inductorR >= 100)))
 	{
 		if(direction = '0')
 		{
-		drive_left_speed = 0;
-		drive_right_speed = 100;
+			drive_left_speed = 0;
+			drive_right_speed = 100;
 		}
 		if(direction = '1')
 		{
-		drive_left_speed = 100;
-		drive_right_speed = 0;
-		}			
+			drive_left_speed = 100;
+			drive_right_speed = 0;
+		}	
+		return 1;		
+	} else {
+		return 0;
 	}
 }
 
@@ -123,12 +133,15 @@ void CheckSensors (void)
 				blips++;
 				blip_high_time = now;
 				blip_ready = 0;
+				blip_sequence_finished = 0;
 			}
+		} else if (now - blip_low_time > blip_sequence_length) {
+			blip_sequence_finished = 1;
 		}
 	} else {
 		// check the length of signal decrease
 		if (inductorM < blip_threshold_downward) {
-			if (now - blip_low_time > blip_length_low) {
+			if (now - blip_low_time > blip_length) {
 				blip_ready = 1;
 			} else {
 				blip_low_time = now;

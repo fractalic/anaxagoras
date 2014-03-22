@@ -32,17 +32,11 @@ void StateMachine();
 // make some lights flash
 void lights(char i);
 
-//  output to motors using pid with lc sensor inputs
-void pid(void); 
-
-// turn robot until line is reached  0 - turn left, 1 - turn right
-void turn(char);
-
 // stop if no signal is detected
 void ShouldIStop(void);
 
 // count iterations of the main control sequence
-int loopcount = 0;
+char loopcount = 0;
 
 void main(void)
 {
@@ -63,11 +57,19 @@ void main(void)
 	
 	while(1)
 	{
+		// check the sensors as often as possible
+		CheckSensors();
+
 		// don't refresh the display all the time
-		if (++loopcount>19) {
-			loopcount = 0;
+		if (loopcount%20 == 0) {
 			DisplayInfo();
 		}
+		// don't change state all the time
+		if (loopcount%5 == 0) {
+			StateMachine();
+		}
+
+		++loopcount;
 	}		
 }
 
@@ -144,31 +146,59 @@ void StateMachine()
 		case RStart:
 			pid(); 
 			ShouldIStop();
-			ChangeState(); //TODO: write change state thinking maybe something where we pass in number of Xings passed
-			//TODO: transition: 4blips -> RStraight
+			if (blips>=4) {
+				reset_millis();
+				robot_state = RStraight;
+			}
 			break;
 		case RStraight:
 			pid();
 			ShouldIStop();
-			// TODO: transition: 2?blips -> RRightPrep, 3?blips -> RLeftPrep, 4blips -> RFinish
+			// check if we should get ready to turn
+			// be sure to reset blip counter
+			if (blip_sequence_finished) {
+				if (blips == 3) {
+					blips = 0;
+					robot_state = RRightPrep;
+				} else if (blips == 2) {
+					blips = 0;
+					robot_state = RLeftPrep;
+				}
+			}
 			break;
 		case RRightPrep:
 			pid();
 			ShouldIStop();
-			// TODO: transition: 1blip -> RRight
+			// turn when intersection detected
+			if (blip_sequence_finished) {
+				if (blips == 1) {
+					robot_state = RRight;
+				}
+			}
 			break;
 		case RRight:
-			turn(1); // turns right until hits wire 
-			// TODO: transition: time? -> RStraight
+			// turns right until hits wire 
+			if (!turn(1)) {
+				blips = 0;
+				robot_state = RStraight;
+			}
 			break;
 		case RLeftPrep:
 			pid();
 			ShouldIStop();
-			// TODO: transition: 1blip -> RLeft
+			// turn when intersection detected
+			if (blip_sequence_finished) {
+				if (blips == 1) {
+					robot_state = RLeft;
+				}
+			}
 			break;
 		case RLeft:
-			turn(0); // turns left until hits wire
-			// TODO: transition: time? -> RStraight
+		 	// turns left until hits wire
+			if (!turn(0)) {
+				blips = 0;
+				robot_state = RStraight;
+			}
 			break;
 		case RFinish:
 			drive_left_speed = 0;
