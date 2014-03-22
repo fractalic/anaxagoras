@@ -173,8 +173,7 @@ void StateMachine()
 
 //Run pid for states
 void pid(int bias)
-{
-	
+{	
 	//time counting
 	int time_init = 0;
 	int time_abs = 0;
@@ -193,19 +192,11 @@ void pid(int bias)
 	int error_last=-1, error_step=0; // record error at last measurement and error at last change
 	int time = 1, time_step=0; // track number of interations since the start of this error
 
-	//float fudge = 10;
 	int speed_change = 0;
 	int direction_change=0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
 	// 0 - no bias, 1 - left bias, 2 - right bias
-
-	// Inputs AD1DAT0, AD1DAT1, AD1DAT2
-	//read in from sensors 	
-	
-	// sppeds for each motor
-	drive_right_speed = 0; //set right motor speed (between 0 and 100)
-	drive_left_speed = 0; // set left motor speed (between 0 and 100)
 
 	//change the read in functions
 	if (inductorL > threshold_left)	sensor_left = 1;
