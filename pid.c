@@ -28,6 +28,9 @@ void pid(void);
 // turn robot until line is reached  0 - turn left, 1 - turn right
 unsigned char turn(char);
 
+// stop if no signal is detected
+char ShouldIStop(void);
+
 //Run pid for states
 void pid(void)
 {	
@@ -112,16 +115,13 @@ unsigned char turn(char direction)
 	}
 }
 
-void ShouldIStop(void)
+char ShouldIStop(void)
 {
-	if((inductorL <= 5) && (inductorR <= 5))
+	if((inductorL <= 5) && (inductorR <= 5) && (inductorM <= 5))
 	{
-	 	delay();
-	 	while((inductorL <= 5) && (inductorR <= 5))
-		{
-		//do nothing
-		}
+	 	return 1;
 	} 
+	return 0;
 }
 
 // blip detection	

@@ -32,9 +32,6 @@ void StateMachine();
 // make some lights flash
 void lights(char i);
 
-// stop if no signal is detected
-void ShouldIStop(void);
-
 // count iterations of the main control sequence
 unsigned int loopcount = 0;
 
@@ -143,51 +140,53 @@ void DisplayInfo()
 // control the current state of the robot
 void StateMachine()
 {
-	// state transitions
-	switch (robot_state) {
-		case RStart:
-			pid(); 
-			ShouldIStop();
-			if (BlipCount() >= 4) {
-				reset_millis();
-				robot_state = RStraight;
-			}
-			break;
-		case RStraight:
-			pid();
-			ShouldIStop();
-			// check if we should get ready to turn
-			if (BlipCount() == 3) robot_state = RRightPrep;
-			else if (BlipCount() == 2) robot_state = RLeftPrep;
-			break;
-		case RRightPrep:
-			pid();
-			ShouldIStop();
-			// turn when intersection detected
-			if (BlipCount() == 1) robot_state = RRight;
-			break;
-		case RRight:
-			// turns right until hits wire 
-			if (!turn(1)) robot_state = RStraight;
-			break;
-		case RLeftPrep:
-			pid();
-			ShouldIStop();
-			// turn when intersection detected
-			if (BlipCount() == 1) robot_state = RLeft;
-			break;
-		case RLeft:
-		 	// turns left until hits wire
-			if (!turn(0)) robot_state = RStraight;
-			break;
-		case RFinish:
-			drive_left_speed = 0;
-			drive_right_speed = 0;
-			//TODO: do we need a reset?
-			break;
-		case RTest:
-			// TODO: output test stuff
-		default:
-			// do nothing
+	if (!ShouldIStop()) {
+		// state transitions
+		switch (robot_state) {
+			case RStart:
+				pid(); 
+				//ShouldIStop();
+				if (BlipCount() >= 4) {
+					reset_millis();
+					robot_state = RStraight;
+				}
+				break;
+			case RStraight:
+				pid();
+				//ShouldIStop();
+				// check if we should get ready to turn
+				if (BlipCount() == 3) robot_state = RRightPrep;
+				else if (BlipCount() == 2) robot_state = RLeftPrep;
+				break;
+			case RRightPrep:
+				pid();
+				//ShouldIStop();
+				// turn when intersection detected
+				if (BlipCount() == 1) robot_state = RRight;
+				break;
+			case RRight:
+				// turns right until hits wire 
+				if (!turn(1)) robot_state = RStraight;
+				break;
+			case RLeftPrep:
+				pid();
+				//ShouldIStop();
+				// turn when intersection detected
+				if (BlipCount() == 1) robot_state = RLeft;
+				break;
+			case RLeft:
+			 	// turns left until hits wire
+				if (!turn(0)) robot_state = RStraight;
+				break;
+			case RFinish:
+				drive_left_speed = 0;
+				drive_right_speed = 0;
+				//TODO: do we need a reset?
+				break;
+			case RTest:
+				// TODO: output test stuff
+			default:
+				// do nothing
+		}
 	}
 }
