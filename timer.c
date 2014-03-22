@@ -21,8 +21,8 @@
 #define TIMER1_RELOAD_VALUE (65536L-((XTAL)/(2*TIMER1_FREQ)))
 
 //These variables are used in the ISR
-volatile unsigned char left_wheel_pwm;
-volatile unsigned char right_wheel_pwm;
+volatile unsigned char drive_right_speed;
+volatile unsigned char drive_left_speed;
 
 // count timer ticks
 volatile char pwm_ticks = 0;
