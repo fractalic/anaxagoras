@@ -7,21 +7,20 @@ extern volatile unsigned char drive_right_speed;
 extern volatile unsigned char drive_left_speed;
 
 // blip detection ---------------------
+// get time in hundredths
+int now;
+// store blip properties
+char low, recent;
+char derivative;
 char blips = 0;
-const unsigned char blip_threshold_upward = 100; // threshold to begin checking for blip
-const unsigned char blip_threshold_downward = 100; // threshold where we assume we've passed the blip
-unsigned blip_high_time = 0; // time of most recent blip
-unsigned blip_low_time = 0; // time of most recent signal drop
+char blip_prev_level; // value of previous blip
 char blip_ready = 0; // ready to detect blip
-unsigned char blip_sequence_finished = 1; // signal that there are no more blips in pattern
-const char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
-const unsigned char blip_sequence_length = 200; // the maximum expected time distance between two blips
+int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
 char error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
 char error_last=-1, error_step = 0; // record error at last measurement and error at last change
 int time = 1, time_step=0; // track number of interations since the start of this error
-char sensor_left = 0, sensor_right = 0, sensor_front = 0;
 
 //  output to motors using pid with lc sensor inputs
 void pid(void); 
@@ -128,32 +127,40 @@ void ShouldIStop(void)
 // blip detection	
 void CheckSensors (void)	
 {
-	char recent = 0; // was there a blip recently
-	unsigned now = millis();
+	// get time
+	now = millis()/10.0;
+
+	// check if we're above or below signal
+	low = (inductorM <= 100)? 1:0;
+	recent = (now - blip_prev_mark < 200)? 1:0;
+	derivative = inductorM - blip_prev_level;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
-		// blip sensor is high and has been that way for a while
-		if (inductorM > blip_threshold_upward) {
-			if (now - blip_high_time > blip_length) {
-				blips++;
-				blip_high_time = now;
-				blip_ready = 0;
-				blip_sequence_finished = 0;
-			}
-		} else if (now - blip_low_time > blip_sequence_length) {
-			blip_sequence_finished = 1;
+		// blip sensor is high
+		if (!low) {
+			blips++;
+			blip_prev_mark = now;
+			blip_ready = 0;
 		}
 	} else {
-		// check the length of signal decrease
-		if (inductorM < blip_threshold_downward) {
-			if (now - blip_low_time > blip_length) {
-				blip_ready = 1;
-			} else {
-				blip_low_time = now;
-			}
+		// check that signal is decreasing
+		if (low && derivative < 0) {
+			blip_ready = 1;
 		}
 	}
+}
+
+// blipcount()
+// determine how many blips have been counted and reset blips to zero
+char BlipCount( void )
+{
+	// only return the blip count when we know the blip sequence is finished
+	if (!recent && low) {
+		return blips;
+	}
+
+	return 0;
 }
 
 #endif

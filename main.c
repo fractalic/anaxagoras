@@ -12,7 +12,7 @@
 
 // rover state machine information
 typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
-RobotState_t robot_state = RTest;
+RobotState_t robot_state = RStart;
 
 // DisplayInfo()
 // show lap time, battery and status information on the screen
@@ -36,7 +36,7 @@ void lights(char i);
 void ShouldIStop(void);
 
 // count iterations of the main control sequence
-char loopcount = 0;
+unsigned int loopcount = 0;
 
 void main(void)
 {
@@ -61,15 +61,15 @@ void main(void)
 		CheckSensors();
 
 		// don't refresh the display all the time
-		if (loopcount%20 == 0) {
+		if (loopcount%1000==0) {
 			DisplayInfo();
 		}
 		// don't change state all the time
-		if (loopcount%5 == 0) {
+		if (loopcount%300 == 0) {
 			StateMachine();
 		}
 
-		++loopcount;
+		if(++loopcount>10000) loopcount = 0;
 	}		
 }
 
@@ -110,9 +110,9 @@ void DisplayInfo()
 {
 	// compute lap time
 	char time_string[8];
-	unsigned time = millis();
+	long time = millis();
 	float seconds = time/1000.0;
-	short minutes = seconds / 60.0;
+	int minutes = time / 60000.0;
 
 	// read pins and convert to voltage values
 	char battery_string[20];
@@ -123,7 +123,7 @@ void DisplayInfo()
 	// write lap time to display
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
-	sprintf(time_string,"%1li:%05.02f",minutes,seconds);
+	sprintf(time_string,"%1d:%05.02f",minutes,seconds);
 	LCD_writeString(time_string);
 
 
@@ -148,7 +148,7 @@ void StateMachine()
 		case RStart:
 			pid(); 
 			ShouldIStop();
-			if (blips>=4) {
+			if (BlipCount() >= 4) {
 				reset_millis();
 				robot_state = RStraight;
 			}
@@ -157,50 +157,28 @@ void StateMachine()
 			pid();
 			ShouldIStop();
 			// check if we should get ready to turn
-			// be sure to reset blip counter
-			if (blip_sequence_finished) {
-				if (blips == 3) {
-					blips = 0;
-					robot_state = RRightPrep;
-				} else if (blips == 2) {
-					blips = 0;
-					robot_state = RLeftPrep;
-				}
-			}
+			if (BlipCount() == 3) robot_state = RRightPrep;
+			else if (BlipCount() == 2) robot_state = RLeftPrep;
 			break;
 		case RRightPrep:
 			pid();
 			ShouldIStop();
 			// turn when intersection detected
-			if (blip_sequence_finished) {
-				if (blips == 1) {
-					robot_state = RRight;
-				}
-			}
+			if (BlipCount() == 1) robot_state = RRight;
 			break;
 		case RRight:
 			// turns right until hits wire 
-			if (!turn(1)) {
-				blips = 0;
-				robot_state = RStraight;
-			}
+			if (!turn(1)) robot_state = RStraight;
 			break;
 		case RLeftPrep:
 			pid();
 			ShouldIStop();
 			// turn when intersection detected
-			if (blip_sequence_finished) {
-				if (blips == 1) {
-					robot_state = RLeft;
-				}
-			}
+			if (BlipCount() == 1) robot_state = RLeft;
 			break;
 		case RLeft:
 		 	// turns left until hits wire
-			if (!turn(0)) {
-				blips = 0;
-				robot_state = RStraight;
-			}
+			if (!turn(0)) robot_state = RStraight;
 			break;
 		case RFinish:
 			drive_left_speed = 0;

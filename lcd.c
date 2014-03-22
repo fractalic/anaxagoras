@@ -61,6 +61,7 @@ void LCD_write(const char i) {
 void LCD_writeString(const char *string)
 {
     int i = 0;
+    int d = 5;
     
 	lcd_dc = 1; // set RS for data
 	lcd_rw = 0; // set RW for write

@@ -34,7 +34,7 @@ void Timer0Start();
 
 // millis()
 // gets the number of milliseconds since last reset
-unsigned millis();
+long millis();
 
 // reset_millis()
 // reset the lap timer
@@ -136,7 +136,7 @@ void Timer1Tick (void) interrupt 3 using 3
 
 // millis()
 // gets the number of milliseconds since last reset
-unsigned millis()
+long millis()
 {
 	return t1_ticks*10.0;
 }
