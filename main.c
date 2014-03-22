@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <p89lpc9351.h>
 
@@ -10,8 +10,10 @@
 #include "lcd.c"
 #include "timer.c"
 
-typedef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
+// rover state machine information
+typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t RobotState = RTest;
+const char *state_names[8] ={ "St", "stgt", "rpr", "rtn", "lpr", "ltn", "fn","tst" };
 
 // DisplayInfo()
 // show lap time, battery and status information on the screen
@@ -81,13 +83,20 @@ void DisplayInfo()
 
 	// battery level settings
 	char battery_string[20];
-	float battery_d = battery / 255.0;
+	float battery_d = 5.0 * (battery / 255.0);
+
+	// current state display
+	char state_string[6];
 
 	// write lap time to display
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
-	sprintf(time_string,"%li:%02.02f",minutes,seconds);
+	sprintf(time_string,"%li:%05.02f",minutes,seconds);
 	LCD_writeString(time_string);
+
+	// write current state to display
+	LCD_setCursor(9,0);
+	strcpy(state_string,state_names[0]);
 
 	// write battery indicator to display
 	LCD_setCursor(0,1);
