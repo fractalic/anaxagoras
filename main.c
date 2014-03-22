@@ -103,26 +103,17 @@ void display_battery()
 	//char battery_string[4];	
 	int battery = AD1DAT3*5.0/255/1.2927-0.2439;
 	int batterydec = AD1DAT3*50.0/255/1.2927-0.2439-battery*10;
-
 	
 	char str[4];
 	char strdec[4];
     sprintf(str, "%d", battery);
     sprintf(strdec, "%d", batterydec);
 	LCD_setCursor(0,1);
-	//battery_string[0] = num2char(battery);
-	//battery_string[1] = '.';
-	//battery_string[2] = num2char(batterydec);
-	//battery_string[3] = '\0';
 	LCD_writeString("Battery: ");
-<<<<<<< HEAD
-	//LCD_writeString(battery_string);	
 	LCD_writeString(str);
 	LCD_writeString(".");
 	LCD_writeString(strdec);
-=======
-	LCD_writeString(battery_string);
->>>>>>> 463747a8a977fc2d75bbbfb958516e3428ce5e08
+
 }
 
 // statemachine

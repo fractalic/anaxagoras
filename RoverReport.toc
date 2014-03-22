@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {0.1}Introduction}{2}
+\contentsline {section}{\numberline {0.2}Hardware}{2}
+\contentsline {subsection}{\numberline {0.2.1}LC Circuit}{2}
+\contentsline {subsection}{\numberline {0.2.2}Micro-controller}{2}
+\contentsline {subsection}{\numberline {0.2.3}LC Holders}{2}
+\contentsline {subsection}{\numberline {0.2.4}Organize and Write More}{2}
+\contentsline {section}{\numberline {0.3}Software}{2}
+\contentsline {subsection}{\numberline {0.3.1}Finite State Machine}{2}
+\contentsline {subsection}{\numberline {0.3.2}LCD Controller}{2}
+\contentsline {subsection}{\numberline {0.3.3}Organize and Write More}{2}
+\contentsline {section}{\numberline {0.4}Evaluation of Complete System}{2}
+\contentsline {subsection}{\numberline {0.4.1}Testing}{2}
+\contentsline {subsection}{\numberline {0.4.2}Strengths and Weaknesses}{2}
+\contentsline {section}{\numberline {0.5}Conclusion}{2}
+\contentsline {section}{\numberline {0.6}References}{3}
+\contentsline {section}{\numberline {0.7}Bibliography}{3}
+\contentsline {section}{\numberline {0.8}Appendices}{3}
