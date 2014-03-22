@@ -10,7 +10,7 @@ extern volatile unsigned char drive_left_speed;
 	char sensor_left = 0, sensor_right = 0, sensor_front = 0;
 	
 //Run pid for states
-void pid(int bias)
+void pid(void)
 {	
 	// threshold of signal 
 	int threshold_left = 100, threshold_right = 100, threshold_front = 0; //TODO: Test that these value work
@@ -69,6 +69,24 @@ void pid(int bias)
 	drive_left_speed = drive_left_speed + speed_change;
 	drive_right_speed = drive_right_speed - speed_change;
 }
+
+void turn(char direction)
+{
+	while(!((inductorL >= 100) && (inductorR >= 100)))
+	{
+		if(direction = '0')
+		{
+		drive_left_speed = 0;
+		drive_right_speed = 100;
+		}
+		if(direction = '1')
+		{
+		drive_left_speed = 100;
+		drive_right_speed = 0;
+		}			
+	}
+}
+
 		
 //TODO: write this	
 void ChangeState (void)	
