@@ -60,10 +60,11 @@ void LCD_write(const char i) {
 // write a sequence of characters to the LCD
 void LCD_writeString(const char *string)
 {
+    int i = 0;
+    
 	lcd_dc = 1; // set RS for data
 	lcd_rw = 0; // set RW for write
 
-    int i = 0;
     while (string[i] != 0)
     {
     	LCD_apply(string[i]);
