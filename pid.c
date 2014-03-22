@@ -86,8 +86,10 @@ void pid(void)
 	error_last = error; 
 	
 	//set wheel speeds
-	drive_left_speed = drive_left_speed + speed_change;
-	drive_right_speed = drive_right_speed - speed_change;
+	//drive_left_speed = drive_left_speed + speed_change;
+	//drive_right_speed = drive_right_speed - speed_change;
+	drive_left_speed = 50;
+	drive_right_speed = 20;
 }
 
 
