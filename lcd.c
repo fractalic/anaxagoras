@@ -38,7 +38,7 @@ void LCD_apply(char i);
 
 // LCD_init()
 // wakeup the LCD and get ready for use
-void LCD_init();
+void InitLCD();
 
 // GLOBAL VARS ----------------------------------
 // nothing here
@@ -95,7 +95,7 @@ void LCD_cmd(char i) {
 
 // LCD_init()
 // wakeup the LCD and get ready for use
-void LCD_init() {
+void InitLCD() {
 	lcd_enable = 0;
 	delay();
 	LCD_cmd(0x30); // wake up
