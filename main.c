@@ -38,6 +38,9 @@ void pid(void);
 // turn robot until line is reached  0 - turn left, 1 - turn right
 void turn(char);
 
+// stop if no signal is detected
+void ShouldIStop(void);
+
 // determine change state options
 void ChangeState(void);
 
@@ -137,15 +140,18 @@ void StateMachine()
 	switch (robot_state) {
 		case RStart:
 			pid(); 
+			ShouldIStop();
 			ChangeState(); //TODO: write change state thinking maybe something where we pass in number of Xings passed
 			//TODO: transition: 4blips -> RStraight
 			break;
 		case RStraight:
 			pid();
+			ShouldIStop();
 			// TODO: transition: 2?blips -> RRightPrep, 3?blips -> RLeftPrep, 4blips -> RFinish
 			break;
 		case RRightPrep:
 			pid();
+			ShouldIStop();
 			// TODO: transition: 1blip -> RRight
 			break;
 		case RRight:
@@ -153,7 +159,8 @@ void StateMachine()
 			// TODO: transition: time? -> RStraight
 			break;
 		case RLeftPrep:
-			// TODO: output: pid
+			pid();
+			ShouldIStop();
 			// TODO: transition: 1blip -> RLeft
 			break;
 		case RLeft:
