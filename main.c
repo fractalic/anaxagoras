@@ -42,7 +42,8 @@ void main(void)
 	LCD_init();
 	
 	// start timer
-	timer0_init();
+	Timer0Start();
+	Timer1Start();
 	
 	reset_millis();
 	
@@ -79,7 +80,7 @@ void DisplayInfo()
 	long minutes = seconds / 60.0;
 
 	// battery level settings
-	char battery_string[7];
+	char battery_string[20];
 	float battery_d = battery / 255.0;
 
 	// write lap time to display
@@ -90,7 +91,7 @@ void DisplayInfo()
 
 	// write battery indicator to display
 	LCD_setCursor(0,1);
-	sprintf(battery_string,"%02.02f",battery_d);
+	sprintf(battery_string,"0x%02x,0x%02x,0x%02x",AD1DAT0, AD1DAT1, AD1DAT2);
 	LCD_writeString(battery_string);
 }
 

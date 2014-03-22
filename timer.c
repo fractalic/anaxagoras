@@ -1,5 +1,5 @@
-#ifndef PWM
-#define PWM
+#ifndef TIMER
+#define TIMER
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,13 +21,12 @@
 #define TIMER1_RELOAD_VALUE (65536L-((XTAL)/(2*TIMER1_FREQ)))
 
 //These variables are used in the ISR
-volatile unsigned char pwmcount;
 volatile unsigned char left_wheel_pwm;
 volatile unsigned char right_wheel_pwm;
 
-// count timer0 ticks (every 100us)
-volatile char t0_ticks = 0;
-volatile long millis_v;
+// count timer ticks
+volatile char pwm_ticks = 0;
+volatile int t1_ticks = 0;
 
 // TODO: set these in the state machine
 short int drive_right = 0;
@@ -37,11 +36,7 @@ short int drive_left_speed = 0;
 
 // timer0_init()
 // setup the timer0 and begin running it
-void timer0_init();
-
-// timer0_restart()
-// stop, load a time value, and start timer0
-void timer0_restart();
+void Timer0Start();
 
 // millis()
 // gets the number of milliseconds since last reset
@@ -55,14 +50,19 @@ void reset_millis();
 // timer0_event()
 // called whenever the timer overflows
 // the time is determind by the frequency defined at the top of this file
-void timer0_event (void) interrupt 1 using 1
+void Timer0Tick (void) interrupt 1 using 1
 {
-	// load the timer and start it
-	timer0_restart();
+	// load a value into timer0 and restart
+	TF0=0; // Clear the overflow flag
+	TR0=0; // Stop timer 0
+	// load the timer
+	TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
+	TL0=TIMER0_RELOAD_VALUE%0x100;
+	TR0=1; // Start timer 0
 
 	// only count 100 ticks before setting to zero
 	// (arbitrary, but should be multiple of 10 and 100)
-	if(++t0_ticks>99) t0_ticks=0;
+	if(++pwm_ticks>99) pwm_ticks = 0;
 
 	// turn the motors on for the fraction of time specified by
 	// X_pwm, as a fraction of 100
@@ -77,7 +77,7 @@ void timer0_event (void) interrupt 1 using 1
 
 // timer0_init()
 // setup the timer0 and begin running it
-void timer0_init (void)
+void Timer0Start (void)
 {
 	// Initialize timer 0 for ISR 'pwmcounter' below
 	TR0=0; // Stop timer 0
@@ -99,10 +99,11 @@ void timer0_init (void)
 
 // timer1_init()
 // setup the timer0 and begin running it
-void timer1_init (void)
+void Timer1Start (void)
 {
 	// Initialize timer 0 for ISR 'pwmcounter' below
 	TR1=0; // Stop timer 0
+
 	TF1=0; // Clear the overflow flag
 
 	TMOD=(TMOD&0x0f)|0x10; // 16-bit timer
@@ -123,7 +124,7 @@ void timer1_init (void)
 // timer0_event()
 // called whenever the timer overflows
 // the time is determind by the frequency defined at the top of this file
-void timer1_event (void) interrupt 3 using 3
+void Timer1Tick (void) interrupt 3 using 3
 {
 	// load a value into timer0 and restart
 	TF1=0; // Clear the overflow flag
@@ -133,38 +134,21 @@ void timer1_event (void) interrupt 3 using 3
 	TL1=TIMER1_RELOAD_VALUE%0x100;
 	TR1=1; // Start timer 0
 
-	millis_v++;
-	
-}
-
-// timer0_restart()
-// stop, load a time value, and start timer0
-void timer0_restart()
-{
-	TF0=0; // Clear the overflow flag
-	
-	TR0=0; // Stop timer 0
-
-	// load the timer
-	TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
-	TL0=TIMER0_RELOAD_VALUE%0x100;
-
-	TR0=1; // Start timer 0
+	t1_ticks++;
 }
 
 // millis()
 // gets the number of milliseconds since last reset
 long millis()
 {
-	long interim = millis_v*10.0;
-	return interim;
+	return t1_ticks*10.0;
 }
 
 // reset_time()
 // reset the global tenths and hundredths counters
 void reset_millis()
 {
-	millis_v = 0;
+	t1_ticks = 0;
 }
 
 #endif
