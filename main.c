@@ -1,60 +1,79 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <p89lpc9351.h>
 
-// include .c files, because crosside gets mad a .h //
+// include .c files, because crosside gets mad at .h //
 // pins should be included in every file
 // utilities should probably be included in every file
 #include "pins.c"
 #include "utilities.c"
 #include "lcd.c"
-#include "pwm.c"
+#include "timer.c"
+#include "pid.c"
 
-typedef enum {RStart, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
-RobotState_t RobotState = RTest;
+// rover state machine information
+typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
+RobotState_t robot_state = RTest;
 
-char time_string[12];
-
-// display the current time on the LCD
-void display_time(void);
-
-// display the current battery on the LCD
-void display_battery(void);
+// DisplayInfo()
+// show lap time, battery and status information on the screen
+void DisplayInfo();
 
 // initialize the ports to proper I/O mode
-void init_ports();
+void InitPorts();
 
-// initializa analogue inputs
+// initadc()
+// set up adc 1, with four input channels
 void InitADC(void);
+
+// statemachine
+// control the current state of the rover
+void StateMachine();
 
 // make some lights flash
 void lights(char i);
 
+// stop if no signal is detected
+void ShouldIStop(void);
+
+// count iterations of the main control sequence
+char loopcount = 0;
+
 void main(void)
 {
 	// set I/O mode of ports and pins on the microcontroller
-	init_ports();
+	InitPorts();
 	
 	// set analog inputs
 	InitADC();
 	
 	// wake up the LCD
-	LCD_init();
+	InitLCD();
 	
 	// start timer
-	timer0_init();
+	Timer0Start();
+	Timer1Start();
 	
 	reset_millis();
 	
 	while(1)
 	{
-		display_time();
-		display_battery();
-		LCD_setCursor(0,0);
+		// check the sensors as often as possible
+		CheckSensors();
+
+		// don't refresh the display all the time
+		if (loopcount%20 == 0) {
+			DisplayInfo();
+		}
+		// don't change state all the time
+		if (loopcount%5 == 0) {
+			StateMachine();
+		}
+
+		++loopcount;
 	}		
 }
 
-void init_ports() {
+void InitPorts() {
 	// set port 1 to quasi-bidirectional
 	P1M1 = 0;
 	P1M2 = 0;
@@ -63,99 +82,8 @@ void init_ports() {
 	P2M2 = 0;
 }
 
-void lights(char i) {
-	// run lights
-	light_0 = (i) & 0x01;
-	light_1 = (i>>1) & 0x01;
-}
 
-// display the current time on the LCD
-void display_time()
-{
-	/*int seconds = millis()/1000;
-	int minutes = seconds / 60;
-	if (seconds >= 60) seconds-=minutes*60;
-
-	time_string[0] = num2char(minutes/10);
-	time_string[1] = num2char(minutes);
-	time_string[2] = ':';
-	time_string[3] = num2char(seconds/10);
-	time_string[4] = num2char(seconds);
-	time_string[5] = '.';
-	time_string[6] = num2char(millis()/100);
-	time_string[7] = '\0';
-	LCD_writeString(time_string);*/
-	
-	long time = millis();
-	long seconds = time/1000.0;
-	long minutes = seconds / 60.0;
-	if (seconds >= 60.0) seconds-=minutes*60.0;
-	
-	sprintf(time_string,"%li XX %li:%li",time,minutes,seconds);
-	LCD_writeString(time_string);
-}
-
-// display the current battery on the LCD TODO: TEST THIS
-void display_battery()
-{
-
-	//batterypin = AD1DAT3;
-	//char battery_string[4];	
-	int battery = AD1DAT3*5.0/255/1.2927-0.2439;
-	int batterydec = AD1DAT3*50.0/255/1.2927-0.2439-battery*10;
-	
-	char str[4];
-	char strdec[4];
-    sprintf(str, "%d", battery);
-    sprintf(strdec, "%d", batterydec);
-	LCD_setCursor(0,1);
-	LCD_writeString("Battery: ");
-	LCD_writeString(str);
-	LCD_writeString(".");
-	LCD_writeString(strdec);
-
-}
-
-// statemachine
-// control the current state of the robot
-void statemachine()
-{
-	// state transitions
-	switch (RobotState) {
-		case RStart:
-			// TODO: output: pid
-			// TODO: transition: 4blips -> RStraight
-			break;
-		case RStraight:
-			// TODO: output: pid
-			// TODO: transition: 2?blips -> RRightPrep, 3?blips -> RLeftPrep, 4blips -> RFinish
-			break;
-		case RRightPrep:
-			// TODO: output: pid
-			// TODO: transition: 1blip -> RRight
-			break;
-		case RRight:
-			// TODO: output: right-biased pid for time or turn right for time
-			// TODO: transition: time? -> RStraight
-			break;
-		case RLeftPrep:
-			// TODO: output: pid
-			// TODO: transition: 1blip -> RLeft
-			break;
-		case RLeft:
-			// TODO: output: left-biased pid for time or turn left for time
-			// TODO: transition: time? -> RStraight
-			break;
-		case RFinish:
-			// TODO: output: stop driving
-			break;
-		case RTest:
-			// TODO: output test stuff
-		default:
-			// do nothing
-	}
-}
-
+// set up adc 1, with four input channels
 void InitADC(void)
 {
 	// Set adc1 channel pins as input only 
@@ -167,4 +95,121 @@ void InitADC(void)
 	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
 	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
 	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
+}
+
+void lights(char i) {
+	// run lights
+	/*light_0 = (i) & 0x01;
+	light_1 = (i>>1) & 0x01;*/
+	i;
+}
+
+// DisplayInfo()
+// show lap time, battery and status information on the screen
+void DisplayInfo()
+{
+	// compute lap time
+	char time_string[8];
+	unsigned time = millis();
+	float seconds = time/1000.0;
+	short minutes = seconds / 60.0;
+
+	// read pins and convert to voltage values
+	char battery_string[20];
+
+	// store string representation of current state
+	char state_string[2];
+
+	// write lap time to display
+	LCD_setCursor(0,0);
+	if (seconds >= 60.0) seconds-=minutes*60.0;
+	sprintf(time_string,"%1li:%05.02f",minutes,seconds);
+	LCD_writeString(time_string);
+
+
+	// write current state to display
+	LCD_setCursor(9,0);
+	sprintf(state_string,"%2d",(int)robot_state);
+	LCD_writeString(state_string);
+
+	// write battery indicator to display
+	LCD_setCursor(0,1);
+	sprintf(battery_string,"%3.1f,%3.1f,%3.1f,%3.1f", 5.0 * (inductorL / 255.0), 5.0 * (inductorM / 255.0), 5.0 * (inductorR / 255.0), 5.0 * (battery / 255.0));
+	LCD_writeString(battery_string);
+
+}
+
+// statemachine
+// control the current state of the robot
+void StateMachine()
+{
+	// state transitions
+	switch (robot_state) {
+		case RStart:
+			pid(); 
+			ShouldIStop();
+			if (blips>=4) {
+				reset_millis();
+				robot_state = RStraight;
+			}
+			break;
+		case RStraight:
+			pid();
+			ShouldIStop();
+			// check if we should get ready to turn
+			// be sure to reset blip counter
+			if (blip_sequence_finished) {
+				if (blips == 3) {
+					blips = 0;
+					robot_state = RRightPrep;
+				} else if (blips == 2) {
+					blips = 0;
+					robot_state = RLeftPrep;
+				}
+			}
+			break;
+		case RRightPrep:
+			pid();
+			ShouldIStop();
+			// turn when intersection detected
+			if (blip_sequence_finished) {
+				if (blips == 1) {
+					robot_state = RRight;
+				}
+			}
+			break;
+		case RRight:
+			// turns right until hits wire 
+			if (!turn(1)) {
+				blips = 0;
+				robot_state = RStraight;
+			}
+			break;
+		case RLeftPrep:
+			pid();
+			ShouldIStop();
+			// turn when intersection detected
+			if (blip_sequence_finished) {
+				if (blips == 1) {
+					robot_state = RLeft;
+				}
+			}
+			break;
+		case RLeft:
+		 	// turns left until hits wire
+			if (!turn(0)) {
+				blips = 0;
+				robot_state = RStraight;
+			}
+			break;
+		case RFinish:
+			drive_left_speed = 0;
+			drive_right_speed = 0;
+			//TODO: do we need a reset?
+			break;
+		case RTest:
+			// TODO: output test stuff
+		default:
+			// do nothing
+	}
 }
