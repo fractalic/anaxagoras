@@ -13,16 +13,16 @@ extern volatile unsigned char drive_left_speed;
 void pid(int bias)
 {	
 	// threshold of signal 
-	int threshold_left = 0, threshold_right = 0, threshold_front = 0;
+	int threshold_left = 100, threshold_right = 100, threshold_front = 0; //TODO: Test that these value work
 
 	// proportional, integral, derivative gains
 	int kp = 0, ki = 0, kd = 0;
 	short speed_change = 0;
-	//short direction_change=0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
 	// 0 - no bias, 1 - left bias, 2 - right bias
 
+	/*
 	//change the read in functions
 	if (inductorL > threshold_left)	sensor_left = 1;
 	else sensor_left = 0;
@@ -44,7 +44,15 @@ void pid(int bias)
 		time_step = time;
 		time = 1;
 	}
-
+	*/
+	error = inductorR-inductorL;
+	if (error != error_last)
+	{
+		error_step = error_last; // record the error value
+		time_step = time;
+		time = 1;
+	}
+	 
 	// find the derivative of the error
 	d_error = (float) (error - error_step) / (float) (time + time_step);
 
@@ -55,7 +63,7 @@ void pid(int bias)
 	time++;
 
 	// record the error at previous measurement
-	error_last = error;
+	error_last = error; 
 	
 	//set wheel speeds
 	drive_left_speed = drive_left_speed + speed_change;
