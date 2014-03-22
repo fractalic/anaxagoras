@@ -26,7 +26,7 @@ volatile unsigned char right_wheel_pwm;
 
 // count timer ticks
 volatile char pwm_ticks = 0;
-volatile int t1_ticks = 0;
+volatile unsigned t1_ticks = 0;
 
 // timer0_init()
 // setup the timer0 and begin running it
@@ -34,11 +34,41 @@ void Timer0Start();
 
 // millis()
 // gets the number of milliseconds since last reset
-long millis();
+unsigned millis();
 
 // reset_millis()
-// reset the global tenths and hundredths counters
+// reset the lap timer
 void reset_millis();
+
+// freeze_millis()
+// freeze the lap timer
+void freeze_millis();
+
+// unfreeze_millis()
+// restart the lap timer from its current value
+void unfreeze_millis();
+
+// timer0_init()
+// setup the timer0 and begin running it
+void Timer0Start (void)
+{
+	// Initialize timer 0 for ISR 'pwmcounter' below
+	TR0=0; // Stop timer 0
+	TF0=0; // Clear the overflow flag
+
+	TMOD=(TMOD&0xf0)|0x01; // 16-bit timer
+	
+	// load a value into timer0 and restart
+	TF0=0; // Clear the overflow flag
+	TR0=0; // Stop timer 0
+	// load the timer
+	TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
+	TL0=TIMER0_RELOAD_VALUE%0x100;
+	TR0=1; // Start timer 0
+
+	ET0=1; // Enable timer 0 interrupt
+	EA=1;  // Enable global interrupts
+}
 
 // crosside got made when I tried to make this a prototype
 // timer0_event()
@@ -67,28 +97,6 @@ void Timer0Tick (void) interrupt 1 using 1
 		right_wheel = (right_wheel_pwm> (t0_ticks%100))?1:0;
 	}*/
 	
-}
-
-// timer0_init()
-// setup the timer0 and begin running it
-void Timer0Start (void)
-{
-	// Initialize timer 0 for ISR 'pwmcounter' below
-	TR0=0; // Stop timer 0
-	TF0=0; // Clear the overflow flag
-
-	TMOD=(TMOD&0xf0)|0x01; // 16-bit timer
-	
-	// load a value into timer0 and restart
-	TF0=0; // Clear the overflow flag
-	TR0=0; // Stop timer 0
-	// load the timer
-	TH0=TIMER0_RELOAD_VALUE/0x100; // upper8 bits
-	TL0=TIMER0_RELOAD_VALUE%0x100;
-	TR0=1; // Start timer 0
-
-	ET0=1; // Enable timer 0 interrupt
-	EA=1;  // Enable global interrupts
 }
 
 // timer1_init()
@@ -133,7 +141,7 @@ void Timer1Tick (void) interrupt 3 using 3
 
 // millis()
 // gets the number of milliseconds since last reset
-long millis()
+unsigned millis()
 {
 	return t1_ticks*10.0;
 }
@@ -150,6 +158,13 @@ void reset_millis()
 void freeze_millis()
 {
 	TR1 = 0; // stop timer1
+}
+
+// unfreeze_millis()
+// restart the lap timer from its current value
+void unfreeze_millis()
+{
+	TR1 = 1;
 }
 
 #endif

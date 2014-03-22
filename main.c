@@ -98,9 +98,9 @@ void DisplayInfo()
 {
 	// compute lap time
 	char time_string[8];
-	long time = millis();
+	unsigned time = millis();
 	float seconds = time/1000.0;
-	long minutes = seconds / 60.0;
+	short minutes = seconds / 60.0;
 
 	// read pins and convert to voltage values
 	char battery_string[20];
@@ -162,7 +162,6 @@ void StateMachine()
 			break;
 		case RFinish:
 			// TODO: output: stop driving
-			ToMotors(0,0);
 			break;
 		case RTest:
 			// TODO: output test stuff
