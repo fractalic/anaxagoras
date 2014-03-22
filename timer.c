@@ -25,7 +25,7 @@ volatile unsigned char drive_right_speed;
 volatile unsigned char drive_left_speed;
 
 // count timer ticks
-volatile char pwm_ticks = 0;
+volatile unsigned char pwm_ticks = 0;
 volatile unsigned t1_ticks = 0;
 
 // timer0_init()
@@ -90,8 +90,8 @@ void Timer0Tick (void) interrupt 1 using 1
 
 	// turn the motors on for the fraction of time specified by
 	// X_pwm, as a fraction of 100
-	left_wheel = (left_wheel_pwm > pwm_ticks)?1:0;
-	right_wheel = (right_wheel_pwm > pwm_ticks)?1:0;
+	left_wheel = (drive_left_speed > pwm_ticks)?1:0;
+	right_wheel = (drive_right_speed > pwm_ticks)?1:0;
 }
 
 // timer1_init()

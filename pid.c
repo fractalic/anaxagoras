@@ -6,12 +6,22 @@
 extern volatile unsigned char drive_right_speed;
 extern volatile unsigned char drive_left_speed;
 
+// blip detection ---------------------
+char blips = 0;
+const unsigned char blip_threshold_upward = 100; // threshold to begin checking for blip
+const unsigned char blip_threshold_downward = 100; // threshold where we assume we've passed the blip
+unsigned blip_high_time = 0; // time of most recent blip
+unsigned blip_low_time = 0; // time of most recent signal drop
+char blip_ready = 0; // ready to detect blip
+char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
+char blip_length_low = 10; // minimum length in hundredths of a second for blip signal drop
 
-	short error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
-	short error_last=-1, error_step = 0; // record error at last measurement and error at last change
-	int time = 1, time_step=0; // track number of interations since the start of this error
-	char sensor_left = 0, sensor_right = 0, sensor_front = 0;
-	
+// pid control --------------------------
+short error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
+short error_last=-1, error_step = 0; // record error at last measurement and error at last change
+int time = 1, time_step=0; // track number of interations since the start of this error
+char sensor_left = 0, sensor_right = 0, sensor_front = 0;
+
 //Run pid for states
 void pid(void)
 {	
@@ -91,15 +101,6 @@ void turn(char direction)
 	}
 }
 
-char blips = 0;
-const char blip_threshold_upward = 100; // threshold to begin checking for blip
-const char blip_threshold_downward = 100; // threshold where we assume we've passed the blip
-unsigned blip_high_time = 0; // time of most recent blip
-unsigned blip_low_time = 0; // time of most recent signal drop
-char blip_ready = 0; // ready to detect blip
-char blip_length = 10; // minimum length in hundredths of a second for blip confirmation
-char blip_pattern_length = 10; // minimum length in hundredths of a second for blip signal drop
-
 // blip detection	
 void CheckSensors (void)	
 {
@@ -110,16 +111,16 @@ void CheckSensors (void)
 	if (blip_ready) {
 		// blip sensor is high and has been that way for a while
 		if (inductorM > blip_threshold_upward) {
-			if (now - blip_prev_time > blip_length) {
-				blip++;
-				blip_prev_time = now;
+			if (now - blip_high_time > blip_length) {
+				blips++;
+				blip_high_time = now;
 				blip_ready = 0;
 			}
 		}
 	} else {
 		// check the length of signal decrease
 		if (inductorM < blip_threshold_downward) {
-			if (now - blip_prev_time > blip_length_low) {
+			if (now - blip_low_time > blip_length_low) {
 				blip_ready = 1;
 			} else {
 				blip_low_time = now;
@@ -127,4 +128,5 @@ void CheckSensors (void)
 		}
 	}
 }
+
 #endif

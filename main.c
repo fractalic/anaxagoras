@@ -38,9 +38,6 @@ void pid(void);
 // turn robot until line is reached  0 - turn left, 1 - turn right
 void turn(char);
 
-// determine change state options
-void ChangeState(void);
-
 // count iterations of the main control sequence
 int loopcount = 0;
 
