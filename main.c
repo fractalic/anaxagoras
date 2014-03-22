@@ -32,8 +32,13 @@ void StateMachine();
 // make some lights flash
 void lights(char i);
 
-// make the robot move using pid
-void pid(void);
+// determine the motor outputs using pid
+// 0 - no bias, 1 - left bias, 2 - right bias
+void pid(int); 
+
+// output values to motors
+void ToMotors (int, int);
+
 
 void main(void)
 {
@@ -114,21 +119,22 @@ void StateMachine()
 	// state transitions
 	switch (RobotState) {
 		case RStart:
-			pid();
-			//TODO: read in from sensors function	
-			//TODO: determine pid output function
+			pid(0);
 			//TODO: output: pid to motors function
 			//TODO: transition: 4blips -> RStraight
 			break;
 		case RStraight:
+			pid(0);
 			// TODO: output: pid
 			// TODO: transition: 2?blips -> RRightPrep, 3?blips -> RLeftPrep, 4blips -> RFinish
 			break;
 		case RRightPrep:
+			pid(0);
 			// TODO: output: pid
 			// TODO: transition: 1blip -> RRight
 			break;
 		case RRight:
+			pid(2);
 			// TODO: output: right-biased pid for time or turn right for time
 			// TODO: transition: time? -> RStraight
 			break;
@@ -137,11 +143,13 @@ void StateMachine()
 			// TODO: transition: 1blip -> RLeft
 			break;
 		case RLeft:
+			pid(2);
 			// TODO: output: left-biased pid for time or turn left for time
 			// TODO: transition: time? -> RStraight
 			break;
 		case RFinish:
 			// TODO: output: stop driving
+			ToMotors(0,0);
 			break;
 		case RTest:
 			// TODO: output test stuff
@@ -163,7 +171,19 @@ void InitADC(void)
 	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
 }
 
-void pid(void)
+//Run pid for states
+void pid(int bias)
 {
+		//TODO: set thresholds for whether no, left or right bias. 
+		// 0 - no bias, 1 - left bias, 2 - right bias
+		
+		//TODO: read in from sensors function	
+		//TODO: determine pid output function
+}
 
+// Output values to motors... don't know if really neccessary
+void ToMotors (int left, int right)
+{
+	left_wheel = left;
+	right_wheel = right;
 }
