@@ -36,9 +36,7 @@ void lights(char i);
 void pid(int); 
 
 // determine change state options
-
 void ChangeState(void);
-
 
 void main(void)
 {
@@ -73,7 +71,7 @@ void InitPorts() {
 	P2M2 = 0;
 }
 
-// initadc()
+
 // set up adc 1, with four input channels
 void InitADC(void)
 {
@@ -135,8 +133,8 @@ void StateMachine()
 	// state transitions
 	switch (robot_state) {
 		case RStart:
-			pid(0);
-			//TODO: output: pid to motors function
+			pid(0); //TODO: fix up pid
+			ChangeState(); //TODO: write change state thinking maybe something where we pass in number of Xings passed
 			//TODO: transition: 4blips -> RStraight
 			break;
 		case RStraight:
@@ -180,13 +178,6 @@ void pid(int bias)
 		//TODO: set thresholds for whether no, left or right bias. 
 		// 0 - no bias, 1 - left bias, 2 - right bias
 
-		// Inputs AD1DAT0, AD1DAT1, AD1DAT2
-		//read in from sensors 	
-		
-		// sppeds for each motor
-		drive_right_speed = 0; //set right motor speed (between 0 and 100)
-		drive_left_speed = 0; // set left motor speed (between 0 and 100)
-
 		//time counting
 		int time_init = 0;
 		int time_abs = 0;
@@ -209,6 +200,12 @@ void pid(int bias)
 		//float fudge = 10;
 		int speed_change=0;
 		int direction_change=0;
+	
+		// Inputs AD1DAT0, AD1DAT1, AD1DAT2
+		//read in from sensors 	
+		// speeds for each motor
+		drive_right_speed = 0; //set right motor speed (between 0 and 100)
+		drive_left_speed = 0; // set left motor speed (between 0 and 100)
 
 		//change the read in functions
 		if (inductorL > threshold_left)	sensor_left = 1;
@@ -250,9 +247,22 @@ void pid(int bias)
 		
 }
 		
-	
+//TODO: write this	
 void ChangeState (void)	
 {	
+	//sensor states
+		int sensor_left = 0, sensor_right = 0, sensor_front = 0; //this will be a count of how many perpendicular wires have been observed
+
+		// threshold of signal 
+		double threshold_left = 0, threshold_right = 0, threshold_front = 0;
+				
+		int direction_change=0;
+		int time_init = 0;
+		int time_abs = 0;
+		int wait = 1; //while wait is 1 we need to wait for signal
+int time = 1, time_step=0; // track number of interations since the start of this error
+		
+		
 	//check state of the front inductor to store which way to turn if we enter an intersection
 	if (inductorM > threshold_front)
 	{	
