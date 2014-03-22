@@ -17,7 +17,7 @@ float kp=0, ki=0, kd=0;
 
 float error=0, d_error=0, s_error=0; // error, derivative of error, integral of error
 int error_last=-1, error_step=0; // record error at last measurement and error at last change
-int time = 1, time_step=0; // track number of interations since the start of this error
+int time = 1, time_step = 0; // track number of interations since the start of this error
 // repetive running actions
 // checking sensors, etc.
 void run_rep() {
