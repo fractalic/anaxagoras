@@ -22,7 +22,7 @@ void DisplayInfo();
 // initialize the ports to proper I/O mode
 void InitPorts();
 
-// initializa analogue inputs
+// initialize analogue inputs
 void InitADC(void);
 
 // statemachine
@@ -31,6 +31,9 @@ void StateMachine();
 
 // make some lights flash
 void lights(char i);
+
+// make the robot move using pid
+void pid(void);
 
 void main(void)
 {
@@ -83,7 +86,7 @@ void DisplayInfo()
 
 	// battery level settings
 	char battery_string[20];
-	float battery_d = 5.0 * (battery / 255.0);
+	float battery_d = 5.0 * (battery / 255.0); // TODO: Test that this works
 
 	// current state display
 	char state_string[6];
@@ -111,6 +114,7 @@ void StateMachine()
 	// state transitions
 	switch (RobotState) {
 		case RStart:
+			pid();
 			// TODO: output: pid
 			// TODO: transition: 4blips -> RStraight
 			break;
@@ -155,4 +159,8 @@ void InitADC(void)
 	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
 	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
 	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
+}
+
+void pid(void)
+{
 }
