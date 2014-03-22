@@ -26,13 +26,13 @@ void run_rep() {
 	int direction_change=0;
 
 	//change the read in functions
-	if (inductor_left > wire_left) {
+	if (inductor_left > threshold_left) {
 		sensor_left = 1;
 	}
 	else {
 		sensor_left = 0;
 	}
-	if (inductor_right > wire_right) {
+	if (inductor_right > threshold_right) {
 		sensor_right = 1;
 	}
 	else {
