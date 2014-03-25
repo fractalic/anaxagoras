@@ -60,14 +60,16 @@ void main(void)
 	while(1)
 	{
 		// check the sensors as often as possible
-		CheckSensors();
+		//if (loopcount%10==0) {
+			CheckSensors();
+		//}
 
 		// don't refresh the display all the time
-		if (loopcount%600==0) {
+		if (loopcount%100==0) {
 			DisplayInfo();
 		}
 		// don't change state all the time
-		if (loopcount%300 == 0) {
+		if (loopcount%20 == 0) {
 			StateMachine();
 		}
 
@@ -126,7 +128,7 @@ void DisplayInfo()
 	char battery_string[20];
 
 	// display blip count
-	char blip_string[2];
+	char blip_string[6];
 
 	// store string representation of current state
 	char state_string[2];
@@ -144,7 +146,7 @@ void DisplayInfo()
 	LCD_writeString(state_string);
 
 	LCD_setCursor(11,0);
-	sprintf(blip_string, "%1d", (int)CheckSensors());
+	sprintf(blip_string, "%2d:%2d", drive_left_speed, drive_right_speed);
 	LCD_writeString(blip_string);
 
 	// write battery indicator to display
@@ -158,13 +160,15 @@ void DisplayInfo()
 // control the current state of the robot
 void StateMachine()
 {
-	if (!ShouldIStop()) {
+	unsigned char blip_count = BlipCount();
+	//if (!ShouldIStop()) {
+
 		// state transitions
 		switch (robot_state) {
 			case RStart:
 				pid();
 				//ShouldIStop();
-				if (BlipCount() >= 4) {
+				if (blip_count >= 4) {
 					reset_millis();
 					robot_state = RStraight;
 				}
@@ -173,14 +177,14 @@ void StateMachine()
 				pid();
 				//ShouldIStop();
 				// check if we should get ready to turn
-				if (BlipCount() == 3) robot_state = RRightPrep;
-				else if (BlipCount() == 2) robot_state = RLeftPrep;
+				if (blip_count == 3) robot_state = RRightPrep;
+				else if (blip_count == 2) robot_state = RLeftPrep;
 				break;
 			case RRightPrep:
 				pid();
 				//ShouldIStop();
 				// turn when intersection detected
-				if (BlipCount() == 1) robot_state = RRight;
+				if (blip_count == 1) robot_state = RRight;
 				break;
 			case RRight:
 				// turns right until hits wire 
@@ -190,7 +194,7 @@ void StateMachine()
 				pid();
 				//ShouldIStop();
 				// turn when intersection detected
-				if (BlipCount() == 1) robot_state = RLeft;
+				if (blip_count == 1) robot_state = RLeft;
 				break;
 			case RLeft:
 			 	// turns left until hits wire
@@ -206,9 +210,9 @@ void StateMachine()
 			default:
 				// do nothing
 		}
-	} else {
+	/*} else {
 		// stop the robot
 		drive_left_speed = 20; // speed 10 does not turn wheels
 		drive_right_speed = 20;
-	}
+	}*/
 }

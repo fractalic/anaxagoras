@@ -11,19 +11,20 @@ extern volatile unsigned char drive_left_speed;
 
 // blip detection ---------------------
 // get time in hundredths
-int now;
+unsigned int now;
 // store blip properties
-char low, recent;
+char low, recent, high;
 char derivative;
 char blips = 0;
 char blip_prev_level; // value of previous blip
 char blip_ready = 0; // ready to detect blip
-int blip_prev_mark = 0; // time of last blip
+unsigned int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
-char error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
+char error = 0;//, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
 char error_last=-1, error_step = 0; // record error at last measurement and error at last change
 int time = 1, time_step=0; // track number of interations since the start of this error
+char drive_left_setting = 0, drive_right_setting = 0;
 
 //  output to motors using pid with lc sensor inputs
 void pid(void); 
@@ -41,7 +42,7 @@ void pid(void)
 	int threshold_left = 100, threshold_right = 100, threshold_front = 0; //TODO: Test that these value work
 
 	// proportional, integral, derivative gains
-	int kp = 0, ki = 0, kd = 0;
+	float kp = 0.3, ki = 0, kd = 0;
 	short speed_change = 0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
@@ -79,10 +80,10 @@ void pid(void)
 	}
 	 
 	// find the derivative of the error
-	d_error = (float) (error - error_step) / (float) (time + time_step);
+	//d_error = (float) (error - error_step) / (float) (time + time_step);
 
 	// set PID coefficients
-	speed_change = (float) kp*(float) error + (float) ki*(float) s_error + (float) kd*(float) d_error;
+	speed_change = (float) kp*(float) error;// + (float) ki*(float) s_error + (float) kd*(float) d_error;
 
 	//increase the time
 	time++;
@@ -91,16 +92,16 @@ void pid(void)
 	error_last = error; 
 	
 	//set wheel speeds
-	//drive_left_speed = drive_left_speed + speed_change;
-	//drive_right_speed = drive_right_speed - speed_change;
-	drive_right_speed = 100;
-	drive_left_speed = 100;
+	drive_left_speed = drive_left_setting + speed_change;
+	drive_right_speed = drive_right_setting - speed_change;
+	drive_right_setting = 50;
+	drive_left_setting = 50;
 }
 
 
 unsigned char turn(char direction)
 {
-	if(!((inductorL >= 100) && (inductorR >= 100)))
+	if(!((inductorL >= 30) || (inductorR >= 30)))
 	{
 		if(direction = '0')
 		{
@@ -135,17 +136,21 @@ unsigned char CheckSensors (void)
 	now = millis()/10.0;
 
 	// check if we're above or below signal
-	low = (inductorM <= 100)? 1:0;
-	recent = (now - blip_prev_mark < 200)? 1:0;
-	derivative = inductorM - blip_prev_level;
+	// ensure the low and high thresholds are separated (hysteresis)
+	low = (inductorM <= 80.0)? 1:0;
+	high = (inductorM >= 130.0)? 1:0;
+	recent = (now - blip_prev_mark < 90.0)? 1:0;
+	//derivative = inductorM - blip_prev_level;
+	blip_prev_level = inductorM;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
 		// blip sensor is high
-		if (!low) {
+		if (high) {
 			blips++;
-			blip_prev_mark = now;
+			blip_prev_mark = millis()/10;
 			blip_ready = 0;
+			return 9;
 		}
 	} else {
 		// check that signal is decreasing
@@ -154,17 +159,19 @@ unsigned char CheckSensors (void)
 		}
 	}
 
-	return (unsigned char)low;
+	return recent;
 }
 
 // blipcount()
 // determine how many blips have been counted and reset blips to zero
 char BlipCount( void )
 {
+	char temp = blips;
 	// only return the blip count when we know the blip sequence is finished
-	//if (low) {
-		return blips;
-	//}
+	if (low && !recent) {
+		blips = 0;
+		return temp;
+	}
 
 	return 0;
 }
