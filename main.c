@@ -125,6 +125,9 @@ void DisplayInfo()
 	// read pins and convert to voltage values
 	char battery_string[20];
 
+	// display blip count
+	char blip_string[2];
+
 	// store string representation of current state
 	char state_string[2];
 
@@ -137,8 +140,12 @@ void DisplayInfo()
 
 	// write current state to display
 	LCD_setCursor(9,0);
-	sprintf(state_string,"%2d",(int)robot_state);
+	sprintf(state_string,"%1d",(int)robot_state);
 	LCD_writeString(state_string);
+
+	LCD_setCursor(11,0);
+	sprintf(blip_string, "%1d", BlipCount());
+	LCD_writeString(blip_string);
 
 	// write battery indicator to display
 	LCD_setCursor(0,1);
@@ -200,6 +207,7 @@ void StateMachine()
 				// do nothing
 		}
 	} else {
+		// stop the robot
 		drive_left_speed = 20; // speed 10 does not turn wheels
 		drive_right_speed = 20;
 	}
