@@ -63,7 +63,7 @@ void main(void)
 		CheckSensors();
 
 		// don't refresh the display all the time
-		if (loopcount%1000==0) {
+		if (loopcount%600==0) {
 			DisplayInfo();
 		}
 		// don't change state all the time
@@ -144,12 +144,12 @@ void DisplayInfo()
 	LCD_writeString(state_string);
 
 	LCD_setCursor(11,0);
-	sprintf(blip_string, "%1d", BlipCount());
+	sprintf(blip_string, "%1d", (int)CheckSensors());
 	LCD_writeString(blip_string);
 
 	// write battery indicator to display
 	LCD_setCursor(0,1);
-	sprintf(battery_string,"%3.1f,%3.1f,%3.1f,%3.1f", 5.0 * (inductorL / 255.0), 5.0 * (inductorM / 255.0), 5.0 * (inductorR / 255.0), 5.0 * (battery / 255.0));
+	sprintf(battery_string,"%3.0f,%3.0f,%3.0f", (float)inductorL, (float)inductorM, (float)inductorR);
 	LCD_writeString(battery_string);
 
 }

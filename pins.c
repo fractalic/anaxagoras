@@ -38,8 +38,8 @@ right-to-left with usb connector to your right
 
 // analog pins
 #define inductorL 	AD1DAT1 // P0_3 // inductor left 
-#define inductorM 	AD1DAT0 // P0_2 //	inductor middle
-#define inductorR 	AD1DAT2 // P0_1 // inductior right
+#define inductorM 	AD1DAT2 // P0_2 //	inductor middle
+#define inductorR 	AD1DAT0 // P0_1 // inductior right
 #define battery 	AD1DAT3 // ad1dat3 or P0_4 // battery input pin	
 
 // lcd pins

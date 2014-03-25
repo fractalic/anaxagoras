@@ -129,7 +129,7 @@ char ShouldIStop(void)
 }
 
 // blip detection	
-void CheckSensors (void)	
+unsigned char CheckSensors (void)	
 {
 	// get time
 	now = millis()/10.0;
@@ -149,10 +149,12 @@ void CheckSensors (void)
 		}
 	} else {
 		// check that signal is decreasing
-		if (low && derivative < 0) {
+		if (low) {
 			blip_ready = 1;
 		}
 	}
+
+	return (unsigned char)low;
 }
 
 // blipcount()
@@ -160,9 +162,9 @@ void CheckSensors (void)
 char BlipCount( void )
 {
 	// only return the blip count when we know the blip sequence is finished
-	if (!recent && low) {
+	//if (low) {
 		return blips;
-	}
+	//}
 
 	return 0;
 }

@@ -17,7 +17,7 @@ char num2char(unsigned int number);
 void delay(void)
 {
     int j, k;
-    for(j=0; j<100; j++)
+    for(j=0; j<10; j++)
     {
         for(k=0; k<100; k++);
     }
