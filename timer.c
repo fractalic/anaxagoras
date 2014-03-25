@@ -90,8 +90,7 @@ void Timer0Tick (void) interrupt 1 using 1
 
 	// turn the motors on for the fraction of time specified by
 	// X_pwm, as a fraction of 100
-	//left_wheel = (drive_left_speed > pwm_ticks)?1:0;
-	P3_0 = (50 > pwm_ticks) ? 1 : 0;
+	left_wheel = (drive_left_speed > pwm_ticks)?1:0;
 	right_wheel = (drive_right_speed > pwm_ticks)?1:0;
 }
 

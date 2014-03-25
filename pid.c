@@ -1,10 +1,13 @@
 #ifndef PID
 #define PID
 
+#include "pins.c"
+#include <p89lpc9351.h>
+
 // access the motor speed settings
 // (declared in timer.c)
-/*extern volatile unsigned char drive_right_speed;
-extern volatile unsigned char drive_left_speed;*/
+extern volatile unsigned char drive_right_speed;
+extern volatile unsigned char drive_left_speed;
 
 // blip detection ---------------------
 // get time in hundredths
@@ -90,8 +93,8 @@ void pid(void)
 	//set wheel speeds
 	//drive_left_speed = drive_left_speed + speed_change;
 	//drive_right_speed = drive_right_speed - speed_change;
-	drive_left_speed = 50;
-	drive_right_speed = 20;
+	drive_right_speed = 100;
+	drive_left_speed = 100;
 }
 
 
@@ -117,6 +120,7 @@ unsigned char turn(char direction)
 
 char ShouldIStop(void)
 {
+	// check for low readings from sensors (track lost)
 	if((inductorL <= 5) && (inductorR <= 5) && (inductorM <= 5))
 	{
 	 	return 1;

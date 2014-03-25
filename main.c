@@ -35,6 +35,11 @@ void lights(char i);
 // count iterations of the main control sequence
 unsigned int loopcount = 0;
 
+// access the motor speed settings
+// (declared in timer.c)
+extern volatile unsigned char drive_right_speed;
+extern volatile unsigned char drive_left_speed;
+
 void main(void)
 {
 	// set I/O mode of ports and pins on the microcontroller
@@ -71,17 +76,18 @@ void main(void)
 }
 
 void InitPorts() {
+	// set port 0 to quasi-bidirectional
+	P0M1 = 0;
+	P0M2 = 0;
 	// set port 1 to quasi-bidirectional
 	P1M1 = 0;
 	P1M2 = 0;
 	// set port 2 to quasi-bidirectional
 	P2M1 = 0;
 	P2M2 = 0;
-
-	P3M1_0 = 1;
-	P3M2_0 = 0;
-	P3M1_1 = 1;
-	P3M2_1 = 0;
+	// set port 3 to quasi-bidirectional
+	P3M1 = 0;
+	P3M2 = 0;
 }
 
 
@@ -149,7 +155,7 @@ void StateMachine()
 		// state transitions
 		switch (robot_state) {
 			case RStart:
-				pid(); 
+				pid();
 				//ShouldIStop();
 				if (BlipCount() >= 4) {
 					reset_millis();
@@ -193,5 +199,8 @@ void StateMachine()
 			default:
 				// do nothing
 		}
+	} else {
+		drive_left_speed = 20; // speed 10 does not turn wheels
+		drive_right_speed = 20;
 	}
 }
