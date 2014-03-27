@@ -4,4 +4,4 @@ Team:
 	Emma Chorlton
 	Ben Hughes
 	Carly Jones
-	Jannicke Pearkes
+	Jannicke
