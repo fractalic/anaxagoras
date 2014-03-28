@@ -68,6 +68,7 @@ void main(void)
 		// check the sensors as often as possible
 		if (loopcount%10==0) {
 			CheckSensors();
+			ReadInductors();
 		}
 
 		// don't refresh the display all the time
