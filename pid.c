@@ -59,26 +59,24 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	// get current time
 	now = millis() / 10.0;
 
-	// left high is positive
+	// compute errors
 	error = inductorL-inductorR;
+	d_error = error-error_last;
+	s_error += error;
 
-	// count time since last change in error state
+	// reset integral error when we cross the wire
 	if ((float)error * (float)error_last < 0) {
 		// reset integral error counter
 		s_error = 0;
-	} else {
-		time_diff += 0.01;
 	}
 
-	d_error = error-error_last;
+	// TODO: limit frequency of d_error, s_error updates
 
-	error_last = error;
+	// determine the differential power to apply
+	pid_differential = 1 * (float) error + 1 * (float) d_error + 0.01 * (float) s_error;
 
-	s_error += error/100.0;
-
-	// set PID coefficients
-	pid_differential = 2 * (float) error + 3 * (float) d_error + 1 * (float) s_error;
-
+	// TODO: ensure powers are separated by differential, even when one is at full power
+	// TODO: make this cleaner
 	//set wheel speeds, capping between 0 and 100
 	if ( (int) pid_left_setting + (int) pid_differential > 100) {
 		drive_left_speed = 100;
@@ -94,6 +92,9 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	} else {
 		drive_right_speed = pid_right_setting - pid_differential;
 	}
+
+	// get ready for next call
+	error_last = error;
 }
 
 
