@@ -82,13 +82,13 @@ unsigned char turn(char direction)
 	{
 		if(direction = '0')
 		{
-			drive_left_speed = 100;
-			drive_right_speed = 0;
+			drive_left_speed = 0;
+			drive_right_speed = 100;
 		}
 		if(direction = '1')
 		{
-			drive_left_speed = 0;
-			drive_right_speed = 100;
+			drive_left_speed = 100;
+			drive_right_speed = 0;
 		}	
 		return 1;		
 	} else {
