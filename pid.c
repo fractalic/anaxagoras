@@ -19,13 +19,14 @@ char blip_ready = 0; // ready to detect blip
 unsigned int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
+// error, derivative of error, integral of error 
+char error = 0, d_error = 0;//, s_error = 0;
 
 char error_last=0; // record error at last measurement
 unsigned int time_last = 0; // track number of interations since the start of this error
-char pid_left_setting = 0, pid_right_setting = 0;
 
 //  output to motors using pid with lc sensor inputs
-void pid(void); 
+void pid(unsigned char, unsigned char); 
 
 // turn robot until line is reached  0 - turn left, 1 - turn right
 unsigned char turn(char);
@@ -33,14 +34,18 @@ unsigned char turn(char);
 // stop if no signal is detected
 char ShouldIStop(void);
 
+// blip detection	
+unsigned char CheckSensors (void);
+
+// blipcount()
+// determine how many blips have been counted and reset blips to zero
+char BlipCount( void );
+
 //Run pid for states
-void pid(void)
-{
-	// error, derivative of error, integral of error 
-	char error = 0, d_error = 0;//, s_error = 0;
-	
+void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
+{	
 	// proportional, integral, derivative gains
-	float kp = 0.3, ki = 0, kd = 1;
+	float kp = 0.3, kd = 0.01; // ki = 0;
 
 	// differential power application
 	short pid_differential = 0;
@@ -63,8 +68,10 @@ void pid(void)
 	//set wheel speeds
 	drive_left_speed = pid_left_setting + pid_differential;
 	drive_right_speed = pid_right_setting - pid_differential;
-	pid_right_setting = 50;
-	pid_left_setting = 50;
+
+	// cap speeds
+	if (drive_left_speed > 100) drive_left_speed = 100;
+	if (drive_right_speed > 100) drive_right_speed = 100;
 }
 
 
@@ -108,7 +115,7 @@ unsigned char CheckSensors (void)
 	// ensure the low and high thresholds are separated (hysteresis)
 	low = (inductorM <= 80.0)? 1:0;
 	high = (inductorM >= 130.0)? 1:0;
-	recent = (now - blip_prev_mark < 90.0)? 1:0;
+	recent = (now - blip_prev_mark < 60.0)? 1:0;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {

@@ -11,8 +11,8 @@
 #include "pid.c"
 
 // rover state machine information
-typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
-RobotState_t robot_state = RStart;
+enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
+unsigned char robot_state = RStart;
 
 // DisplayInfo()
 // show lap time, battery and status information on the screen
@@ -33,12 +33,15 @@ void StateMachine();
 void lights(char i);
 
 // count iterations of the main control sequence
-unsigned int loopcount = 0;
+unsigned char loopcount = 0;
 
+// timer control (from timer.c)
 // access the motor speed settings
-// (declared in timer.c)
-extern volatile unsigned char drive_right_speed;
-extern volatile unsigned char drive_left_speed;
+extern volatile unsigned char drive_right_speed, drive_left_speed;
+
+// pid control (from pid.c)
+// error, derivative of error, integral of error
+extern unsigned char error, d_error;//, s_error;
 
 void main(void)
 {
@@ -60,9 +63,9 @@ void main(void)
 	while(1)
 	{
 		// check the sensors as often as possible
-		//if (loopcount%10==0) {
+		if (loopcount%10==0) {
 			CheckSensors();
-		//}
+		}
 
 		// don't refresh the display all the time
 		if (loopcount%100==0) {
@@ -73,7 +76,7 @@ void main(void)
 			StateMachine();
 		}
 
-		if(++loopcount>10000) loopcount = 0;
+		if(++loopcount>200) loopcount = 0;
 	}		
 }
 
@@ -118,83 +121,66 @@ void lights(char i) {
 // show lap time, battery and status information on the screen
 void DisplayInfo()
 {
-	// compute lap time
-	char time_string[8];
-	long time = millis();
-	float seconds = time/1000.0;
-	int minutes = time / 60000.0;
+	// two display lines
+	xdata char top_line[17];
+	xdata char bottom_line[17];
 
-	// read pins and convert to voltage values
-	char battery_string[20];
+	unsigned time = millis()/10.0;
+	xdata float seconds = time/100.0;
+	xdata int minutes = time / 60000.0;
 
-	// display blip count
-	char blip_string[6];
-
-	// store string representation of current state
-	char state_string[2];
-
-	// write lap time to display
+	// write lap time, state, other stuff
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
-	sprintf(time_string,"%1d:%05.02f",minutes,seconds);
-	LCD_writeString(time_string);
+	sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
+		(int)robot_state, drive_left_speed, drive_right_speed);
+	LCD_writeString(top_line);
 
-
-	// write current state to display
-	LCD_setCursor(9,0);
-	sprintf(state_string,"%1d",(int)robot_state);
-	LCD_writeString(state_string);
-
-	LCD_setCursor(11,0);
-	sprintf(blip_string, "%2d:%2d", drive_left_speed, drive_right_speed);
-	LCD_writeString(blip_string);
-
-	// write battery indicator to display
+	// write battery level and inductor readings
 	LCD_setCursor(0,1);
-	sprintf(battery_string,"%3.0f,%3.0f,%3.0f", (float)inductorL, (float)inductorM, (float)inductorR);
-	LCD_writeString(battery_string);
-
+	sprintf(bottom_line,"%3.0f:%3.0f %2ud:%2ud",
+		(float)inductorL, (float)inductorR, (unsigned int)error, (unsigned int)d_error);
+	LCD_writeString(bottom_line);
 }
 
 // statemachine
 // control the current state of the robot
 void StateMachine()
 {
-	unsigned char blip_count = BlipCount();
 	//if (!ShouldIStop()) {
 
 		// state transitions
 		switch (robot_state) {
 			case RStart:
-				pid();
+				pid(50, 50);
 				//ShouldIStop();
-				if (blip_count >= 4) {
+				if (BlipCount() >= 4) {
 					reset_millis();
 					robot_state = RStraight;
 				}
 				break;
 			case RStraight:
-				pid();
+				pid(50, 50);
 				//ShouldIStop();
 				// check if we should get ready to turn
-				if (blip_count == 3) robot_state = RRightPrep;
-				else if (blip_count == 2) robot_state = RLeftPrep;
+				if (BlipCount() == 3) robot_state = RRightPrep;
+				else if (BlipCount() == 2) robot_state = RLeftPrep;
 				break;
 			case RRightPrep:
-				pid();
+				pid(50, 50);
 				//ShouldIStop();
 				// turn when intersection detected
-				if (blip_count == 1) robot_state = RRight;
+				if (BlipCount() == 1) robot_state = RRight;
 				break;
 			case RRight:
 				// turns right until hits wire 
 				if (!turn(1)) robot_state = RStraight;
 				break;
 			case RLeftPrep:
-				pid();
+				pid(50, 50);
 				//ShouldIStop();
 				// turn when intersection detected
-				if (blip_count == 1) robot_state = RLeft;
+				if (BlipCount() == 1) robot_state = RLeft;
 				break;
 			case RLeft:
 			 	// turns left until hits wire
