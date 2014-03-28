@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <p89lpc9351.h>
+#include <string.h>
 
 // include .c files, because crosside gets mad at .h //
 // pins should be included in every file
@@ -44,7 +45,7 @@ extern volatile unsigned char drive_right_speed, drive_left_speed;
 
 // pid control (from pid.c)
 // error, derivative of error, integral of error
-extern unsigned char error, d_error;//, s_error;
+extern int error, d_error;//, s_error;
 
 void main(void)
 {
@@ -131,19 +132,21 @@ void DisplayInfo()
 
 	unsigned time = millis()/10.0;
 	xdata float seconds = time/100.0;
-	xdata int minutes = time / 60000.0;
+	xdata int minutes = time / 6000.0;
 
 	// write lap time, state, other stuff
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
+	strcpy(top_line, "                  ");
 	sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
 		(int)robot_state, drive_left_speed, drive_right_speed);
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
 	LCD_setCursor(0,1);
-	sprintf(bottom_line,"%3.0f:%3.0f %2ud:%2ud",
-		(float)inductorL, (float)inductorR, (unsigned int)error, (unsigned int)d_error);
+	strcpy(bottom_line, "                  ");
+	sprintf(bottom_line,"%3.0f:%3.0f %3d:%3d",
+		(float)inductorL, (float)inductorR, (int)error, (int)d_error);
 	LCD_writeString(bottom_line);
 }
 

@@ -24,9 +24,9 @@ unsigned int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
 // error, derivative of error, integral of error 
-unsigned char error = 0, d_error = 0;//, s_error = 0;
+int error = 0, d_error = 0;//, s_error = 0;
 
-unsigned char error_last=0; // record error at last measurement
+int error_last = 0; // record error at last measurement
 unsigned int time_last = 0; // track number of interations since the start of this error
 
 //  output to motors using pid with lc sensor inputs
@@ -61,10 +61,10 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	// left high is positive
 	error = inductorL-inductorR;
 
-	d_error = (float)error-(float)error_last / ( (float) now - (float) time_last );
+	d_error = (error-error_last) / (now - time_last);
 
 	// set PID coefficients
-	pid_differential = 0.3*(float) error + 0.1*(float) d_error;
+	pid_differential = 0.3 * (float) error + 0.01 * (float) d_error;
 
 	// record current error and timestamp for next time
 	error_last = error;
@@ -159,7 +159,7 @@ char BlipCount( void )
 // correct for different signal strengths from inductors
 void ReadInductors(void)
 {	
-	if(inductorLpin + 50 < 255) inductorL = inductorLpin + 50;
+	if (inductorLpin * 1.35 <= 255) inductorL = inductorLpin * 1.35;
 	inductorR = inductorRpin;
 }
 
