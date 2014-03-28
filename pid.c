@@ -25,7 +25,7 @@ unsigned int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
 // error, derivative of error, integral of error 
-int error = 0, d_error = 0;//, s_error = 0;
+int error = 0, d_error = 0, s_error = 0;
 
 int error_last = 0; // record error at last measurement
 float time_diff = 1; // track number of interations since the start of this error
@@ -63,22 +63,23 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	error = inductorL-inductorR;
 
 	// count time since last change in error state
-	if ((error > 0 && error_last <= 0) || (error < 0 && error_last >= 0)) {
-		time_diff = 1;
-		// record current error and timestamp for next time
-		error_last = error;
+	if ((float)error * (float)error_last < 0) {
+		// reset integral error counter
+		s_error = 0;
 	} else {
 		time_diff += 0.01;
 	}
-	if (time_diff > 1000) time_diff = 1000;
 
-	//d_error = (error-error_last) / (float) (now - time_last);
-	d_error = (error-error_last) / (float) (time_diff);
+	d_error = error-error_last;
+
+	error_last = error;
+
+	s_error += error/100.0;
 
 	// set PID coefficients
-	pid_differential = 2 * (float) error + 3 * (float) d_error;
+	pid_differential = 2 * (float) error + 3 * (float) d_error + 1 * (float) s_error;
 
-	//set wheel speeds
+	//set wheel speeds, capping between 0 and 100
 	if ( (int) pid_left_setting + (int) pid_differential > 100) {
 		drive_left_speed = 100;
 	} else if ( (int) pid_left_setting + (int) pid_differential < 0 ) {
