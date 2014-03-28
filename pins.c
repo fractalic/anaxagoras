@@ -56,7 +56,7 @@ right-to-left with usb connector to your right
 #define lcd_enable	P2_5 // lcd clock pulse pin
 
 // pwm pins
-#define left_wheel	P3_0 // output motor speed from PID to pwm signal for left wheel 
-#define right_wheel	P3_1 // output motor speed from PID to pwm signal for right wheels
+#define left_wheel	P3_1 // output motor speed from PID to pwm signal for left wheel 
+#define right_wheel	P3_0 // output motor speed from PID to pwm signal for right wheels
 
 #endif
