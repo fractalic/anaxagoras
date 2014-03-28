@@ -42,36 +42,17 @@ void pid(void)
 	int threshold_left = 100, threshold_right = 100, threshold_front = 0; //TODO: Test that these value work
 
 	// proportional, integral, derivative gains
+
 	float kp = 0.3, ki = 0, kd = 1;
+
 	short speed_change = 0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
 	// 0 - no bias, 1 - left bias, 2 - right bias
 
-	/*
-	//change the read in functions
-	if (inductorL > threshold_left)	sensor_left = 1;
-	else sensor_left = 0;
-	if (inductorR > threshold_right)sensor_right = 1;
-	else sensor_right = 0;
 
-	// set artificial error
-	if (sensor_left && sensor_right) error = 0;
-	else if (sensor_left && !sensor_right) error = -1; //right is the negative direction
-	else if (!sensor_left && sensor_right) error = 1; //left is the positive direction
-	else 
-	{
-		if (error_last > 0) error = 5;
-		else error = -5;
-	}
-	if (error != error_last)
-	{
-		error_step = error_last; // record the error value
-		time_step = time;
-		time = 1;
-	}
-	*/
 	error = inductorL-inductorR;
+
 	if (error != error_last)
 	{
 		error_step = error_last; // record the error value
@@ -80,7 +61,7 @@ void pid(void)
 	}
 	 
 	// find the derivative of the error
-	//d_error = (float) (error - error_step) / (float) (time + time_step);
+	d_error = (float) (error - error_step) / (float) (time + time_step);
 
 	// set PID coefficients
 	speed_change = (float) kp*(float) error + (float) kd*(float) d_error;
@@ -101,7 +82,7 @@ void pid(void)
 
 unsigned char turn(char direction)
 {
-	if(!((inductorL >= 30) || (inductorR >= 30)))
+	if(!((inductorL >= 30) && (inductorR >= 30)))
 	{
 		if(direction = '0')
 		{
