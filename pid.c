@@ -42,7 +42,7 @@ void pid(void)
 	int threshold_left = 100, threshold_right = 100, threshold_front = 0; //TODO: Test that these value work
 
 	// proportional, integral, derivative gains
-	float kp = 0.3, ki = 0, kd = 0;
+	float kp = 0.3, ki = 0, kd = 1;
 	short speed_change = 0;
 
 	//TODO: set thresholds for whether no, left or right bias. 
@@ -71,7 +71,7 @@ void pid(void)
 		time = 1;
 	}
 	*/
-	error = inductorR-inductorL;
+	error = inductorL-inductorR;
 	if (error != error_last)
 	{
 		error_step = error_last; // record the error value
@@ -83,7 +83,7 @@ void pid(void)
 	//d_error = (float) (error - error_step) / (float) (time + time_step);
 
 	// set PID coefficients
-	speed_change = (float) kp*(float) error;// + (float) ki*(float) s_error + (float) kd*(float) d_error;
+	speed_change = (float) kp*(float) error + (float) kd*(float) d_error;
 
 	//increase the time
 	time++;
@@ -113,7 +113,7 @@ unsigned char turn(char direction)
 			drive_left_speed = 100;
 			drive_right_speed = 0;
 		}	
-		return 1;		
+		return 1;	
 	} else {
 		return 0;
 	}
