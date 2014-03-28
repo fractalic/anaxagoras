@@ -9,9 +9,10 @@
 extern volatile unsigned char drive_right_speed;
 extern volatile unsigned char drive_left_speed;
 
+// (from main.c)
 //Inductor names
-char inductorL;
-char inductorR;
+extern unsigned char inductorL;
+extern unsigned char inductorR;
 
 // blip detection ---------------------
 // get time in hundredths
@@ -27,7 +28,7 @@ unsigned int blip_prev_mark = 0; // time of last blip
 int error = 0, d_error = 0;//, s_error = 0;
 
 int error_last = 0; // record error at last measurement
-unsigned short time_diff = 1; // track number of interations since the start of this error
+float time_diff = 1; // track number of interations since the start of this error
 
 //  output to motors using pid with lc sensor inputs
 void pid(unsigned char, unsigned char); 
@@ -64,27 +65,34 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	// count time since last change in error state
 	if ((error > 0 && error_last <= 0) || (error < 0 && error_last >= 0)) {
 		time_diff = 1;
+		// record current error and timestamp for next time
+		error_last = error;
 	} else {
-		time_diff++;
+		time_diff += 0.01;
 	}
+	if (time_diff > 1000) time_diff = 1000;
 
 	//d_error = (error-error_last) / (float) (now - time_last);
 	d_error = (error-error_last) / (float) (time_diff);
 
 	// set PID coefficients
-	pid_differential = 0.3 * (float) error + 0.1 * (float) d_error;
-
-	// record current error and timestamp for next time
-	error_last = error;
-	//time_last = now;
+	pid_differential = 2 * (float) error + 3 * (float) d_error;
 
 	//set wheel speeds
-	drive_left_speed = pid_left_setting + pid_differential;
-	drive_right_speed = pid_right_setting - pid_differential;
-
-	// cap speeds
-	if (drive_left_speed > 100) drive_left_speed = 100;
-	if (drive_right_speed > 100) drive_right_speed = 100;
+	if ( (int) pid_left_setting + (int) pid_differential > 100) {
+		drive_left_speed = 100;
+	} else if ( (int) pid_left_setting + (int) pid_differential < 0 ) {
+		drive_left_speed = 0;
+	} else {
+		drive_left_speed = pid_left_setting + pid_differential;
+	}
+	if ( (int) pid_right_setting - (int) pid_differential > 100) {
+		drive_right_speed = 100;
+	} else if ( (int) pid_right_setting - (int) pid_differential < 0 ) {
+		drive_right_speed = 0;
+	} else {
+		drive_right_speed = pid_right_setting - pid_differential;
+	}
 }
 
 
@@ -128,7 +136,7 @@ unsigned char CheckSensors (void)
 	// ensure the low and high thresholds are separated (hysteresis)
 	low = (inductorM <= 80.0)? 1:0;
 	high = (inductorM >= 130.0)? 1:0;
-	recent = (now - blip_prev_mark < 60.0)? 1:0;
+	recent = (now - blip_prev_mark < 90.0)? 1:0;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
@@ -167,7 +175,7 @@ char BlipCount( void )
 // correct for different signal strengths from inductors
 void ReadInductors(void)
 {	
-	if (inductorLpin * 1.35 <= 255) inductorL = inductorLpin * 1.35;
+	if (inductorLpin * 1.37 <= 255) inductorL = inductorLpin * 1.37;
 	inductorR = inductorRpin;
 }
 

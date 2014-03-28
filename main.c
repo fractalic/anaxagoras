@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <p89lpc9351.h>
 #include <string.h>
@@ -30,7 +31,7 @@ void InitADC(void);
 // control the current state of the rover
 void StateMachine();
 
-// add an offset to the inductors 
+// add an offset to the inductors
 //void ReadInductors(void);
 
 // make some lights flash
@@ -46,6 +47,10 @@ extern volatile unsigned char drive_right_speed, drive_left_speed;
 // pid control (from pid.c)
 // error, derivative of error, integral of error
 extern int error, d_error;//, s_error;
+
+//Inductor names
+unsigned char inductorL;
+unsigned char inductorR;
 
 void main(void)
 {
@@ -135,16 +140,20 @@ void DisplayInfo()
 	xdata int minutes = time / 6000.0;
 
 	// write lap time, state, other stuff
-	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
 	sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
 		(int)robot_state, drive_left_speed, drive_right_speed);
+	//LCD_setCursor(0,0);
+	//LCD_writeString("                ");
+	LCD_setCursor(0,0);
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
-	LCD_setCursor(0,1);
 	sprintf(bottom_line,"%3.0f:%3.0f %3d:%3d",
-		(float)inductorL, (float)inductorR, (int)error, (int)d_error);
+	(float)inductorL, (float)inductorR, (int)error, (int)d_error);
+	//LCD_setCursor(0,1);
+	//LCD_writeString("                ");
+	LCD_setCursor(0,1);
 	LCD_writeString(bottom_line);
 }
 
