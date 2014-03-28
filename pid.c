@@ -45,6 +45,10 @@ unsigned char CheckSensors (void);
 // determine how many blips have been counted and reset blips to zero
 char BlipCount( void );
 
+// readinductors()
+// correct for different signal strengths from inductors
+void ReadInductors(void);
+
 //Run pid for states
 void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 {	
@@ -154,6 +158,8 @@ char BlipCount( void )
 	return 0;
 }
 
+// readinductors()
+// correct for different signal strengths from inductors
 void ReadInductors(void)
 {	
 	if(inductorLpin + 50 < 255) inductorL = inductorLpin + 50;
