@@ -78,7 +78,7 @@ void pid(void)
 
 unsigned char turn(char direction)
 {
-	if(!((inductorL >= 30) || (inductorR >= 30)))
+	if(!((inductorL >= 30) && (inductorR >= 30)))
 	{
 		if(direction = '0')
 		{
