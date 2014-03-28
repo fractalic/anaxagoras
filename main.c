@@ -29,6 +29,9 @@ void InitADC(void);
 // control the current state of the rover
 void StateMachine();
 
+// add an offset to the inductors 
+//void ReadInductors(void);
+
 // make some lights flash
 void lights(char i);
 
