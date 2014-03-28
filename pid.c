@@ -51,10 +51,7 @@ void ReadInductors(void);
 
 //Run pid for states
 void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
-{	
-	// proportional, integral, derivative gains
-	float kp = 0.3, kd = 0.01; // ki = 0;
-
+{
 	// differential power application
 	short pid_differential = 0;
 
@@ -67,7 +64,7 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	d_error = (float)error-(float)error_last / ( (float) now - (float) time_last );
 
 	// set PID coefficients
-	pid_differential = (float) kp*(float) error + (float) kd*(float) d_error;
+	pid_differential = 0.3*(float) error + 0.1*(float) d_error;
 
 	// record current error and timestamp for next time
 	error_last = error;
