@@ -14,6 +14,8 @@
 typedef enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
 RobotState_t robot_state = RStart;
 
+
+
 // DisplayInfo()
 // show lap time, battery and status information on the screen
 void DisplayInfo();
@@ -28,6 +30,9 @@ void InitADC(void);
 // statemachine
 // control the current state of the rover
 void StateMachine();
+
+// add an offset to the inductors 
+//void ReadInductors(void);
 
 // make some lights flash
 void lights(char i);
@@ -62,6 +67,7 @@ void main(void)
 		// check the sensors as often as possible
 		//if (loopcount%10==0) {
 			CheckSensors();
+			ReadInductors();
 		//}
 
 		// don't refresh the display all the time
@@ -72,7 +78,6 @@ void main(void)
 		if (loopcount%20 == 0) {
 			StateMachine();
 		}
-
 		if(++loopcount>10000) loopcount = 0;
 	}		
 }

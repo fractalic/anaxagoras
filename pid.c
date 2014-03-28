@@ -9,6 +9,10 @@
 extern volatile unsigned char drive_right_speed;
 extern volatile unsigned char drive_left_speed;
 
+//Inductor names
+char inductorL;
+char inductorR;
+
 // blip detection ---------------------
 // get time in hundredths
 unsigned int now;
@@ -141,6 +145,12 @@ char BlipCount( void )
 	}
 
 	return 0;
+}
+
+void ReadInductors(void)
+{	
+	if(inductorLpin + 50 < 255) inductorL = inductorLpin + 50;
+	inductorR = inductorRpin;
 }
 
 #endif
