@@ -161,6 +161,7 @@ void DisplayInfo()
 // control the current state of the robot
 void StateMachine()
 {
+	// TODO: get stopping working
 	//if (!ShouldIStop()) {
 
 		// state transitions

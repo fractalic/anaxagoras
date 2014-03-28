@@ -100,6 +100,7 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 
 unsigned char turn(char direction)
 {
+	// TODO: fix this logic
 	if(!((inductorL >= 30) && (inductorR >= 30)))
 	{
 		if(direction = '0')
@@ -131,6 +132,7 @@ char ShouldIStop(void)
 // blip detection	
 unsigned char CheckSensors (void)	
 {
+	//TODO: check the thresholds again
 	// get time
 	now = millis()/10.0;
 
