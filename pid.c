@@ -14,17 +14,15 @@ extern volatile unsigned char drive_left_speed;
 unsigned int now;
 // store blip properties
 char low, recent, high;
-char derivative;
 char blips = 0;
-char blip_prev_level; // value of previous blip
 char blip_ready = 0; // ready to detect blip
 unsigned int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
-char error = 0;//, d_error = 0, s_error = 0; // error, derivative of error, integral of error 
-char error_last=-1, error_step = 0; // record error at last measurement and error at last change
-int time = 1, time_step=0; // track number of interations since the start of this error
-char drive_left_setting = 0, drive_right_setting = 0;
+
+char error_last=0; // record error at last measurement
+unsigned int time_last = 0; // track number of interations since the start of this error
+char pid_left_setting = 0, pid_right_setting = 0;
 
 //  output to motors using pid with lc sensor inputs
 void pid(void); 
@@ -37,46 +35,36 @@ char ShouldIStop(void);
 
 //Run pid for states
 void pid(void)
-{	
-	// threshold of signal 
-	int threshold_left = 100, threshold_right = 100, threshold_front = 0; //TODO: Test that these value work
-
+{
+	// error, derivative of error, integral of error 
+	char error = 0, d_error = 0;//, s_error = 0;
+	
 	// proportional, integral, derivative gains
-
 	float kp = 0.3, ki = 0, kd = 1;
 
-	short speed_change = 0;
+	// differential power application
+	short pid_differential = 0;
 
-	//TODO: set thresholds for whether no, left or right bias. 
-	// 0 - no bias, 1 - left bias, 2 - right bias
+	// get current time
+	now = millis() / 10.0;
 
-
+	// left high is positive
 	error = inductorL-inductorR;
 
-	if (error != error_last)
-	{
-		error_step = error_last; // record the error value
-		time_step = time;
-		time = 1;
-	}
-	 
-	// find the derivative of the error
-	d_error = (float) (error - error_step) / (float) (time + time_step);
+	d_error = (float)error-(float)error_last / ( (float) now - (float) time_last );
 
 	// set PID coefficients
-	speed_change = (float) kp*(float) error + (float) kd*(float) d_error;
+	pid_differential = (float) kp*(float) error + (float) kd*(float) d_error;
 
-	//increase the time
-	time++;
+	// record current error and timestamp for next time
+	error_last = error;
+	time_last = now;
 
-	// record the error at previous measurement
-	error_last = error; 
-	
 	//set wheel speeds
-	drive_left_speed = drive_left_setting + speed_change;
-	drive_right_speed = drive_right_setting - speed_change;
-	drive_right_setting = 50;
-	drive_left_setting = 50;
+	drive_left_speed = pid_left_setting + pid_differential;
+	drive_right_speed = pid_right_setting - pid_differential;
+	pid_right_setting = 50;
+	pid_left_setting = 50;
 }
 
 
@@ -121,15 +109,13 @@ unsigned char CheckSensors (void)
 	low = (inductorM <= 80.0)? 1:0;
 	high = (inductorM >= 130.0)? 1:0;
 	recent = (now - blip_prev_mark < 90.0)? 1:0;
-	//derivative = inductorM - blip_prev_level;
-	blip_prev_level = inductorM;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
 		// blip sensor is high
 		if (high) {
 			blips++;
-			blip_prev_mark = millis()/10;
+			blip_prev_mark = now;
 			blip_ready = 0;
 			return 9;
 		}
