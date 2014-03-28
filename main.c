@@ -137,14 +137,12 @@ void DisplayInfo()
 	// write lap time, state, other stuff
 	LCD_setCursor(0,0);
 	if (seconds >= 60.0) seconds-=minutes*60.0;
-	strcpy(top_line, "                  ");
 	sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
 		(int)robot_state, drive_left_speed, drive_right_speed);
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
 	LCD_setCursor(0,1);
-	strcpy(bottom_line, "                  ");
 	sprintf(bottom_line,"%3.0f:%3.0f %3d:%3d",
 		(float)inductorL, (float)inductorR, (int)error, (int)d_error);
 	LCD_writeString(bottom_line);

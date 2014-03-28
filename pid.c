@@ -27,7 +27,7 @@ unsigned int blip_prev_mark = 0; // time of last blip
 int error = 0, d_error = 0;//, s_error = 0;
 
 int error_last = 0; // record error at last measurement
-unsigned int time_last = 0; // track number of interations since the start of this error
+unsigned short time_diff = 1; // track number of interations since the start of this error
 
 //  output to motors using pid with lc sensor inputs
 void pid(unsigned char, unsigned char); 
@@ -61,14 +61,22 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	// left high is positive
 	error = inductorL-inductorR;
 
-	d_error = (error-error_last) / (now - time_last);
+	// count time since last change in error state
+	if ((error > 0 && error_last <= 0) || (error < 0 && error_last >= 0)) {
+		time_diff = 1;
+	} else {
+		time_diff++;
+	}
+
+	//d_error = (error-error_last) / (float) (now - time_last);
+	d_error = (error-error_last) / (float) (time_diff);
 
 	// set PID coefficients
-	pid_differential = 0.3 * (float) error + 0.01 * (float) d_error;
+	pid_differential = 0.3 * (float) error + 0.1 * (float) d_error;
 
 	// record current error and timestamp for next time
 	error_last = error;
-	time_last = now;
+	//time_last = now;
 
 	//set wheel speeds
 	drive_left_speed = pid_left_setting + pid_differential;
