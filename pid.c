@@ -20,9 +20,9 @@ unsigned int blip_prev_mark = 0; // time of last blip
 
 // pid control --------------------------
 // error, derivative of error, integral of error 
-char error = 0, d_error = 0;//, s_error = 0;
+unsigned char error = 0, d_error = 0;//, s_error = 0;
 
-char error_last=0; // record error at last measurement
+unsigned char error_last=0; // record error at last measurement
 unsigned int time_last = 0; // track number of interations since the start of this error
 
 //  output to motors using pid with lc sensor inputs
