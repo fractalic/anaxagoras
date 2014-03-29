@@ -14,17 +14,7 @@ extern volatile unsigned char drive_left_speed;
 extern unsigned char inductorL;
 extern unsigned char inductorR;
 
-//BlipCountTester
- char BlipCountTester;
-
-// blip detection ---------------------
-// get time in hundredths
-unsigned int now;
-// store blip properties
-char low, recent, high;
-char blips = 0;
-char blip_ready = 0; // ready to detect blip
-unsigned int blip_prev_mark = 0; // time of last blip
+const unsigned char inductor_threshold = 130;
 
 //  output to motors using pid with lc sensor inputs
 void pid(unsigned char, unsigned char); 
@@ -46,6 +36,19 @@ char BlipCount( int );
 // correct for different signal strengths from inductors
 void ReadInductors(void);
 
+//BlipCountTester
+ char BlipCountTester;
+
+// BLIP DETECTION VARS ---------------------
+// get time in hundredths
+unsigned int now;
+// store blip properties
+char low, recent, high;
+char blips = 0;
+char blip_ready = 0; // ready to detect blip
+unsigned int blip_prev_mark = 0; // time of last blip
+
+// PID VARS ----------------------
 //Run pid for states
 //sensor states
 char sensor_left = 0, sensor_right = 0;
@@ -62,21 +65,23 @@ float time = 1, time_step; // track number of interations since the start of thi
 // repetive running actions
 // checking sensors, etc.
 
+// TURN VARS ----------------------
+char turn_low_point = 0;
 
 
 void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 	int pid_differential;
 
-	sensor_left = (inductorL > 130) ? 1 : 0;
-	sensor_right = (inductorR > 130) ? 1 : 0;
+	sensor_left = (inductorL > inductor_threshold) ? 1 : 0;
+	sensor_right = (inductorR > inductor_threshold) ? 1 : 0;
 
 	// set artificial error
 	if (sensor_left && sensor_right) error = 0;
-	else if (sensor_left && !sensor_right) error = 4; // error = (const) * (inductorL - inductorR)
-	else if (!sensor_left && sensor_right) error = -4; // error = (const) * (inductorL - inductorR)
+	else if (sensor_left && !sensor_right) error = -4; // error = (const) * (inductorL - inductorR)
+	else if (!sensor_left && sensor_right) error = 4; // error = (const) * (inductorL - inductorR)
 	else {
-		if (error_last < 0) error = -5;
-		else error = 5;
+		if (error_last > 0) error = 5;
+		else error = -5;
 	}
 
 	// if the error has changed, start measuring the time the error persists
@@ -96,7 +101,7 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 	}
 
 	// find the derivative of the error
-	d_error = (float) (error - error_step) / (float) (time + time_step);
+	d_error = (float) -(error - error_step) / (float) (time + time_step);
 
 	// set PID coefficients
 	// using gains
@@ -124,33 +129,34 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 	}
 }
 
-
+// turn (direction)
+// turn until find a new wire
 unsigned char turn(char direction)
 {
-	/*if (direction = '0') {
+	// power the appropriate wheel
+	if (direction == 0) {
 		drive_left_speed = 0;
 		drive_right_speed = 100;
-	} else if (direction = '1') {
+	} else if (direction == 1) {
 		drive_left_speed = 100;
 		drive_right_speed = 0;
-	}*/
+	}
 
-	if(!((inductorL >= 30) && (inductorR >= 30)))
-	{
-		if(direction = '0')
-		{
-			drive_left_speed = 0;
-			drive_right_speed = 100;
-		}
-		if(direction = '1')
-		{
-			drive_left_speed = 100;
-			drive_right_speed = 0;
-		}	
-		return 1;	
-	} else {
+	// check that we've come away from the first wire
+	if (inductorL < 40 && inductorR < 40) {
+		turn_low_point = 1;
+	}
+
+	// check if back on wire
+	if (turn_low_point &&
+		(inductorL > inductor_threshold && inductorR > inductor_threshold)) {
+		// end turn
+		turn_low_point = 0;
 		return 0;
 	}
+
+	// not finished turning
+	return 1;
 }
 
 char ShouldIStop(void)
