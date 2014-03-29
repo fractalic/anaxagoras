@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <p89lpc9351.h>
 #include <string.h>
@@ -46,7 +45,7 @@ extern volatile unsigned char drive_right_speed, drive_left_speed;
 
 // pid control (from pid.c)
 // error, derivative of error, integral of error
-extern int error, d_error;//, s_error;
+extern int error, d_error, s_error;
 
 //Inductor names
 unsigned char inductorL;
@@ -141,16 +140,18 @@ void DisplayInfo()
 
 	// write lap time, state, other stuff
 	if (seconds >= 60.0) seconds-=minutes*60.0;
-	sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
-		(int)robot_state, drive_left_speed, drive_right_speed);
+	//sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
+	sprintf(top_line, "%03d:%03d  %3u:%3u",
+		(int)inductorL, (int)inductorR,
+		(unsigned int)drive_left_speed, (unsigned int)drive_right_speed);
 	//LCD_setCursor(0,0);
 	//LCD_writeString("                ");
 	LCD_setCursor(0,0);
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
-	sprintf(bottom_line,"%3.0f:%3.0f %3d:%3d",
-	(float)inductorL, (float)inductorR, (int)error, (int)d_error);
+	sprintf(bottom_line,"E%4d:%5d:%4d",
+		(int)error, (int) s_error, (int)d_error);
 	//LCD_setCursor(0,1);
 	//LCD_writeString("                ");
 	LCD_setCursor(0,1);
@@ -167,11 +168,11 @@ void StateMachine()
 		// state transitions
 		switch (robot_state) {
 			case RStart:
-				pid(50, 50);
+				pid(100, 100);
 				//ShouldIStop();
 				if (BlipCount() >= 4) {
 					reset_millis();
-					robot_state = RStraight;
+					//robot_state = RStraight;
 				}
 				break;
 			case RStraight:

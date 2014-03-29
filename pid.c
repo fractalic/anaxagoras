@@ -27,8 +27,8 @@ unsigned int blip_prev_mark = 0; // time of last blip
 // error, derivative of error, integral of error 
 int error = 0, d_error = 0, s_error = 0;
 
-int error_last = 0; // record error at last measurement
-float time_diff = 1; // track number of interations since the start of this error
+int error_delta_start = 0; // record error at last measurement
+int time_delta_start = 0; // track time since derivative update
 
 //  output to motors using pid with lc sensor inputs
 void pid(unsigned char, unsigned char); 
@@ -60,20 +60,40 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	now = millis() / 10.0;
 
 	// compute errors
-	error = inductorL-inductorR;
-	d_error = error-error_last;
-	s_error += error;
+	error = (inductorL-inductorR);
+
+	// update derivative error and integral error
+	// no more frequently than known delta time
+	if (now - time_delta_start > 5.0) {
+		// compute the errors over the delta time
+		d_error = error_delta_start-error;
+		s_error += error;
+
+		if (s_error < 0) s_error -= 3;
+		else s_error += 3;
+
+		// we've started the next interval,
+		// record starting parameters
+		error_delta_start = error;
+		time_delta_start = now;
+	}
+
+	// dead zone to prevent the errors from changing sign rapidly
+	// when the signal from the two inductors is nearly the same
+	if (error > -2 && error < 2) {
+		// probably off wire, boost integral error
+		//s_error = error*100;
+		error = 0;
+	}
 
 	// reset integral error when we cross the wire
-	if ((float)error * (float)error_last < 0) {
+	if ((float)error * (float)error_delta_start < 0) {
 		// reset integral error counter
 		s_error = 0;
 	}
 
-	// TODO: limit frequency of d_error, s_error updates
-
 	// determine the differential power to apply
-	pid_differential = 1 * (float) error + 1 * (float) d_error + 0.01 * (float) s_error;
+	pid_differential = 0.30 * error + 0.3 * s_error + 1 * d_error;
 
 	// TODO: ensure powers are separated by differential, even when one is at full power
 	// TODO: make this cleaner
@@ -92,9 +112,6 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting)
 	} else {
 		drive_right_speed = pid_right_setting - pid_differential;
 	}
-
-	// get ready for next call
-	error_last = error;
 }
 
 
@@ -179,7 +196,7 @@ char BlipCount( void )
 // correct for different signal strengths from inductors
 void ReadInductors(void)
 {	
-	if (inductorLpin * 1.37 <= 255) inductorL = inductorLpin * 1.37;
+	if (inductorLpin * 1.2 <= 255) inductorL = inductorLpin * 1.2;
 	inductorR = inductorRpin;
 }
 
