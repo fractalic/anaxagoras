@@ -196,19 +196,17 @@ unsigned char CheckSensors (void)
 	if (blip_ready) {
 		// blip sensor is high
 		if (high) {
+			// do not associate distant blips
 			blips++;
 			blip_prev_mark = now;
 			blip_ready = 0;
-			return 9;
 		}
 	} else {
 		// check that signal is decreasing
-		if (low) {
+		if (low && recent) {
 			blip_ready = 1;
 		}
 	}
-	// do not associate distant blips
-	if (!recent) blips = 0;
 
 	return recent;
 }
@@ -217,10 +215,14 @@ unsigned char CheckSensors (void)
 // determine how many blips have been counted and reset blips to zero
 char BlipCount( int instant )
 {
-	char temp = blips;
+	char temp;
+
+	temp = blips;
+	
 	// only return the blip count when we know the blip sequence is finished
 	if (low && (!recent || instant || (blips >= 4))) {
 		blips = 0;
+		blip_ready = 1;
 		BlipCountTester = temp;
 		return temp;
 	}
