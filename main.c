@@ -57,8 +57,9 @@ char blip_count = 0;
 //BlipCountTester
 extern char BlipCountTester;
 
-//BlipCountTester
-//char BlipCountTester;
+// count first blip we see
+// (for turns)
+char instant = 0;
 
 void main(void)
 {
@@ -159,11 +160,11 @@ void DisplayInfo()
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
-	sprintf(bottom_line,"E%4d:%2d:%2d:%4d",
+	sprintf(bottom_line,"M%03d   R%1d B%02d S%1d",
 		//commented for pid testing
 		//(int)error, (int) s_error, (int)d_error);
 		//for blip testing
-		(int)blip_ready, (int) blips, (int) BlipCountTester, (int) robot_state);
+		(int)inductorM, (int)blip_ready, (int) blips, (int) robot_state);
 	//LCD_setCursor(0,1);
 	//LCD_writeString("                ");
 	LCD_setCursor(0,1);
@@ -177,7 +178,9 @@ void StateMachine()
 	// TODO: get stopping working
 	//if (!ShouldIStop()) {
 
-		blip_count = BlipCount(0);
+		blip_count = BlipCount(instant);
+		// go on next
+		instant = 0;
 		// state transitions
 		switch (robot_state) {
 			case RStart:
@@ -189,14 +192,15 @@ void StateMachine()
 				}
 				break;
 			case RStraight:
-				pid(50, 50);
+				pid(100, 100);
 				//ShouldIStop();
 				// check if we should get ready to turn
 				if (blip_count == 3) robot_state = RRightPrep;
 				else if (blip_count == 2) robot_state = RLeftPrep;
 				break;
 			case RRightPrep:
-				pid(50, 50);
+				instant = 1;
+				pid(30, 30);
 				//ShouldIStop();
 				// turn when intersection detected
 				if (blip_count == 1) robot_state = RRight;
@@ -206,7 +210,8 @@ void StateMachine()
 				if (!turn(1)) robot_state = RStraight;
 				break;
 			case RLeftPrep:
-				pid(50, 50);
+				instant = 1;
+				pid(30, 30);
 				//ShouldIStop();
 				// turn when intersection detected
 				if (blip_count == 1) robot_state = RLeft;

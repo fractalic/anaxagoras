@@ -14,7 +14,7 @@ extern volatile unsigned char drive_left_speed;
 extern unsigned char inductorL;
 extern unsigned char inductorR;
 
-const unsigned char inductor_threshold = 130;
+const unsigned char inductor_threshold = 40;
 
 //  output to motors using pid with lc sensor inputs
 void pid(unsigned char, unsigned char); 
@@ -26,7 +26,7 @@ unsigned char turn(char);
 char ShouldIStop(void);
 
 // blip detection	
-unsigned char CheckSensors (void);
+unsigned char CheckSensors(void);
 
 // blipcount()
 // determine how many blips have been counted and reset blips to zero
@@ -57,7 +57,7 @@ char sensor_left = 0, sensor_right = 0;
 unsigned int time_mark;
 
 // proportional, integral, derivative gains
-float kp = 20, ki = 0, kd = 10;
+float kp = 20, ki = 0, kd = 0;
 
 float error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error
 int error_last, error_step; // record error at last measurement and error at last change
@@ -76,9 +76,9 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 	sensor_right = (inductorR > inductor_threshold) ? 1 : 0;
 
 	// set artificial error
-	if (sensor_left && sensor_right) error = 0;
-	else if (sensor_left && !sensor_right) error = -4; // error = (const) * (inductorL - inductorR)
-	else if (!sensor_left && sensor_right) error = 4; // error = (const) * (inductorL - inductorR)
+	if (sensor_left && sensor_right) error = (0.05) * ((float)inductorR - (float)inductorL);
+	else if (sensor_left && !sensor_right) error = (0.15) * ((float)inductorR - (float)inductorL);
+	else if (!sensor_left && sensor_right) error = (0.15) * ((float)inductorR - (float)inductorL);
 	else {
 		if (error_last > 0) error = 5;
 		else error = -5;
@@ -143,7 +143,7 @@ unsigned char turn(char direction)
 	}
 
 	// check that we've come away from the first wire
-	if (inductorL < 40 && inductorR < 40) {
+	if (inductorL < 20 && inductorR < 20) {
 		turn_low_point = 1;
 	}
 
@@ -178,9 +178,9 @@ unsigned char CheckSensors (void)
 
 	// check if we're above or below signal
 	// ensure the low and high thresholds are separated (hysteresis)
-	low = (inductorM <= 80.0)? 1:0;
-	high = (inductorM >= 130.0)? 1:0;
-	recent = (now - blip_prev_mark < 55.0)? 1:0;
+	low = (inductorM <= 30.0)? 1:0;
+	high = (inductorM >= 170.0)? 1:0;
+	recent = (now - blip_prev_mark < 50.0)? 1:0;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
