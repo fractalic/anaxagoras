@@ -186,7 +186,7 @@ void StateMachine()
 				pid(50, 50);
 				//ShouldIStop();
 				// turn when intersection detected
-				if (BlipCount() == 1) robot_state = RRight;
+				if (BlipCount(1) == 1) robot_state = RRight;
 				break;
 			case RRight:
 				// turns right until hits wire 
@@ -196,7 +196,7 @@ void StateMachine()
 				pid(50, 50);
 				//ShouldIStop();
 				// turn when intersection detected
-				if (BlipCount() == 1) robot_state = RLeft;
+				if (BlipCount(1) == 1) robot_state = RLeft;
 				break;
 			case RLeft:
 			 	// turns left until hits wire
