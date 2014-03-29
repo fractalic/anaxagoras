@@ -151,7 +151,10 @@ void DisplayInfo()
 
 	// write battery level and inductor readings
 	sprintf(bottom_line,"E%4d:%5d:%4d",
-		(int)error, (int) s_error, (int)d_error);
+		//commented for pid testing
+		//(int)error, (int) s_error, (int)d_error);
+		//for blip testing
+		(int)blip_ready, (int) blips, (int) robot_state);
 	//LCD_setCursor(0,1);
 	//LCD_writeString("                ");
 	LCD_setCursor(0,1);
@@ -170,17 +173,17 @@ void StateMachine()
 			case RStart:
 				pid(100, 100);
 				//ShouldIStop();
-				if (BlipCount() >= 4) {
+				if (BlipCount(0) >= 4) {
 					reset_millis();
-					//robot_state = RStraight;
+					robot_state = RStraight;
 				}
 				break;
 			case RStraight:
 				pid(50, 50);
 				//ShouldIStop();
 				// check if we should get ready to turn
-				if (BlipCount() == 3) robot_state = RRightPrep;
-				else if (BlipCount() == 2) robot_state = RLeftPrep;
+				if (BlipCount(0) == 3) robot_state = RRightPrep;
+				else if (BlipCount(0) == 2) robot_state = RLeftPrep;
 				break;
 			case RRightPrep:
 				pid(50, 50);

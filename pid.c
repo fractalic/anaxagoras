@@ -37,7 +37,7 @@ unsigned char CheckSensors (void);
 
 // blipcount()
 // determine how many blips have been counted and reset blips to zero
-char BlipCount( void );
+char BlipCount( int );
 
 // readinductors()
 // correct for different signal strengths from inductors
@@ -184,11 +184,11 @@ unsigned char CheckSensors (void)
 
 // blipcount()
 // determine how many blips have been counted and reset blips to zero
-char BlipCount( void )
+char BlipCount( int instant )
 {
 	char temp = blips;
 	// only return the blip count when we know the blip sequence is finished
-	if (low && !recent) {
+	if (low && (!recent || instant)) {
 		blips = 0;
 		return temp;
 	}
