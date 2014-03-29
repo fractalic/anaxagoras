@@ -81,9 +81,9 @@ void main(void)
 	while(1)
 	{
 		// check the sensors as often as possible
+		CheckSensors();
+		ReadInductors();
 		if (loopcount%10==0) {
-			CheckSensors();
-			ReadInductors();
 		}
 
 		// don't refresh the display all the time
@@ -91,7 +91,7 @@ void main(void)
 			DisplayInfo();
 		}
 		// don't change state all the time
-		if (loopcount%10 == 0) {
+		if (loopcount%5 == 0) {
 			StateMachine();
 		}
 
@@ -176,7 +176,7 @@ void DisplayInfo()
 void StateMachine()
 {
 	// TODO: get stopping working
-	//if (!ShouldIStop()) {
+	if (!ShouldIStop()) {
 
 		blip_count = BlipCount(instant);
 		// go on next
@@ -197,6 +197,7 @@ void StateMachine()
 				// check if we should get ready to turn
 				if (blip_count == 3) robot_state = RRightPrep;
 				else if (blip_count == 2) robot_state = RLeftPrep;
+				else if (blip_count == 4) robot_state = RFinish;
 				break;
 			case RRightPrep:
 				instant = 1;
@@ -230,9 +231,9 @@ void StateMachine()
 			default:
 				// do nothing
 		}
-	/*} else {
+	} else {
 		// stop the robot
-		drive_left_speed = 20; // speed 10 does not turn wheels
-		drive_right_speed = 20;
-	}*/
+		drive_left_speed = 0; // speed 10 does not turn wheels
+		drive_right_speed = 0;
+	}
 }

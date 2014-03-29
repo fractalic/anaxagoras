@@ -57,7 +57,7 @@ char sensor_left = 0, sensor_right = 0;
 unsigned int time_mark;
 
 // proportional, integral, derivative gains
-float kp = 20, ki = 0, kd = 0;
+float kp = 20, ki = 0, kd = 10;
 
 float error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error
 int error_last, error_step; // record error at last measurement and error at last change
@@ -67,6 +67,9 @@ float time = 1, time_step; // track number of interations since the start of thi
 
 // TURN VARS ----------------------
 char turn_low_point = 0;
+
+//ShouldIStop Variables
+unsigned int LastStopTime = 0;
 
 
 void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
@@ -162,10 +165,17 @@ unsigned char turn(char direction)
 char ShouldIStop(void)
 {
 	// check for low readings from sensors (track lost)
+	now = millis()/10.0;
 	if((inductorL <= 5) && (inductorR <= 5) && (inductorM <= 5))
 	{
-	 	return 1;
-	} 
+		if((now - LastStopTime)> 200)	
+		{
+	 		return 1;
+	 	}
+	 	return 0;
+	}
+	// reset timer
+	LastStopTime = now;
 	return 0;
 }
 
@@ -178,7 +188,7 @@ unsigned char CheckSensors (void)
 
 	// check if we're above or below signal
 	// ensure the low and high thresholds are separated (hysteresis)
-	low = (inductorM <= 30.0)? 1:0;
+	low = (inductorM <= 80.0)? 1:0;
 	high = (inductorM >= 170.0)? 1:0;
 	recent = (now - blip_prev_mark < 50.0)? 1:0;
 
@@ -197,6 +207,8 @@ unsigned char CheckSensors (void)
 			blip_ready = 1;
 		}
 	}
+	// do not associate distant blips
+	if (!recent) blips = 0;
 
 	return recent;
 }
@@ -207,7 +219,7 @@ char BlipCount( int instant )
 {
 	char temp = blips;
 	// only return the blip count when we know the blip sequence is finished
-	if (low && (!recent || instant)) {
+	if (low && (!recent || instant || (blips >= 4))) {
 		blips = 0;
 		BlipCountTester = temp;
 		return temp;
