@@ -45,7 +45,7 @@ extern volatile unsigned char drive_right_speed, drive_left_speed;
 
 // pid control (from pid.c)
 // error, derivative of error, integral of error
-extern int error, d_error, s_error;
+extern float error, d_error, s_error;
 
 //Inductor names
 unsigned char inductorL;
