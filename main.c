@@ -51,6 +51,15 @@ extern float error, d_error, s_error;
 unsigned char inductorL;
 unsigned char inductorR;
 
+// count blips
+char blip_count = 0;
+
+//BlipCountTester
+extern char BlipCountTester;
+
+//BlipCountTester
+//char BlipCountTester;
+
 void main(void)
 {
 	// set I/O mode of ports and pins on the microcontroller
@@ -81,7 +90,7 @@ void main(void)
 			DisplayInfo();
 		}
 		// don't change state all the time
-		if (loopcount%20 == 0) {
+		if (loopcount%10 == 0) {
 			StateMachine();
 		}
 
@@ -150,11 +159,11 @@ void DisplayInfo()
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
-	sprintf(bottom_line,"E%4d:%5d:%4d",
+	sprintf(bottom_line,"E%4d:%2d:%2d:%4d",
 		//commented for pid testing
 		//(int)error, (int) s_error, (int)d_error);
 		//for blip testing
-		(int)blip_ready, (int) blips, (int) robot_state);
+		(int)blip_ready, (int) blips, (int) BlipCountTester, (int) robot_state);
 	//LCD_setCursor(0,1);
 	//LCD_writeString("                ");
 	LCD_setCursor(0,1);
@@ -168,12 +177,13 @@ void StateMachine()
 	// TODO: get stopping working
 	//if (!ShouldIStop()) {
 
+		blip_count = BlipCount(0);
 		// state transitions
 		switch (robot_state) {
 			case RStart:
 				pid(100, 100);
 				//ShouldIStop();
-				if (BlipCount(0) >= 4) {
+				if (blip_count >= 4) {
 					reset_millis();
 					robot_state = RStraight;
 				}
@@ -182,14 +192,14 @@ void StateMachine()
 				pid(50, 50);
 				//ShouldIStop();
 				// check if we should get ready to turn
-				if (BlipCount(0) == 3) robot_state = RRightPrep;
-				else if (BlipCount(0) == 2) robot_state = RLeftPrep;
+				if (blip_count == 3) robot_state = RRightPrep;
+				else if (blip_count == 2) robot_state = RLeftPrep;
 				break;
 			case RRightPrep:
 				pid(50, 50);
 				//ShouldIStop();
 				// turn when intersection detected
-				if (BlipCount(1) == 1) robot_state = RRight;
+				if (blip_count == 1) robot_state = RRight;
 				break;
 			case RRight:
 				// turns right until hits wire 
@@ -199,7 +209,7 @@ void StateMachine()
 				pid(50, 50);
 				//ShouldIStop();
 				// turn when intersection detected
-				if (BlipCount(1) == 1) robot_state = RLeft;
+				if (blip_count == 1) robot_state = RLeft;
 				break;
 			case RLeft:
 			 	// turns left until hits wire

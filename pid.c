@@ -14,6 +14,9 @@ extern volatile unsigned char drive_left_speed;
 extern unsigned char inductorL;
 extern unsigned char inductorR;
 
+//BlipCountTester
+ char BlipCountTester;
+
 // blip detection ---------------------
 // get time in hundredths
 unsigned int now;
@@ -58,6 +61,9 @@ int error_last, error_step; // record error at last measurement and error at las
 float time = 1, time_step; // track number of interations since the start of this error
 // repetive running actions
 // checking sensors, etc.
+
+
+
 void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 	int pid_differential;
 
@@ -121,7 +127,14 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 
 unsigned char turn(char direction)
 {
-	// TODO: fix this logic
+	/*if (direction = '0') {
+		drive_left_speed = 0;
+		drive_right_speed = 100;
+	} else if (direction = '1') {
+		drive_left_speed = 100;
+		drive_right_speed = 0;
+	}*/
+
 	if(!((inductorL >= 30) && (inductorR >= 30)))
 	{
 		if(direction = '0')
@@ -161,7 +174,7 @@ unsigned char CheckSensors (void)
 	// ensure the low and high thresholds are separated (hysteresis)
 	low = (inductorM <= 80.0)? 1:0;
 	high = (inductorM >= 130.0)? 1:0;
-	recent = (now - blip_prev_mark < 45.0)? 1:0;
+	recent = (now - blip_prev_mark < 55.0)? 1:0;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
@@ -190,6 +203,7 @@ char BlipCount( int instant )
 	// only return the blip count when we know the blip sequence is finished
 	if (low && (!recent || instant)) {
 		blips = 0;
+		BlipCountTester = temp;
 		return temp;
 	}
 
