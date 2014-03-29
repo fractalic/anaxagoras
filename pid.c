@@ -161,7 +161,7 @@ unsigned char CheckSensors (void)
 	// ensure the low and high thresholds are separated (hysteresis)
 	low = (inductorM <= 80.0)? 1:0;
 	high = (inductorM >= 130.0)? 1:0;
-	recent = (now - blip_prev_mark < 90.0)? 1:0;
+	recent = (now - blip_prev_mark < 45.0)? 1:0;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
