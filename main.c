@@ -138,15 +138,15 @@ void DisplayInfo()
 	// write lap time, state, other stuff
 	//if (seconds >= 60.0) seconds-=minutes*60.0;
 	//sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
-	sprintf(top_line, "T%05.01f  L%3uR%3u", (float)seconds,
-		(unsigned int)drive_left_speed, (unsigned int)drive_right_speed);
+	sprintf(top_line, "T%05.01f L%03d R%03d", (float)seconds,
+		(int)inductorL, (int)inductorR);
 
 	LCD_cmd(0x80); // set cursor home
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
 	sprintf(bottom_line,"Bt%5.02f M%03d    ",
-		(float) battery/255.0, (int)inductorM);
+		(float) battery/255.0*3.2*11.0, (int)inductorM);
 		//commented for pid testing
 		//(int)error, (int) s_error, (int)d_error);
 		//for blip testing

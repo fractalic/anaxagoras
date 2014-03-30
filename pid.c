@@ -203,7 +203,7 @@ void CheckSensors ()
 	// check if we are ready to detect a blip
 	if (blip_ready) {
 		// blip sensor is high
-		if (high) {
+		if (high && inductorL > 50 && inductorR > 50) {
 			// do not associate distant blips
 			blips++;
 			blip_prev_mark = now;
