@@ -50,7 +50,7 @@ char sensor_left = 0, sensor_right = 0;
 unsigned int time_mark;
 
 // proportional, integral, derivative gains
-float kp = 25, kd = 20;
+float kp = 25, kd = 10;
 
 float error = 0, d_error = 0; // error, derivative of error, integral of error
 int error_last, error_step; // record error at last measurement and error at last change
@@ -76,14 +76,14 @@ void pid(unsigned char pid_setting) {
 	sensor_right = (inductorR > inductor_threshold) ? 1 : 0;
 
 	// set artificial error
-	if (sensor_left && sensor_right) error = (0.05) * ((float)inductorR - (float)inductorL);
+	if (sensor_left && sensor_right) error = (0.07) * ((float)inductorR - (float)inductorL);
 	else if (sensor_left && !sensor_right) {
-		error = (0.30) * ((float)inductorR - (float)inductorL);
+		error = (0.25) * ((float)inductorR - (float)inductorL);
 
 		// set blip rejection on sharp turns
 		//*reject = 1;
 	} else if (!sensor_left && sensor_right) {
-		error = (0.30) * ((float)inductorR - (float)inductorL);
+		error = (0.25) * ((float)inductorR - (float)inductorL);
 
 		// set blip rejection on sharp turns
 		//*reject = 1;
