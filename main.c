@@ -33,9 +33,6 @@ void StateMachine();
 // add an offset to the inductors
 //void ReadInductors(void);
 
-// make some lights flash
-void lights(char i);
-
 // count iterations of the main control sequence
 unsigned char loopcount = 0;
 
@@ -54,12 +51,12 @@ unsigned char inductorR;
 // count blips
 char blip_count = 0;
 
-//BlipCountTester
-extern char BlipCountTester;
-
 // count first blip we see
 // (for turns)
 char instant = 0;
+
+// reject blips when making sharp turns
+//char reject = 0;
 
 void main(void)
 {
@@ -82,9 +79,6 @@ void main(void)
 	{
 		// check the sensors as often as possible
 		CheckSensors();
-		ReadInductors();
-		if (loopcount%10==0) {
-		}
 
 		// don't refresh the display all the time
 		if (loopcount%100==0) {
@@ -127,13 +121,6 @@ void InitADC(void)
 	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
 	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
 	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
-}
-
-void lights(char i) {
-	// run lights
-	/*light_0 = (i) & 0x01;
-	light_1 = (i>>1) & 0x01;*/
-	i;
 }
 
 // DisplayInfo()
@@ -184,7 +171,7 @@ void StateMachine()
 		// state transitions
 		switch (robot_state) {
 			case RStart:
-				pid(100, 100);
+				pid(100);
 				//ShouldIStop();
 				if (blip_count >= 4) {
 					reset_millis();
@@ -192,8 +179,7 @@ void StateMachine()
 				}
 				break;
 			case RStraight:
-				pid(100, 100);
-				//ShouldIStop();
+				pid(100);
 				// check if we should get ready to turn
 				if (blip_count == 3) robot_state = RRightPrep;
 				else if (blip_count == 2) robot_state = RLeftPrep;
@@ -201,8 +187,7 @@ void StateMachine()
 				break;
 			case RRightPrep:
 				instant = 1;
-				pid(30, 30);
-				//ShouldIStop();
+				pid(50);
 				// turn when intersection detected
 				if (blip_count == 1) robot_state = RRight;
 				break;
@@ -212,7 +197,7 @@ void StateMachine()
 				break;
 			case RLeftPrep:
 				instant = 1;
-				pid(30, 30);
+				pid(50);
 				//ShouldIStop();
 				// turn when intersection detected
 				if (blip_count == 1) robot_state = RLeft;

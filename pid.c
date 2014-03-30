@@ -17,7 +17,7 @@ extern unsigned char inductorR;
 const unsigned char inductor_threshold = 40;
 
 //  output to motors using pid with lc sensor inputs
-void pid(unsigned char, unsigned char); 
+void pid(unsigned char); 
 
 // turn robot until line is reached  0 - turn left, 1 - turn right
 unsigned char turn(char);
@@ -26,18 +26,11 @@ unsigned char turn(char);
 char ShouldIStop(void);
 
 // blip detection	
-unsigned char CheckSensors(void);
+void CheckSensors();
 
 // blipcount()
 // determine how many blips have been counted and reset blips to zero
 char BlipCount( int );
-
-// readinductors()
-// correct for different signal strengths from inductors
-void ReadInductors(void);
-
-//BlipCountTester
- char BlipCountTester;
 
 // BLIP DETECTION VARS ---------------------
 // get time in hundredths
@@ -57,7 +50,7 @@ char sensor_left = 0, sensor_right = 0;
 unsigned int time_mark;
 
 // proportional, integral, derivative gains
-float kp = 20, ki = 0, kd = 10;
+float kp = 25, ki = 0, kd = 20;
 
 float error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error
 int error_last, error_step; // record error at last measurement and error at last change
@@ -72,19 +65,34 @@ char turn_low_point = 0;
 unsigned int LastStopTime = 0;
 
 
-void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
+void pid(unsigned char pid_setting) {
 	int pid_differential;
+
+	// do not set blip reject flag
+	// by default
+	//*reject = 0;
 
 	sensor_left = (inductorL > inductor_threshold) ? 1 : 0;
 	sensor_right = (inductorR > inductor_threshold) ? 1 : 0;
 
 	// set artificial error
 	if (sensor_left && sensor_right) error = (0.05) * ((float)inductorR - (float)inductorL);
-	else if (sensor_left && !sensor_right) error = (0.15) * ((float)inductorR - (float)inductorL);
-	else if (!sensor_left && sensor_right) error = (0.15) * ((float)inductorR - (float)inductorL);
-	else {
+	else if (sensor_left && !sensor_right) {
+		error = (0.30) * ((float)inductorR - (float)inductorL);
+
+		// set blip rejection on sharp turns
+		//*reject = 1;
+	} else if (!sensor_left && sensor_right) {
+		error = (0.30) * ((float)inductorR - (float)inductorL);
+
+		// set blip rejection on sharp turns
+		//*reject = 1;
+	} else {
 		if (error_last > 0) error = 5;
 		else error = -5;
+
+		// set blip rejection on sharp turns
+		//*reject = 1;
 	}
 
 	// if the error has changed, start measuring the time the error persists
@@ -116,19 +124,19 @@ void pid(unsigned char pid_left_setting, unsigned char pid_right_setting) {
 	// TODO: ensure powers are separated by differential, even when one is at full power
 	// TODO: make this cleaner
 	//set wheel speeds, capping between 0 and 100
-	if ( (int) pid_left_setting + (int) pid_differential > 100) {
+	if ( (int) pid_setting + (int) pid_differential > 100) {
 		drive_left_speed = 100;
-	} else if ( (int) pid_left_setting + (int) pid_differential < 0 ) {
+	} else if ( (int) pid_setting + (int) pid_differential < 0 ) {
 		drive_left_speed = 0;
 	} else {
-		drive_left_speed = pid_left_setting + pid_differential;
+		drive_left_speed = pid_setting + pid_differential;
 	}
-	if ( (int) pid_right_setting - (int) pid_differential > 100) {
+	if ( (int) pid_setting - (int) pid_differential > 100) {
 		drive_right_speed = 100;
-	} else if ( (int) pid_right_setting - (int) pid_differential < 0 ) {
+	} else if ( (int) pid_setting - (int) pid_differential < 0 ) {
 		drive_right_speed = 0;
 	} else {
-		drive_right_speed = pid_right_setting - pid_differential;
+		drive_right_speed = pid_setting - pid_differential;
 	}
 }
 
@@ -146,13 +154,13 @@ unsigned char turn(char direction)
 	}
 
 	// check that we've come away from the first wire
-	if (inductorL < 20 && inductorR < 20) {
+	if (inductorL < 60 || inductorR < 60) {
 		turn_low_point = 1;
 	}
 
 	// check if back on wire
 	if (turn_low_point &&
-		(inductorL > inductor_threshold && inductorR > inductor_threshold)) {
+		(inductorL > 75 && inductorR > 75)) {
 		// end turn
 		turn_low_point = 0;
 		return 0;
@@ -180,7 +188,7 @@ char ShouldIStop(void)
 }
 
 // blip detection	
-unsigned char CheckSensors (void)	
+void CheckSensors ()	
 {
 	//TODO: check the thresholds again
 	// get time
@@ -188,9 +196,9 @@ unsigned char CheckSensors (void)
 
 	// check if we're above or below signal
 	// ensure the low and high thresholds are separated (hysteresis)
-	low = (inductorM <= 80.0)? 1:0;
-	high = (inductorM >= 170.0)? 1:0;
-	recent = (now - blip_prev_mark < 50.0)? 1:0;
+	low = (inductorM <= 70.0)? 1:0;
+	high = (inductorM >= 190.0)? 1:0;
+	recent = (now - blip_prev_mark < 60.0)? 1:0;
 
 	// check if we are ready to detect a blip
 	if (blip_ready) {
@@ -208,7 +216,9 @@ unsigned char CheckSensors (void)
 		}
 	}
 
-	return recent;
+	// calibrate readings from L, R inductors
+	if (inductorLpin * 1.2 <= 255) inductorL = inductorLpin * 1.2;
+	inductorR = inductorRpin;
 }
 
 // blipcount()
@@ -220,22 +230,13 @@ char BlipCount( int instant )
 	temp = blips;
 	
 	// only return the blip count when we know the blip sequence is finished
-	if (low && (!recent || instant || (blips >= 4))) {
+	if ((low && !recent) || instant || blips >= 4) {
 		blips = 0;
 		blip_ready = 1;
-		BlipCountTester = temp;
 		return temp;
 	}
 
 	return 0;
-}
-
-// readinductors()
-// correct for different signal strengths from inductors
-void ReadInductors(void)
-{	
-	if (inductorLpin * 1.2 <= 255) inductorL = inductorLpin * 1.2;
-	inductorR = inductorRpin;
 }
 
 #endif
