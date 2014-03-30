@@ -14,7 +14,7 @@ extern volatile unsigned char drive_left_speed;
 extern unsigned char inductorL;
 extern unsigned char inductorR;
 
-const unsigned char inductor_threshold = 40;
+#define inductor_threshold 40
 
 //  output to motors using pid with lc sensor inputs
 void pid(unsigned char); 
@@ -50,9 +50,9 @@ char sensor_left = 0, sensor_right = 0;
 unsigned int time_mark;
 
 // proportional, integral, derivative gains
-float kp = 25, ki = 0, kd = 20;
+float kp = 25, kd = 20;
 
-float error = 0, d_error = 0, s_error = 0; // error, derivative of error, integral of error
+float error = 0, d_error = 0; // error, derivative of error, integral of error
 int error_last, error_step; // record error at last measurement and error at last change
 float time = 1, time_step; // track number of interations since the start of this error
 // repetive running actions
@@ -116,7 +116,7 @@ void pid(unsigned char pid_setting) {
 
 	// set PID coefficients
 	// using gains
-	pid_differential = (float) kp*(float) error + (float) ki*(float) s_error + (float) kd*(float) d_error;
+	pid_differential = (float) kp*(float) error + (float) kd*(float) d_error;
 
 	// record the error at previous measurement
 	error_last = error;

@@ -12,7 +12,7 @@
 #include "pid.c"
 
 // rover state machine information
-enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish, RTest} RobotState_t;
+enum {RStart = 0, RStraight, RRightPrep, RRight, RLeftPrep, RLeft, RFinish} RobotState_t;
 unsigned char robot_state = RStart;
 
 // DisplayInfo()
@@ -133,28 +133,25 @@ void DisplayInfo()
 
 	unsigned time = millis()/10.0;
 	xdata float seconds = time/100.0;
-	xdata int minutes = time / 6000.0;
+	//xdata int minutes = time / 6000.0;
 
 	// write lap time, state, other stuff
-	if (seconds >= 60.0) seconds-=minutes*60.0;
+	//if (seconds >= 60.0) seconds-=minutes*60.0;
 	//sprintf(top_line, "%01d:%04.01f %1d %02d %02d", minutes, seconds,
-	sprintf(top_line, "%03d:%03d  %3u:%3u",
-		(int)inductorL, (int)inductorR,
+	sprintf(top_line, "T%05.01f  L%3uR%3u", (float)seconds,
 		(unsigned int)drive_left_speed, (unsigned int)drive_right_speed);
-	//LCD_setCursor(0,0);
-	//LCD_writeString("                ");
-	LCD_setCursor(0,0);
+
+	LCD_cmd(0x80); // set cursor home
 	LCD_writeString(top_line);
 
 	// write battery level and inductor readings
-	sprintf(bottom_line,"M%03d   R%1d B%02d S%1d",
+	sprintf(bottom_line,"Bt%5.02f M%03d    ",
+		(float) battery/255.0, (int)inductorM);
 		//commented for pid testing
 		//(int)error, (int) s_error, (int)d_error);
 		//for blip testing
-		(int)inductorM, (int)blip_ready, (int) blips, (int) robot_state);
-	//LCD_setCursor(0,1);
-	//LCD_writeString("                ");
-	LCD_setCursor(0,1);
+		//(int)inductorM, (int)blip_ready, (int) blips, (int) robot_state);
+    LCD_cmd(40+0x80); // set cursor to second line
 	LCD_writeString(bottom_line);
 }
 
@@ -209,10 +206,8 @@ void StateMachine()
 			case RFinish:
 				drive_left_speed = 0;
 				drive_right_speed = 0;
-				//TODO: do we need a reset?
+				freeze_millis();
 				break;
-			case RTest:
-				// TODO: output test stuff
 			default:
 				// do nothing
 		}
